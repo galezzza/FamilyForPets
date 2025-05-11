@@ -10,9 +10,7 @@ namespace FamilyForPets.Domain.Volunteer
     public class Volunteer : Entity
     {
         public Guid Id { get; private set; }
-        public string Name { get; private set; } = default!;
-        public string? Surname { get; private set; }
-        public string? AdditionalName { get; private set; }
+        public FullName FullName { get; private set; } = default!;
         public string Email { get; private set; } = default!;
         public string? Description { get; private set; }
         public int ExperienceInYears { get; private set; }
@@ -29,9 +27,7 @@ namespace FamilyForPets.Domain.Volunteer
         public List<Pet> PetsHelpInProgress => GetPetsHelpInProgress();
 
 
-        public Volunteer(string name,
-            string? surname,
-            string? additionalName,
+        public Volunteer(FullName fullName,
             string email,
             string? description,
             int experienceInYears,
@@ -40,9 +36,7 @@ namespace FamilyForPets.Domain.Volunteer
             List<SocialNetwork> socialNetworks,
             DetailsForPayment detailsForPayment)
         {
-            Name = name;
-            Surname = surname;
-            AdditionalName = additionalName;
+            FullName = fullName;
             Email = email;
             Description = description;
             ExperienceInYears = experienceInYears;
