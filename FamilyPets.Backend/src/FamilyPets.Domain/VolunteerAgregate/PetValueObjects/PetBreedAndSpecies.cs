@@ -1,11 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace FamilyForPets.Domain.Volunteer
+namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
 {
     public class PetBreedAndSpecies : ValueObject
     {
         public Guid SpeciesId { get; }
-        
+
         public Guid BreedId { get; }
 
         private PetBreedAndSpecies(Guid speciesId, Guid breedId)

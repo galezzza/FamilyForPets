@@ -1,7 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
+using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
 using Microsoft.VisualBasic;
 
-namespace FamilyForPets.Domain.Volunteer
+namespace FamilyForPets.Domain.VolunteerAgregate
 {
     public class Pet : Entity
     {

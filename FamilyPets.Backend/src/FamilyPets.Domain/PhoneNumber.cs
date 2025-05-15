@@ -5,12 +5,12 @@ namespace FamilyForPets.Domain
     public class PhoneNumber : ValueObject
     {
         public string Number { get; } = default!;
-        
+
         private PhoneNumber(string number)
         {
             Number = number;
         }
-        
+
         public static Result<PhoneNumber> Create(string number)
         {
             if (string.IsNullOrWhiteSpace(number))

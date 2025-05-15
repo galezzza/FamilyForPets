@@ -17,4 +17,8 @@
     <ProjectReference Include="..\FamilyPets.UseCases\FamilyForPets.UseCases.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>

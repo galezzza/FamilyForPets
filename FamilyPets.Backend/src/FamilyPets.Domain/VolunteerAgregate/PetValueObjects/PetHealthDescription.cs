@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace FamilyForPets.Domain.Volunteer
+namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
 {
     public class PetHealthDescription : ValueObject
     {
