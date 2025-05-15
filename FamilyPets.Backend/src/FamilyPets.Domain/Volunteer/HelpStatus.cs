@@ -13,10 +13,11 @@ namespace FamilyForPets.Domain.Volunteer
         {
             HelpNeeded,
             LookingForHome,
-            HomeFounded
+            HomeFounded,
         };
 
         public string Value { get; }
+
         private HelpStatus(string value)
         {
             Value = value;

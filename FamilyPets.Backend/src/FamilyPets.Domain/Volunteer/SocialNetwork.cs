@@ -5,6 +5,7 @@ namespace FamilyForPets.Domain.Volunteer
     public class SocialNetwork : ValueObject
     {
         public string Name { get; private set; } = default!;
+
         public string Url { get; private set; } = default!;
 
         private SocialNetwork(string name, string url)

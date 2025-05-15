@@ -1,33 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 
 namespace FamilyForPets.Domain.Volunteer
 {
     public class Volunteer : Entity
     {
         public Guid Id { get; private set; }
+
         public FullName FullName { get; private set; } = default!;
+
         public string Email { get; private set; } = default!;
+
         public string? Description { get; private set; }
+
         public int ExperienceInYears { get; private set; }
 
         private List<Pet> _allPets = [];
+
         public IReadOnlyCollection<Pet> AllPets => _allPets.AsReadOnly();
+
         public string PhoneNumber { get; private set; } = default!;
-        
+
         private List<SocialNetwork> _socialNetworks = [];
+
         public IReadOnlyCollection<SocialNetwork> SocialNetworks => _socialNetworks.AsReadOnly();
+
         public DetailsForPayment DetailsForPayment { get; private set; } = default!;
+
         public List<Pet> PetsHelpNeeded => GetPetsHelpNeeded();
+
         public List<Pet> PetsHomeFounded => GetPetsHomeFounded();
+
         public List<Pet> PetsHelpInProgress => GetPetsHelpInProgress();
 
-
-        public Volunteer(FullName fullName,
+        public Volunteer(
+            FullName fullName,
             string email,
             string? description,
             int experienceInYears,
@@ -45,6 +51,7 @@ namespace FamilyForPets.Domain.Volunteer
             _socialNetworks = socialNetworks;
             DetailsForPayment = detailsForPayment;
         }
+
         public List<Pet> GetPetsHelpNeeded()
         {
             return _allPets

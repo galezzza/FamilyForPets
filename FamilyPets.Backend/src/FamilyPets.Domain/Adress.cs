@@ -5,8 +5,11 @@ namespace FamilyForPets.Domain
     public class Adress : ValueObject
     {
         public string HouseNumber { get; } = default!;
+        
         public string Street { get; } = default!;
+        
         public string City { get; } = default!;
+        
         public string Country { get; } = default!;
 
         private Adress(string houseNumber, string street, string city, string country)

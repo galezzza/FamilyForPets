@@ -5,7 +5,9 @@ namespace FamilyForPets.Domain.Volunteer
     public class FullName : ValueObject
     {
         public string Name { get; } = default!;
+
         public string? Surname { get; }
+
         public string? AdditionalName { get; }
 
         private FullName(string name, string? surname, string? additionalName)

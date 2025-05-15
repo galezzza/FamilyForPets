@@ -5,6 +5,7 @@ namespace FamilyForPets.Domain.Volunteer
     public class DetailsForPayment : ValueObject
     {
         public string CardNumber { get; private set; } = default!;
+
         public string OtherDetails { get; private set; } = default!;
 
         private DetailsForPayment(string cardNumber, string otherDetails)
