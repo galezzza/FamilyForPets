@@ -4,10 +4,8 @@ using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
 
 namespace FamilyForPets.Domain.VolunteerAgregate
 {
-    public class Volunteer : Entity
+    public class Volunteer : Entity<VolunteerId>
     {
-        public Guid Id { get; private set; }
-
         public FullName FullName { get; private set; } = default!;
 
         public string Email { get; private set; } = default!;

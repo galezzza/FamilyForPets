@@ -1,8 +1,9 @@
-﻿namespace FamilyForPets.Domain.Species
+﻿using CSharpFunctionalExtensions;
+
+namespace FamilyForPets.Domain.Species
 {
-    public class Breed
+    public class Breed : Entity<BreedId>
     {
-        public Guid Id { get; private set; }
         public string Name { get; private set; } = default!;
 
         public Breed(string name)
