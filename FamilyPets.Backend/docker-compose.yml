@@ -1,0 +1,22 @@
+﻿services:
+  familyforpets.api:
+    image: ${DOCKER_REGISTRY-}familyforpetsapi
+    build:
+      context: .
+      dockerfile: src/FamilyPets.API/Dockerfile
+  
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: famaly_for_pets
+      POSTGRES_USER: postgers
+      POSTGRES_PASSWORD: postgers
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
