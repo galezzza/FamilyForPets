@@ -1,16 +1,19 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
-using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
 
-namespace FamilyForPets.Domain.VolunteerAgregate
+namespace FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects
 {
 
-    public class VolunteerId : CustomId<VolunteerId>
+    public class VolunteerId : CustomId<VolunteerId>, ICustomId<VolunteerId>
     {
         private VolunteerId(Guid id)
             : base(id) { }
 
-        public static VolunteerId NewVolunteerId() => new VolunteerId(Guid.NewGuid());
+        public static VolunteerId New() => new VolunteerId(Guid.NewGuid());
+
+        public static VolunteerId Empty() => new VolunteerId(Guid.Empty);
+
+        public static VolunteerId Create(Guid id) => new VolunteerId(id);
 
     }
 

@@ -1,24 +1,25 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.Species;
 
 namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
 {
     public class PetBreedAndSpecies : ValueObject
     {
-        public Guid SpeciesId { get; }
+        public SpeciesId SpeciesId { get; }
 
-        public Guid BreedId { get; }
+        public BreedId BreedId { get; }
 
-        private PetBreedAndSpecies(Guid speciesId, Guid breedId)
+        private PetBreedAndSpecies(SpeciesId speciesId, BreedId breedId)
         {
             SpeciesId = speciesId;
             BreedId = breedId;
         }
 
-        public static Result<PetBreedAndSpecies> Create(Guid speciesId, Guid breedId)
+        public static Result<PetBreedAndSpecies> Create(SpeciesId speciesId, BreedId breedId)
         {
-            if (speciesId == Guid.Empty)
+            if (speciesId.Value == Guid.Empty)
                 return Result.Failure<PetBreedAndSpecies>("Species ID cannot be empty.");
-            if (breedId == Guid.Empty)
+            if (breedId.Value == Guid.Empty)
                 return Result.Failure<PetBreedAndSpecies>("Breed ID cannot be empty.");
             return Result.Success(new PetBreedAndSpecies(speciesId, breedId));
         }
