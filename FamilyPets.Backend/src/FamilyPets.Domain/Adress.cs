@@ -1,9 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.Shared;
 
 namespace FamilyForPets.Domain
 {
     public class Adress : ValueObject
     {
+        public const int MAX_ADRESS_TEXT_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
+
         public string HouseNumber { get; } = default!;
 
         public string Street { get; } = default!;
@@ -19,6 +22,8 @@ namespace FamilyForPets.Domain
             City = city;
             Country = country;
         }
+
+        public static Adress Empty() => new Adress(string.Empty, string.Empty, string.Empty, string.Empty);
 
         public static Result<Adress> Create(string houseNumber, string street, string city, string country)
         {

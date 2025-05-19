@@ -1,15 +1,20 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.Shared;
 
 namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
 {
     public class PetHealthDescription : ValueObject
     {
+        public const int MAX_DESCRIPTION_LENGHT = ProjectConstants.MAX_HIGH_TEXT_LENGHT;
+
         public string Description { get; }
 
         private PetHealthDescription(string description)
         {
             Description = description;
         }
+
+        public static PetHealthDescription Empty() => new PetHealthDescription(string.Empty);
 
         public static Result<PetHealthDescription> Create(string description)
         {
