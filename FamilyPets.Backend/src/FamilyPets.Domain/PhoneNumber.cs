@@ -1,10 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.Shared;
 
 namespace FamilyForPets.Domain
 {
     public class PhoneNumber : ValueObject
     {
         public string Number { get; } = default!;
+
+        public const int MAX_PHONE_NUMBER_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
 
         private PhoneNumber(string number)
         {

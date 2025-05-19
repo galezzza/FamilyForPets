@@ -1,9 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.Shared;
 
 namespace FamilyForPets.Domain
 {
     public class FullName : ValueObject
     {
+        public const int MAX_NAME_TEXT_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
+
         public string Name { get; } = default!;
 
         public string? Surname { get; }

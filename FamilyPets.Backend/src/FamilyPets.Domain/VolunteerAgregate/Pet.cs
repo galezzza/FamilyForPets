@@ -96,7 +96,8 @@ namespace FamilyForPets.Domain.VolunteerAgregate
         }
 
         // empty constructor for EF Core
-        private Pet()
+        private Pet(PetId id)
+            : base(id)
         {
         }
 

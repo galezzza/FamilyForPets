@@ -1,4 +1,5 @@
 ﻿using FamilyForPets.Domain;
+using FamilyForPets.Domain.Shared;
 using FamilyForPets.Domain.Species;
 using FamilyForPets.Domain.VolunteerAgregate;
 using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
@@ -108,6 +109,7 @@ namespace FamilyForPets.Infrastructure.Configurations
             builder.Property(p => p.ContactPhoneNumber)
                 .HasColumnName("contact_phone_number")
                 .IsRequired()
+                .HasMaxLength(PhoneNumber.MAX_PHONE_NUMBER_LENGHT)
                 .HasConversion(
                     phoneNumber => phoneNumber.Number,
                     number => PhoneNumber.Create(number).Value);
@@ -124,7 +126,9 @@ namespace FamilyForPets.Infrastructure.Configurations
             builder.ComplexProperty(p => p.HelpStatus, hsb =>
             {
                 hsb.IsRequired();
-                hsb.Property(s => s.Value).HasColumnName("help_status_enum");
+                hsb.Property(s => s.Value)
+                    .HasColumnName("help_status_enum")
+                    .HasMaxLength(ProjectConstants.MAX_LOW_TEXT_LENGHT);
             });
 
             builder.ComplexProperty(p => p.PaymentDatails, pdb =>
@@ -140,6 +144,9 @@ namespace FamilyForPets.Infrastructure.Configurations
                     .HasMaxLength(DetailsForPayment.MAX_DETAILS_LENGHT);
             });
 
+            // PaymentDetails can be null, so its properties CardNumber and OtherDetails set as not required
+            // but if PaymentDetails is not null, then CardNumber is required. So there is a check constraint
+            // that checks and throw an error if OtherDetails is not null and CardNumber is null
             builder.ToTable(t =>
             {
                 t.HasCheckConstraint(

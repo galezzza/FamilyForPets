@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.Shared;
 using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
 
@@ -6,6 +7,10 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 {
     public class Volunteer : Entity<VolunteerId>
     {
+        public const int MAX_EMAIL_LENGHT = ProjectConstants.MAX_MEDIUM_TEXT_LENGHT;
+
+        public const int MAX_DESCRIPTION_LENGHT = ProjectConstants.MAX_HIGH_TEXT_LENGHT;
+
         public FullName FullName { get; private set; } = default!;
 
         public string Email { get; private set; } = default!;
@@ -18,19 +23,21 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 
         public IReadOnlyCollection<Pet> AllPets => _allPets.AsReadOnly();
 
-        public string PhoneNumber { get; private set; } = default!;
+        public PhoneNumber PhoneNumber { get; private set; } = default!;
 
-        private List<SocialNetwork> _socialNetworks = [];
-
-        public IReadOnlyCollection<SocialNetwork> SocialNetworks => _socialNetworks.AsReadOnly();
+        public VolunteerSocialNetworksList VolunteerSocialNetworks { get; private set; } = default!;
 
         public DetailsForPayment DetailsForPayment { get; private set; } = default!;
 
-        public List<Pet> PetsHelpNeeded => GetPetsHelpNeeded();
+        // public List<Pet> PetsHelpNeeded => GetPetsHelpNeeded();
 
-        public List<Pet> PetsHomeFounded => GetPetsHomeFounded();
+        // public List<Pet> PetsHomeFounded => GetPetsHomeFounded();
 
-        public List<Pet> PetsHelpInProgress => GetPetsHelpInProgress();
+        // public List<Pet> PetsHelpInProgress => GetPetsHelpInProgress();
+
+        // because Volunteer has those 3 properties of type List<Pet> that refer to relavent methods
+        // EF Core have indentified that as "multiple relationships between Pet and Volunteer"
+        // and created three shadow foreign keys on those properties in database thats are not correct
 
         public Volunteer(
             FullName fullName,
@@ -38,7 +45,7 @@ namespace FamilyForPets.Domain.VolunteerAgregate
             string? description,
             int experienceInYears,
             List<Pet> allPets,
-            string phoneNumber,
+            PhoneNumber phoneNumber,
             List<SocialNetwork> socialNetworks,
             DetailsForPayment detailsForPayment)
         {
@@ -48,7 +55,7 @@ namespace FamilyForPets.Domain.VolunteerAgregate
             ExperienceInYears = experienceInYears;
             _allPets = allPets;
             PhoneNumber = phoneNumber;
-            _socialNetworks = socialNetworks;
+            VolunteerSocialNetworks = VolunteerSocialNetworksList.Create(socialNetworks).Value;
             DetailsForPayment = detailsForPayment;
         }
 
@@ -72,5 +79,12 @@ namespace FamilyForPets.Domain.VolunteerAgregate
             .Where(pet => pet.HelpStatus == HelpStatus.HomeFounded)
             .ToList();
         }
+
+        // for EF Core
+        private Volunteer(VolunteerId id)
+            : base(id)
+        {
+        }
+
     }
 }
