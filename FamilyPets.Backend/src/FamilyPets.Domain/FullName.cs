@@ -1,12 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.Shared;
 
-namespace FamilyForPets.Domain.Volunteer
+namespace FamilyForPets.Domain
 {
     public class FullName : ValueObject
     {
-        public string Name { get; } = default!;
-        public string? Surname { get; }
-        public string? AdditionalName { get; }
+        public const int MAX_NAME_TEXT_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
 
         private FullName(string name, string? surname, string? additionalName)
         {
@@ -14,6 +13,12 @@ namespace FamilyForPets.Domain.Volunteer
             Surname = surname;
             AdditionalName = additionalName;
         }
+
+        public string Name { get; } = default!;
+
+        public string? Surname { get; }
+
+        public string? AdditionalName { get; }
 
         public static Result<FullName> Create(string name, string? surname, string? additionalName)
         {

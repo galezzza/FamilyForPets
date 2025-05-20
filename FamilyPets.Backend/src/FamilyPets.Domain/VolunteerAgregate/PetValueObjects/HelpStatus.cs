@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using CSharpFunctionalExtensions;
 
-namespace FamilyForPets.Domain.Volunteer
+namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
 {
     public class HelpStatus : ValueObject
     {
@@ -13,14 +13,15 @@ namespace FamilyForPets.Domain.Volunteer
         {
             HelpNeeded,
             LookingForHome,
-            HomeFounded
+            HomeFounded,
         };
-
-        public string Value { get; }
         private HelpStatus(string value)
         {
             Value = value;
         }
+
+        public string Value { get; }
+
 
         public static Result<HelpStatus> Create(string input)
         {

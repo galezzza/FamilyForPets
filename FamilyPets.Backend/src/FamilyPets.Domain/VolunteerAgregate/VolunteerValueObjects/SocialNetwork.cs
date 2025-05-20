@@ -1,17 +1,23 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.Shared;
 
-namespace FamilyForPets.Domain.Volunteer
+namespace FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects
 {
     public class SocialNetwork : ValueObject
     {
-        public string Name { get; private set; } = default!;
-        public string Url { get; private set; } = default!;
+        public const int MAX_NAME_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
+
+        public const int MAX_URL_LENGHT = ProjectConstants.MAX_HIGH_TEXT_LENGHT;
 
         private SocialNetwork(string name, string url)
         {
             Name = name;
             Url = url;
         }
+
+        public string Name { get; private set; } = default!;
+
+        public string Url { get; private set; } = default!;
 
         public static Result<SocialNetwork> Create(string name, string url)
         {
