@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FamilyForPets.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250519204531_VolunteerAndNewPetInitial")]
-    partial class VolunteerAndNewPetInitial
+    [Migration("20250520175634_NewInitial")]
+    partial class NewInitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,24 @@ namespace FamilyForPets.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("FamilyForPets.Domain.Species.Species", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_species");
+
+                    b.ToTable("species", (string)null);
+                });
 
             modelBuilder.Entity("FamilyForPets.Domain.VolunteerAgregate.Pet", b =>
                 {
@@ -246,6 +264,59 @@ namespace FamilyForPets.Infrastructure.Migrations
                     b.ToTable("volunteers", (string)null);
                 });
 
+            modelBuilder.Entity("FamilyForPets.Domain.Species.Species", b =>
+                {
+                    b.OwnsOne("FamilyForPets.Domain.Species.SpeciesBreedsList", "SpeciesBreeds", b1 =>
+                        {
+                            b1.Property<Guid>("SpeciesId")
+                                .HasColumnType("uuid");
+
+                            b1.HasKey("SpeciesId");
+
+                            b1.ToTable("species");
+
+                            b1.ToJson("species_breeds");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SpeciesId")
+                                .HasConstraintName("fk_species_species_id");
+
+                            b1.OwnsMany("FamilyForPets.Domain.Species.Breed", "Breeds", b2 =>
+                                {
+                                    b2.Property<Guid>("SpeciesBreedsListSpeciesId")
+                                        .HasColumnType("uuid");
+
+                                    b2.Property<int>("__synthesizedOrdinal")
+                                        .ValueGeneratedOnAdd()
+                                        .HasColumnType("integer");
+
+                                    b2.Property<Guid?>("Id")
+                                        .HasColumnType("uuid");
+
+                                    b2.Property<string>("Name")
+                                        .IsRequired()
+                                        .HasMaxLength(100)
+                                        .HasColumnType("character varying(100)")
+                                        .HasColumnName("breed_name");
+
+                                    b2.HasKey("SpeciesBreedsListSpeciesId", "__synthesizedOrdinal");
+
+                                    b2.ToTable("species");
+
+                                    b2.ToJson("species_breeds");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("SpeciesBreedsListSpeciesId")
+                                        .HasConstraintName("fk_species_species_species_breeds_list_species_id");
+                                });
+
+                            b1.Navigation("Breeds");
+                        });
+
+                    b.Navigation("SpeciesBreeds")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FamilyForPets.Domain.VolunteerAgregate.Pet", b =>
                 {
                     b.HasOne("FamilyForPets.Domain.VolunteerAgregate.Volunteer", null)
@@ -267,7 +338,7 @@ namespace FamilyForPets.Infrastructure.Migrations
 
                             b1.ToTable("volunteers");
 
-                            b1.ToJson("volunteer_social_networks");
+                            b1.ToJson("volunteer_social_newtworks");
 
                             b1.WithOwner()
                                 .HasForeignKey("VolunteerId")
@@ -300,7 +371,7 @@ namespace FamilyForPets.Infrastructure.Migrations
 
                                     b2.ToTable("volunteers");
 
-                                    b2.ToJson("volunteer_social_networks");
+                                    b2.ToJson("volunteer_social_newtworks");
 
                                     b2.WithOwner()
                                         .HasForeignKey("VolunteerSocialNetworksListVolunteerId")

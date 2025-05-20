@@ -11,33 +11,13 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 
         public const int MAX_DESCRIPTION_LENGHT = ProjectConstants.MAX_HIGH_TEXT_LENGHT;
 
-        public FullName FullName { get; private set; } = default!;
-
-        public string Email { get; private set; } = default!;
-
-        public string? Description { get; private set; }
-
-        public int ExperienceInYears { get; private set; }
-
         private List<Pet> _allPets = [];
 
-        public IReadOnlyCollection<Pet> AllPets => _allPets.AsReadOnly();
-
-        public PhoneNumber PhoneNumber { get; private set; } = default!;
-
-        public VolunteerSocialNetworksList VolunteerSocialNetworks { get; private set; } = default!;
-
-        public DetailsForPayment DetailsForPayment { get; private set; } = default!;
-
-        // public List<Pet> PetsHelpNeeded => GetPetsHelpNeeded();
-
-        // public List<Pet> PetsHomeFounded => GetPetsHomeFounded();
-
-        // public List<Pet> PetsHelpInProgress => GetPetsHelpInProgress();
-
-        // because Volunteer has those 3 properties of type List<Pet> that refer to relavent methods
-        // EF Core have indentified that as "multiple relationships between Pet and Volunteer"
-        // and created three shadow foreign keys on those properties in database thats are not correct
+        // for EF Core
+        private Volunteer(VolunteerId id)
+            : base(id)
+        {
+        }
 
         public Volunteer(
             FullName fullName,
@@ -59,32 +39,27 @@ namespace FamilyForPets.Domain.VolunteerAgregate
             DetailsForPayment = detailsForPayment;
         }
 
-        public List<Pet> GetPetsHelpNeeded()
-        {
-            return _allPets
-            .Where(pet => pet.HelpStatus == HelpStatus.HelpNeeded)
-            .ToList();
-        }
+        public FullName FullName { get; private set; } = default!;
 
-        public List<Pet> GetPetsHelpInProgress()
-        {
-            return _allPets
-            .Where(pet => pet.HelpStatus == HelpStatus.LookingForHome)
-            .ToList();
-        }
+        public string Email { get; private set; } = default!;
 
-        public List<Pet> GetPetsHomeFounded()
-        {
-            return _allPets
-            .Where(pet => pet.HelpStatus == HelpStatus.HomeFounded)
-            .ToList();
-        }
+        public string? Description { get; private set; }
 
-        // for EF Core
-        private Volunteer(VolunteerId id)
-            : base(id)
-        {
-        }
+        public int ExperienceInYears { get; private set; }
 
+        public IReadOnlyCollection<Pet> AllPets => _allPets.AsReadOnly();
+
+        public PhoneNumber PhoneNumber { get; private set; } = default!;
+
+        public VolunteerSocialNetworksList VolunteerSocialNetworks { get; private set; } = default!;
+
+        public DetailsForPayment DetailsForPayment { get; private set; } = default!;
+
+
+        public int GetNumeberOfPetsWithHelpNeeded() => AllPets.Where(p => p.HelpStatus == HelpStatus.HelpNeeded).Count();
+
+        public int GetNumeberOfPetsWithHelpInProgress() => AllPets.Where(p => p.HelpStatus == HelpStatus.LookingForHome).Count();
+
+        public int GetNumeberOfPetsWithFoundedHome() => AllPets.Where(p => p.HelpStatus == HelpStatus.HomeFounded).Count();
     }
 }

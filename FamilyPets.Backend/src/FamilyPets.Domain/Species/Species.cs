@@ -1,18 +1,25 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.Shared;
 
 namespace FamilyForPets.Domain.Species
 {
     public class Species : Entity<SpeciesId>
     {
-        public string Name { get; private set; } = default!;
+        public const int MAX_NAME_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
 
-        private List<Breed> _breeds = [];
-
-        public IReadOnlyCollection<Breed> Breeds => _breeds.AsReadOnly();
+        // empty constructor for EF Core
+        private Species()
+        {
+        }
 
         public Species(string name)
         {
             Name = name;
         }
+
+        public string Name { get; private set; } = default!;
+
+        public SpeciesBreedsList SpeciesBreeds { get; private set; } = default!;
+
     }
 }

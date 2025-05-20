@@ -6,11 +6,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FamilyForPets.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class VolunteerAndNewPetInitial : Migration
+    public partial class NewInitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "species",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    species_breeds = table.Column<string>(type: "jsonb", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_species", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "volunteers",
                 columns: table => new
@@ -25,7 +38,7 @@ namespace FamilyForPets.Infrastructure.Migrations
                     additional_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     first_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     last_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    volunteer_social_networks = table.Column<string>(type: "jsonb", nullable: false)
+                    volunteer_social_newtworks = table.Column<string>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,6 +96,9 @@ namespace FamilyForPets.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "pets");
+
+            migrationBuilder.DropTable(
+                name: "species");
 
             migrationBuilder.DropTable(
                 name: "volunteers");

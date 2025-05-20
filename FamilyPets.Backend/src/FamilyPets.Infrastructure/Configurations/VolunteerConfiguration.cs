@@ -1,4 +1,5 @@
-﻿using FamilyForPets.Domain;
+﻿using System.Threading.Tasks.Dataflow;
+using FamilyForPets.Domain;
 using FamilyForPets.Domain.VolunteerAgregate;
 using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
@@ -79,7 +80,7 @@ namespace FamilyForPets.Infrastructure.Configurations
 
             builder.OwnsOne(v => v.VolunteerSocialNetworks, vb =>
             {
-                vb.ToJson();
+                vb.ToJson("volunteer_social_newtworks");
                 vb.OwnsMany(vsnb => vsnb.SocialNetworks, snb =>
                 {
                     snb.Property(sn => sn.Name)

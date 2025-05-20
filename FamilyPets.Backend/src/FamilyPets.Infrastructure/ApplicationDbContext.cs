@@ -1,4 +1,5 @@
-﻿using FamilyForPets.Domain.VolunteerAgregate;
+﻿using FamilyForPets.Domain.Species;
+using FamilyForPets.Domain.VolunteerAgregate;
 using FamilyForPets.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,18 +11,23 @@ namespace FamilyForPets.Infrastructure
     {
         private const string DATABASE = "Database";
 
-        public DbSet<Pet> Pets => Set<Pet>();
+        public DbSet<Volunteer> Volunteers => Set<Volunteer>();
+
+        public DbSet<Species> Species => Set<Species>();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));
             optionsBuilder.UseSnakeCaseNamingConvention();
             optionsBuilder.UseLoggerFactory(CreateLoggerFactory());
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+            //modelBuilder.ApplyConfiguration(new VolunteerConfiguration());
+            //modelBuilder.ApplyConfiguration(new SpeciesConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 

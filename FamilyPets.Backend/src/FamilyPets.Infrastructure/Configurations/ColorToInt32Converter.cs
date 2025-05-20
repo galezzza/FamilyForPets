@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FamilyForPets.Infrastructure.Configurations.PetConverter
+namespace FamilyForPets.Infrastructure.Configurations
 {
     public class ColorToInt32Converter : ValueConverter<Color, int>
     {
