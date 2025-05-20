@@ -5,15 +5,15 @@ namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
 {
     public class PetBreedAndSpecies : ValueObject
     {
-        public SpeciesId SpeciesId { get; }
-
-        public BreedId BreedId { get; }
-
         private PetBreedAndSpecies(SpeciesId speciesId, BreedId breedId)
         {
             SpeciesId = speciesId;
             BreedId = breedId;
         }
+
+        public SpeciesId SpeciesId { get; }
+
+        public BreedId BreedId { get; }
 
         public static Result<PetBreedAndSpecies> Create(SpeciesId speciesId, BreedId breedId)
         {

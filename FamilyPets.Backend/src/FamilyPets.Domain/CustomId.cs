@@ -4,12 +4,12 @@ using FamilyForPets.Domain.Species;
 public abstract class CustomId<T> : ValueObject, IComparable<T>, IComparable
     where T : CustomId<T>
 {
-    public Guid Value { get; }
-
     protected CustomId(Guid value)
     {
         Value = value;
     }
+
+    public Guid Value { get; }
 
     public int CompareTo(T? other)
     {

@@ -15,13 +15,13 @@ namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
             LookingForHome,
             HomeFounded,
         };
-
-        public string Value { get; }
-
         private HelpStatus(string value)
         {
             Value = value;
         }
+
+        public string Value { get; }
+
 
         public static Result<HelpStatus> Create(string input)
         {

@@ -7,14 +7,6 @@ namespace FamilyForPets.Domain
     {
         public const int MAX_ADRESS_TEXT_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
 
-        public string HouseNumber { get; } = default!;
-
-        public string Street { get; } = default!;
-
-        public string City { get; } = default!;
-
-        public string Country { get; } = default!;
-
         private Adress(string houseNumber, string street, string city, string country)
         {
             HouseNumber = houseNumber;
@@ -22,6 +14,14 @@ namespace FamilyForPets.Domain
             City = city;
             Country = country;
         }
+
+        public string HouseNumber { get; } = default!;
+
+        public string Street { get; } = default!;
+
+        public string City { get; } = default!;
+
+        public string Country { get; } = default!;
 
         public static Adress Empty() => new Adress(string.Empty, string.Empty, string.Empty, string.Empty);
 

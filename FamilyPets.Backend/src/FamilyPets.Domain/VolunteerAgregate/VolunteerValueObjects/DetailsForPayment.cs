@@ -9,15 +9,15 @@ namespace FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects
 
         public const int MAX_CARD_NUMBER_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
 
-        public string CardNumber { get; private set; } = default!;
-
-        public string? OtherDetails { get; private set; } = default!;
-
         private DetailsForPayment(string cardNumber, string otherDetails)
         {
             CardNumber = cardNumber;
             OtherDetails = otherDetails;
         }
+
+        public string CardNumber { get; private set; } = default!;
+
+        public string? OtherDetails { get; private set; } = default!;
 
         public static DetailsForPayment Empty() => new DetailsForPayment(string.Empty, string.Empty);
 

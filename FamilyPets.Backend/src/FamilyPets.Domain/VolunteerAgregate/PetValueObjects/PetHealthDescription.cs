@@ -7,12 +7,12 @@ namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
     {
         public const int MAX_DESCRIPTION_LENGHT = ProjectConstants.MAX_HIGH_TEXT_LENGHT;
 
-        public string Description { get; }
-
         private PetHealthDescription(string description)
         {
             Description = description;
         }
+
+        public string Description { get; }
 
         public static PetHealthDescription Empty() => new PetHealthDescription(string.Empty);
 

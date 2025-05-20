@@ -7,18 +7,18 @@ namespace FamilyForPets.Domain
     {
         public const int MAX_NAME_TEXT_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
 
-        public string Name { get; } = default!;
-
-        public string? Surname { get; }
-
-        public string? AdditionalName { get; }
-
         private FullName(string name, string? surname, string? additionalName)
         {
             Name = name;
             Surname = surname;
             AdditionalName = additionalName;
         }
+
+        public string Name { get; } = default!;
+
+        public string? Surname { get; }
+
+        public string? AdditionalName { get; }
 
         public static Result<FullName> Create(string name, string? surname, string? additionalName)
         {

@@ -5,18 +5,18 @@ namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
 {
     public class PelageColor : ValueObject
     {
-        public Color PrimaryColor { get; }
-        
-        public Color? SecondaryColor { get; }
-        
-        public Color? TertiaryColor { get; }
-
         private PelageColor(Color primaryColor, Color? secondaryColor, Color? tertiaryColor)
         {
             PrimaryColor = primaryColor;
             SecondaryColor = secondaryColor;
-            TertiaryColor = tertiaryColor; 
+            TertiaryColor = tertiaryColor;
         }
+
+        public Color PrimaryColor { get; }
+
+        public Color? SecondaryColor { get; }
+
+        public Color? TertiaryColor { get; }
 
         public static Result<PelageColor> Create(
             Color primaryColor,

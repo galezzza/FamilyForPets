@@ -1,4 +1,4 @@
-# editorconfig.org
+п»ї# editorconfig.org
 
 root = true
 
@@ -206,6 +206,7 @@ csharp_style_var_elsewhere = false:suggestion
 # Xml project files
 [*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,nativeproj,locproj}]
 indent_size = 2
+dotnet_diagnostic.SA1202.severity = none
 
 # Xml build files
 [*.builds]
@@ -270,26 +271,26 @@ dotnet_diagnostic.SA1201.severity = none
 dotnet_diagnostic.SA1623.severity = none
 dotnet_diagnostic.SA1118.severity = none
 
-# Отключаем или меняем уровень серьезности предупреждения SA1310, чтобы не конфликтовало с новыми правилами.
+# РћС‚РєР»СЋС‡Р°РµРј РёР»Рё РјРµРЅСЏРµРј СѓСЂРѕРІРµРЅСЊ СЃРµСЂСЊРµР·РЅРѕСЃС‚Рё РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ SA1310, С‡С‚РѕР±С‹ РЅРµ РєРѕРЅС„Р»РёРєС‚РѕРІР°Р»Рѕ СЃ РЅРѕРІС‹РјРё РїСЂР°РІРёР»Р°РјРё.
 dotnet_diagnostic.SA1310.severity = none
 
-# Определяем символы для публичных констант
+# РћРїСЂРµРґРµР»СЏРµРј СЃРёРјРІРѕР»С‹ РґР»СЏ РїСѓР±Р»РёС‡РЅС‹С… РєРѕРЅСЃС‚Р°РЅС‚
 dotnet_naming_symbols.public_constants.applicable_kinds = field
 dotnet_naming_symbols.public_constants.applicable_accessibilities = public
 dotnet_naming_symbols.public_constants.required_modifiers = const
 
-# Задаём стиль именования:
-#   - all_upper: все символы в верхнем регистре
-#   - word_separator = _: использовать подчеркивание для разделения слов
+# Р—Р°РґР°С‘Рј СЃС‚РёР»СЊ РёРјРµРЅРѕРІР°РЅРёСЏ:
+#   - all_upper: РІСЃРµ СЃРёРјРІРѕР»С‹ РІ РІРµСЂС…РЅРµРј СЂРµРіРёСЃС‚СЂРµ
+#   - word_separator = _: РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїРѕРґС‡РµСЂРєРёРІР°РЅРёРµ РґР»СЏ СЂР°Р·РґРµР»РµРЅРёСЏ СЃР»РѕРІ
 dotnet_naming_style.public_constants_style.capitalization = all_upper
 dotnet_naming_style.public_constants_style.word_separator = _
 
-# Применяем стиль к символам:
+# РџСЂРёРјРµРЅСЏРµРј СЃС‚РёР»СЊ Рє СЃРёРјРІРѕР»Р°Рј:
 dotnet_naming_rule.public_constants_rule.symbols = public_constants
 dotnet_naming_rule.public_constants_rule.style = public_constants_style
 dotnet_naming_rule.public_constants_rule.severity = suggestion
 
-# Настройка правил именования для приватных статических полей
+# РќР°СЃС‚СЂРѕР№РєР° РїСЂР°РІРёР» РёРјРµРЅРѕРІР°РЅРёСЏ РґР»СЏ РїСЂРёРІР°С‚РЅС‹С… СЃС‚Р°С‚РёС‡РµСЃРєРёС… РїРѕР»РµР№
 dotnet_naming_rule.private_static_fields_should_have_underscore.symbols = private_static_fields
 dotnet_naming_rule.private_static_fields_should_have_underscore.style = underscore_prefix_style
 dotnet_naming_rule.private_static_fields_should_have_underscore.severity = suggestion
@@ -301,18 +302,18 @@ dotnet_naming_symbols.private_static_fields.required_modifiers = static
 dotnet_naming_style.underscore_prefix_style.capitalization = camel_case
 dotnet_naming_style.underscore_prefix_style.required_prefix = _
 
-# Определяем символы для приватных констант
+# РћРїСЂРµРґРµР»СЏРµРј СЃРёРјРІРѕР»С‹ РґР»СЏ РїСЂРёРІР°С‚РЅС‹С… РєРѕРЅСЃС‚Р°РЅС‚
 dotnet_naming_symbols.private_constants.applicable_kinds = field
 dotnet_naming_symbols.private_constants.applicable_accessibilities = private
 dotnet_naming_symbols.private_constants.required_modifiers = const
 
-# Задаём стиль именования:
-#   - all_upper: все символы в верхнем регистре
-#   - word_separator = _: использовать подчеркивание для разделения слов
+# Р—Р°РґР°С‘Рј СЃС‚РёР»СЊ РёРјРµРЅРѕРІР°РЅРёСЏ:
+#   - all_upper: РІСЃРµ СЃРёРјРІРѕР»С‹ РІ РІРµСЂС…РЅРµРј СЂРµРіРёСЃС‚СЂРµ
+#   - word_separator = _: РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїРѕРґС‡РµСЂРєРёРІР°РЅРёРµ РґР»СЏ СЂР°Р·РґРµР»РµРЅРёСЏ СЃР»РѕРІ
 dotnet_naming_style.private_constants_style.capitalization = all_upper
 dotnet_naming_style.private_constants_style.word_separator = _
 
-# Применяем стиль к символам:
+# РџСЂРёРјРµРЅСЏРµРј СЃС‚РёР»СЊ Рє СЃРёРјРІРѕР»Р°Рј:
 dotnet_naming_rule.private_constants_rule.symbols = private_constants
 dotnet_naming_rule.private_constants_rule.style = private_constants_style
 dotnet_naming_rule.private_constants_rule.severity = suggestion

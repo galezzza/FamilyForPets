@@ -9,15 +9,15 @@ namespace FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects
 
         public const int MAX_URL_LENGHT = ProjectConstants.MAX_HIGH_TEXT_LENGHT;
 
-        public string Name { get; private set; } = default!;
-
-        public string Url { get; private set; } = default!;
-
         private SocialNetwork(string name, string url)
         {
             Name = name;
             Url = url;
         }
+
+        public string Name { get; private set; } = default!;
+
+        public string Url { get; private set; } = default!;
 
         public static Result<SocialNetwork> Create(string name, string url)
         {
