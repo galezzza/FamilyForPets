@@ -1,4 +1,4 @@
-﻿using FamilyForPets.Domain.Species;
+﻿using FamilyForPets.Domain.SpeciesAgregate;
 using FamilyForPets.Domain.VolunteerAgregate;
 using FamilyForPets.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
@@ -26,8 +26,6 @@ namespace FamilyForPets.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-            //modelBuilder.ApplyConfiguration(new VolunteerConfiguration());
-            //modelBuilder.ApplyConfiguration(new SpeciesConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 
