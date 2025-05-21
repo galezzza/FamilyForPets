@@ -20,11 +20,12 @@ namespace FamilyForPets.Domain
 
         public string? AdditionalName { get; }
 
-        public static Result<FullName> Create(string name, string? surname, string? additionalName)
+        public static Result<FullName, Error> Create(string name, string? surname, string? additionalName)
         {
             if (string.IsNullOrWhiteSpace(name))
-                return Result.Failure<FullName>("Name cannot be empty");
-            return Result.Success(new FullName(name, surname, additionalName));
+                return Result.Failure<FullName, Error>(Errors.General.CannotBeEmpty("Name"));
+            return Result.Success<FullName, Error>(
+                new FullName(name, surname, additionalName));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

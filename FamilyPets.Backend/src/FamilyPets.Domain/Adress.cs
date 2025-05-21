@@ -25,17 +25,18 @@ namespace FamilyForPets.Domain
 
         public static Adress Empty() => new Adress(string.Empty, string.Empty, string.Empty, string.Empty);
 
-        public static Result<Adress> Create(string houseNumber, string street, string city, string country)
+        public static Result<Adress, Error> Create(string houseNumber, string street, string city, string country)
         {
             if (string.IsNullOrWhiteSpace(houseNumber))
-                return Result.Failure<Adress>("House number cannot be empty.");
+                return Result.Failure<Adress, Error>(Errors.General.CannotBeEmpty("House number"));
             if (string.IsNullOrWhiteSpace(street))
-                return Result.Failure<Adress>("Street cannot be empty.");
+                return Result.Failure<Adress, Error>(Errors.General.CannotBeEmpty("Street"));
             if (string.IsNullOrWhiteSpace(city))
-                return Result.Failure<Adress>("City cannot be empty.");
+                return Result.Failure<Adress, Error>(Errors.General.CannotBeEmpty("City"));
             if (string.IsNullOrWhiteSpace(country))
-                return Result.Failure<Adress>("Country cannot be empty.");
-            return Result.Success(new Adress(houseNumber, street, city, country));
+                return Result.Failure<Adress, Error>(Errors.General.CannotBeEmpty("Country"));
+            return Result.Success<Adress, Error>(
+                new Adress(houseNumber, street, city, country));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

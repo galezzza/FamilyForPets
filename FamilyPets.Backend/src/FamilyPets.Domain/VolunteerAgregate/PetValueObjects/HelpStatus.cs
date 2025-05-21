@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.Shared;
 
 namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
 {
@@ -15,6 +16,7 @@ namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
             LookingForHome,
             HomeFounded,
         };
+
         private HelpStatus(string value)
         {
             Value = value;
@@ -23,17 +25,17 @@ namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
         public string Value { get; }
 
 
-        public static Result<HelpStatus> Create(string input)
+        public static Result<HelpStatus, Error> Create(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
-                return Result.Failure<HelpStatus>("Value cannot be empty.");
+                return Result.Failure<HelpStatus, Error>(Errors.General.ValueIsRequired());
 
             var status = input.Trim().ToLower(CultureInfo.InvariantCulture);
 
             if (_allStatuses.Any(g => g.Value.ToLowerInvariant() == status) == false)
-                return Result.Failure<HelpStatus>($"Invalid status: {input}");
+                return Result.Failure<HelpStatus, Error>(Errors.General.ValueIsInvalid("Status"));
 
-            return Result.Success(new HelpStatus(status));
+            return Result.Success<HelpStatus, Error>(new HelpStatus(status));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.Shared;
 using FamilyForPets.Domain.SpeciesAgregate;
 
 namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
@@ -15,13 +16,14 @@ namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
 
         public BreedId BreedId { get; }
 
-        public static Result<PetBreedAndSpecies> Create(SpeciesId speciesId, BreedId breedId)
+        public static Result<PetBreedAndSpecies, Error> Create(SpeciesId speciesId, BreedId breedId)
         {
             if (speciesId.Value == Guid.Empty)
-                return Result.Failure<PetBreedAndSpecies>("Species ID cannot be empty.");
+                return Result.Failure<PetBreedAndSpecies, Error>(Errors.General.CannotBeEmpty("Species ID"));
             if (breedId.Value == Guid.Empty)
-                return Result.Failure<PetBreedAndSpecies>("Breed ID cannot be empty.");
-            return Result.Success(new PetBreedAndSpecies(speciesId, breedId));
+                return Result.Failure<PetBreedAndSpecies, Error>(Errors.General.CannotBeEmpty("Breed ID"));
+            return Result.Success<PetBreedAndSpecies, Error>(
+                new PetBreedAndSpecies(speciesId, breedId));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

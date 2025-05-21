@@ -19,13 +19,13 @@ namespace FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects
 
         public string Url { get; private set; } = default!;
 
-        public static Result<SocialNetwork> Create(string name, string url)
+        public static Result<SocialNetwork, Error> Create(string name, string url)
         {
             if (string.IsNullOrWhiteSpace(name))
-                return Result.Failure<SocialNetwork>("Name cannot be empty");
+                return Result.Failure<SocialNetwork, Error>(Errors.General.CannotBeEmpty("Name"));
             if (string.IsNullOrWhiteSpace(url))
-                return Result.Failure<SocialNetwork>("Url cannot be empty");
-            return Result.Success(new SocialNetwork(name, url));
+                return Result.Failure<SocialNetwork, Error>(Errors.General.CannotBeEmpty("Url"));
+            return Result.Success<SocialNetwork, Error>(new SocialNetwork(name, url));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

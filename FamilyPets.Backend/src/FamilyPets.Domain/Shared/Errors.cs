@@ -17,7 +17,7 @@ namespace FamilyForPets.Domain.Shared
                 return Error.Validation("value.is.invalid", $"{label} is invalid.");
             }
 
-            public static Error StringCannotBeEmpty(string? stringName = null)
+            public static Error CannotBeEmpty(string? stringName = null)
             {
                 string label = stringName ?? "value";
                 return Error.Validation("value.is.invalid", $"{label} cannot be empty.");
@@ -37,12 +37,12 @@ namespace FamilyForPets.Domain.Shared
 
             public static Error Failure()
             {
-                return Error.Failure("failure.error.code.to.rename", $"TO RENAME ERROR MESSAGE FOR FAILURE");
+                return Error.Failure("unexpected.error", "An unexpected error occurred.");
             }
 
             public static Error Conflict()
             {
-                return Error.Conflict("conflict.error.code.to.rename", $"TO RENAME ERROR MESSAGE FOR CONFLICT");
+                return Error.Conflict("conflict.occured", "A conflict occurred.");
             }
 
             public record ErrorNotFoundObjectDto()
