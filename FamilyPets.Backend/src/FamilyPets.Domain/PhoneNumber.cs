@@ -14,11 +14,12 @@ namespace FamilyForPets.Domain
 
         public string Number { get; } = default!;
 
-        public static Result<PhoneNumber> Create(string number)
+        public static Result<PhoneNumber, Error> Create(string number)
         {
             if (string.IsNullOrWhiteSpace(number))
-                return Result.Failure<PhoneNumber>("Phone number cannot be empty.");
-            return Result.Success(new PhoneNumber(number));
+                return Result.Failure<PhoneNumber, Error>(Errors.General.CannotBeEmpty("Phone number"));
+            return Result.Success<PhoneNumber, Error>(
+                new PhoneNumber(number));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

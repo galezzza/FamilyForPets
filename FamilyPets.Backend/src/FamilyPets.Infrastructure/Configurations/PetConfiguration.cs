@@ -1,10 +1,10 @@
 ﻿using FamilyForPets.Domain;
 using FamilyForPets.Domain.Shared;
-using FamilyForPets.Domain.Species;
+using FamilyForPets.Domain.SpeciesAgregate;
 using FamilyForPets.Domain.VolunteerAgregate;
 using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
-using FamilyForPets.Infrastructure.Configurations.PetConverter;
+using FamilyForPets.Infrastructure.Configurations.Converters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -121,7 +121,6 @@ namespace FamilyForPets.Infrastructure.Configurations
             builder.Property(p => p.IsVaccinated)
                 .HasColumnName("is_vaccinated")
                 .IsRequired(false);
-
 
             builder.ComplexProperty(p => p.HelpStatus, hsb =>
             {

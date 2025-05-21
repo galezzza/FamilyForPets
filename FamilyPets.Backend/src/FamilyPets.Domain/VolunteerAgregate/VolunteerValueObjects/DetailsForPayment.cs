@@ -21,13 +21,22 @@ namespace FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects
 
         public static DetailsForPayment Empty() => new DetailsForPayment(string.Empty, string.Empty);
 
-        public static Result<DetailsForPayment> Create(string cardNumber, string otherDetails)
+        public static Result<DetailsForPayment, Error> Create(string cardNumber, string otherDetails)
         {
             if (string.IsNullOrWhiteSpace(cardNumber))
-                return Result.Failure<DetailsForPayment>("Card number cannot be empty.");
+            {
+                return Result.Failure<DetailsForPayment, Error>(
+                    Errors.General.CannotBeEmpty("Card number"));
+            }
+
             if (string.IsNullOrWhiteSpace(otherDetails))
-                return Result.Failure<DetailsForPayment>("Other details cannot be empty.");
-            return Result.Success(new DetailsForPayment(cardNumber, otherDetails));
+            {
+                return Result.Failure<DetailsForPayment, Error>(
+                    Errors.General.CannotBeEmpty("Other Details"));
+            }
+
+            return Result.Success<DetailsForPayment, Error>(
+                new DetailsForPayment(cardNumber, otherDetails));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

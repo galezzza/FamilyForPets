@@ -1,5 +1,4 @@
 ﻿using CSharpFunctionalExtensions;
-using FamilyForPets.Domain.Species;
 
 public abstract class CustomId<T> : ValueObject, IComparable<T>, IComparable
     where T : CustomId<T>

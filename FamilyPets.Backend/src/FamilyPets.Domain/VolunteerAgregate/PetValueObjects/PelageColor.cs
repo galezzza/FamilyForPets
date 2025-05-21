@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.Shared;
 
 namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
 {
@@ -18,14 +19,15 @@ namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
 
         public Color? TertiaryColor { get; }
 
-        public static Result<PelageColor> Create(
+        public static Result<PelageColor, Error> Create(
             Color primaryColor,
             Color? secondaryColor,
             Color? tertiaryColor)
         {
             if (primaryColor.IsEmpty)
-                return Result.Failure<PelageColor>("Primary color cannot be empty.");
-            return Result.Success(new PelageColor(primaryColor, secondaryColor, tertiaryColor));
+                return Result.Failure<PelageColor, Error>(Errors.General.CannotBeEmpty("Primary color"));
+            return Result.Success<PelageColor, Error>(
+                new PelageColor(primaryColor, secondaryColor, tertiaryColor));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

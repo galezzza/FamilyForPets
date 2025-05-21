@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.Shared;
 
 namespace FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects
 {
@@ -18,9 +19,10 @@ namespace FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects
 
         public IReadOnlyCollection<SocialNetwork> SocialNetworks => _socialNetworks.AsReadOnly();
 
-        public static Result<VolunteerSocialNetworksList> Create(List<SocialNetwork> socialNetworks)
+        public static Result<VolunteerSocialNetworksList, Error> Create(List<SocialNetwork> socialNetworks)
         {
-            return Result.Success(new VolunteerSocialNetworksList(socialNetworks));
+            return Result.Success<VolunteerSocialNetworksList, Error>(
+                new VolunteerSocialNetworksList(socialNetworks));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

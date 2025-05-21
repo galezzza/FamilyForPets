@@ -16,11 +16,12 @@ namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
 
         public static PetHealthDescription Empty() => new PetHealthDescription(string.Empty);
 
-        public static Result<PetHealthDescription> Create(string description)
+        public static Result<PetHealthDescription, Error> Create(string description)
         {
             if (string.IsNullOrWhiteSpace(description))
-                return Result.Failure<PetHealthDescription>("Description cannot be empty.");
-            return Result.Success(new PetHealthDescription(description));
+                return Result.Failure<PetHealthDescription, Error>(Errors.General.CannotBeEmpty("Description"));
+            return Result.Success<PetHealthDescription, Error>(
+                new PetHealthDescription(description));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

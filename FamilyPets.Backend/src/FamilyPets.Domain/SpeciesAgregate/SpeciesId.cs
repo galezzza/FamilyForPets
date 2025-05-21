@@ -1,7 +1,7 @@
 ﻿using FamilyForPets.Domain.VolunteerAgregate;
 using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
 
-namespace FamilyForPets.Domain.Species
+namespace FamilyForPets.Domain.SpeciesAgregate
 {
 
     public class SpeciesId : CustomId<SpeciesId>, ICustomId<SpeciesId>
