@@ -1,10 +1,10 @@
 ﻿using FamilyForPets.Domain;
-using FamilyForPets.Domain.Shared;
 using FamilyForPets.Domain.SpeciesAgregate;
 using FamilyForPets.Domain.VolunteerAgregate;
 using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
 using FamilyForPets.Infrastructure.Configurations.Converters;
+using FamilyForPets.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;

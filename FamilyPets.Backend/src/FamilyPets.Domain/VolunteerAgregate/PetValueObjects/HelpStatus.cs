@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using CSharpFunctionalExtensions;
-using FamilyForPets.Domain.Shared;
+using FamilyForPets.Shared;
 
 namespace FamilyForPets.Domain.VolunteerAgregate.PetValueObjects
 {

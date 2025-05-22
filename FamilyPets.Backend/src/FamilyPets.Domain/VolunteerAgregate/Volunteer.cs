@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
-using FamilyForPets.Domain.Shared;
 using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
+using FamilyForPets.Shared;
 
 namespace FamilyForPets.Domain.VolunteerAgregate
 {
