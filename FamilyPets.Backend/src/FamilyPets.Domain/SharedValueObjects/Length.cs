@@ -5,6 +5,8 @@ namespace FamilyForPets.Domain.SharedValueObjects
 {
     public class Length : ValueObject
     {
+        private Length() { }
+
         private Length(double value, LengthType type)
         {
             Value = value;

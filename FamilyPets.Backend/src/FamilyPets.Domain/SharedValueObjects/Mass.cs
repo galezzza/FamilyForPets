@@ -7,6 +7,8 @@ namespace FamilyForPets.Domain.SharedValueObjects
 {
     public class Mass : ValueObject
     {
+        private Mass() { }
+
         private Mass(double value, MassType type)
         {
             Value = value;

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks.Dataflow;
-using FamilyForPets.Domain;
+using FamilyForPets.Domain.SharedValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate;
 using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
@@ -37,15 +37,23 @@ namespace FamilyForPets.Infrastructure.Configurations
                     .HasMaxLength(FullName.MAX_NAME_TEXT_LENGHT);
             });
 
-            builder.Property(v => v.Email)
+            builder.Property(p => p.Email)
                 .HasColumnName("email")
                 .IsRequired()
-                .HasMaxLength(Volunteer.MAX_EMAIL_LENGHT);
+                .HasConversion(
+                    email => email.Email,
+                    email => EmailAdress.Create(email).Value)
+                .HasMaxLength(EmailAdress.MAX_EMAIL_ADDRESS_LENGTH);
 
-            builder.Property(v => v.Description)
-                .HasColumnName("description")
+            builder.Property(p => p.Description)
+                .HasColumnName("volunteer_description")
                 .IsRequired(false)
-                .HasMaxLength(Volunteer.MAX_DESCRIPTION_LENGHT);
+                .HasConversion(
+                    description => description.Description,
+                    description => VolunteerDescription.Create(description).Value)
+                .HasMaxLength(VolunteerDescription.MAX_DESCRIPTION_LENGHT);
+
+
 
             builder.Property(v => v.ExperienceInYears)
                 .HasColumnName("experience_in_years")

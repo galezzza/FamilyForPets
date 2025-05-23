@@ -16,7 +16,7 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 
         private Pet(
             PetNickname name,
-            PetDescription? description,
+            PetDescription description,
             PelageColor color,
             DateTime? dateOfBirth,
             PetBreedAndSpecies petBreed,
@@ -41,7 +41,7 @@ namespace FamilyForPets.Domain.VolunteerAgregate
             Height = height;
             ContactPhoneNumber = contactPhoneNumber;
             CastrationStatus = castrationStatus;
-            PetVaccinesList = petVaccinesList;
+            PetVaccines = petVaccinesList;
             HelpStatus = helpStatus;
             PaymentDatails = paymentDatails;
             CreatedAt = DateTime.UtcNow;
@@ -49,7 +49,7 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 
         public PetNickname Name { get; private set; } = default!;
 
-        public PetDescription? Description { get; private set; }
+        public PetDescription Description { get; private set; } = PetDescription.Empty(); // can br null
 
         public PelageColor Color { get; private set; } = default!;
 
@@ -69,7 +69,7 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 
         public CastrationStatus CastrationStatus { get; private set; }
 
-        public PetVaccinesList PetVaccinesList { get; private set; } = PetVaccinesList.Empty(); // can be null
+        public PetVaccinesList PetVaccines { get; private set; } = PetVaccinesList.Empty(); // can be null
 
         public HelpStatus HelpStatus { get; private set; } = HelpStatus.HelpNeeded;
 
@@ -79,7 +79,7 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 
         public static Result<Pet, Error> Create(
             PetNickname name,
-            PetDescription? description,
+            PetDescription description,
             PelageColor color,
             DateTime? dateOfBirth,
             PetBreedAndSpecies petBreed,

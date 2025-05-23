@@ -40,7 +40,7 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 
         public EmailAdress Email { get; private set; } = default!;
 
-        public VolunteerDescription Description { get; private set; } = VolunteerDescription.Empty() // can be null
+        public VolunteerDescription Description { get; private set; } = VolunteerDescription.Empty(); // can be null
 
         public int ExperienceInYears { get; private set; }
 
