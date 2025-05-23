@@ -1,4 +1,4 @@
-﻿using FamilyForPets.Domain;
+﻿using FamilyForPets.Domain.SharedValueObjects;
 using FamilyForPets.Domain.SpeciesAgregate;
 using FamilyForPets.Domain.VolunteerAgregate;
 using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
@@ -25,12 +25,20 @@ namespace FamilyForPets.Infrastructure.Configurations
                     value => PetId.Create(value));
 
             builder.Property(p => p.Name)
+                .HasColumnName("name")
                 .IsRequired()
-                .HasMaxLength(Pet.MAX_NAME_LENGHT);
+                .HasConversion(
+                    nickname => nickname.Name,
+                    nickname => PetNickname.Create(nickname).Value)
+                .HasMaxLength(PetNickname.MAX_NAME_LENGHT);
 
             builder.Property(p => p.Description)
-                .HasMaxLength(Pet.MAX_DESCRIPTION_LENGHT)
-                .IsRequired(false);
+                .HasColumnName("pet_description")
+                .IsRequired(false)
+                .HasConversion(
+                    description => description.Description,
+                    description => PetDescription.Create(description).Value)
+                .HasMaxLength(PetDescription.MAX_DESCRIPTION_LENGHT);
 
             builder.ComplexProperty(p => p.Color, cb =>
             {
@@ -98,13 +106,51 @@ namespace FamilyForPets.Infrastructure.Configurations
                     .HasMaxLength(Adress.MAX_ADRESS_TEXT_LENGHT);
             });
 
-            builder.Property(p => p.Weight)
-                .HasColumnName("weight")
-                .IsRequired(false);
+            builder.ComplexProperty(p => p.Weight, wb =>
+            {
+                wb.Property(m => m.Value)
+                    .HasColumnName("weight");
 
-            builder.Property(p => p.Height)
-                .HasColumnName("height")
-                .IsRequired(false);
+                wb.ComplexProperty(m => m.Type, mtb =>
+                {
+                    mtb.Property(s => s.Value)
+                        .HasColumnName("mass_type_enum")
+                        .HasMaxLength(ProjectConstants.MAX_LOW_TEXT_LENGHT);
+                });
+            });
+
+            // Weight can be null, so its properties Value and MassType set as not required
+            // but if Weight is not null, then Value and MassType are required.
+            // So there is a check constraint
+            builder.ToTable(t =>
+            {
+                t.HasCheckConstraint(
+                    "CK_Weight_BothOrNone",
+                    "(weight IS NULL AND mass_type_enum IS NULL) OR (weight IS NOT NULL AND mass_type_enum IS NOT NULL)");
+            });
+
+            builder.ComplexProperty(p => p.Height, hb =>
+            {
+                hb.Property(h => h.Value)
+                    .HasColumnName("height");
+
+                hb.ComplexProperty(h => h.Type, ltb =>
+                {
+                    ltb.Property(s => s.Value)
+                        .HasColumnName("length_type_enum")
+                        .HasMaxLength(ProjectConstants.MAX_LOW_TEXT_LENGHT);
+                });
+            });
+
+            // Height can be null, so its properties Value and LengthType set as not required
+            // but if Height is not null, then Value and LengthType are required.
+            // So there is a check constraint
+            builder.ToTable(t =>
+            {
+                t.HasCheckConstraint(
+                    "CK_Height_BothOrNone",
+                    "(height IS NULL AND length_type_enum IS NULL) OR (height IS NOT NULL AND length_type_enum IS NOT NULL)");
+            });
 
             builder.Property(p => p.ContactPhoneNumber)
                 .HasColumnName("contact_phone_number")
@@ -114,13 +160,25 @@ namespace FamilyForPets.Infrastructure.Configurations
                     phoneNumber => phoneNumber.Number,
                     number => PhoneNumber.Create(number).Value);
 
-            builder.Property(p => p.IsNeutered)
-                .HasColumnName("is_neutered")
-                .IsRequired();
+            builder.ComplexProperty(p => p.CastrationStatus, csb =>
+            {
+                csb.IsRequired();
+                csb.Property(s => s.Value)
+                    .HasColumnName("castration_status_enum")
+                    .HasMaxLength(ProjectConstants.MAX_LOW_TEXT_LENGHT);
+            });
 
-            builder.Property(p => p.IsVaccinated)
-                .HasColumnName("is_vaccinated")
-                .IsRequired(false);
+            builder.OwnsOne(p => p.PetVaccines, pb =>
+            {
+                pb.ToJson("pet_vaccienes");
+                pb.OwnsMany(pvb => pvb.PetVaccines, pv =>
+                {
+                    pv.Property(sn => sn.Name)
+                        .IsRequired(false)
+                        .HasColumnName("pet_vacciene")
+                        .HasMaxLength(PetVaccine.MAX_NAME_LENGHT);
+                });
+            });
 
             builder.ComplexProperty(p => p.HelpStatus, hsb =>
             {
@@ -157,6 +215,7 @@ namespace FamilyForPets.Infrastructure.Configurations
                 .HasColumnName("created_at")
                 .IsRequired()
                 .HasConversion(new DateTimeToBinaryConverter());
+
         }
 
     }
