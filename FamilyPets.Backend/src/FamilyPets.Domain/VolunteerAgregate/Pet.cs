@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.SharedValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
 using FamilyForPets.Shared;
@@ -7,29 +8,25 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 {
     public class Pet : Entity<PetId>
     {
-        public const int MAX_NAME_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
-
-        public const int MAX_DESCRIPTION_LENGHT = ProjectConstants.MAX_HIGH_TEXT_LENGHT;
-
         // empty constructor for EF Core
         private Pet(PetId id)
             : base(id)
         {
         }
 
-        public Pet(
-            string name,
-            string? description,
+        private Pet(
+            PetNickname name,
+            PetDescription? description,
             PelageColor color,
             DateTime? dateOfBirth,
             PetBreedAndSpecies petBreed,
             PetHealthDescription petHealthDescription,
             Adress petCurrentAdress,
-            int? weight,
-            int? height,
+            Mass weight,
+            Length height,
             PhoneNumber contactPhoneNumber,
-            bool isNeutered,
-            bool? isVaccinated,
+            CastrationStatus castrationStatus,
+            PetVaccinesList petVaccinesList,
             HelpStatus helpStatus,
             DetailsForPayment paymentDatails)
         {
@@ -43,16 +40,16 @@ namespace FamilyForPets.Domain.VolunteerAgregate
             Weight = weight;
             Height = height;
             ContactPhoneNumber = contactPhoneNumber;
-            IsNeutered = isNeutered;
-            IsVaccinated = isVaccinated;
+            CastrationStatus = castrationStatus;
+            PetVaccinesList = petVaccinesList;
             HelpStatus = helpStatus;
             PaymentDatails = paymentDatails;
             CreatedAt = DateTime.UtcNow;
         }
 
-        public string Name { get; private set; } = default!;
+        public PetNickname Name { get; private set; } = default!;
 
-        public string? Description { get; private set; }
+        public PetDescription? Description { get; private set; }
 
         public PelageColor Color { get; private set; } = default!;
 
@@ -64,15 +61,15 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 
         public Adress PetCurrentAdress { get; private set; } = Adress.Empty(); // can be null
 
-        public int? Weight { get; private set; }
+        public Mass Weight { get; private set; } = Mass.Empty(); // can be null
 
-        public int? Height { get; private set; }
+        public Length Height { get; private set; } = Length.Empty(); // can be null
 
         public PhoneNumber ContactPhoneNumber { get; private set; } = default!;
 
-        public bool IsNeutered { get; private set; }
+        public CastrationStatus CastrationStatus { get; private set; }
 
-        public bool? IsVaccinated { get; private set; }
+        public PetVaccinesList PetVaccinesList { get; private set; } = PetVaccinesList.Empty(); // can be null
 
         public HelpStatus HelpStatus { get; private set; } = HelpStatus.HelpNeeded;
 
@@ -80,5 +77,37 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 
         public DateTime CreatedAt { get; private set; } = default!;
 
+        public static Result<Pet, Error> Create(
+            PetNickname name,
+            PetDescription? description,
+            PelageColor color,
+            DateTime? dateOfBirth,
+            PetBreedAndSpecies petBreed,
+            PetHealthDescription petHealthDescription,
+            Adress petCurrentAdress,
+            Mass weight,
+            Length height,
+            PhoneNumber contactPhoneNumber,
+            CastrationStatus castrationStatus,
+            PetVaccinesList petVaccinesList,
+            HelpStatus helpStatus,
+            DetailsForPayment paymentDatails)
+        {
+            return Result.Success<Pet, Error>(new Pet(
+                name,
+                description,
+                color,
+                dateOfBirth,
+                petBreed,
+                petHealthDescription,
+                petCurrentAdress,
+                weight,
+                height,
+                contactPhoneNumber,
+                castrationStatus,
+                petVaccinesList,
+                helpStatus,
+                paymentDatails));
+        }
     }
 }

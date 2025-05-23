@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.Shared;
 
-namespace FamilyForPets.Domain
+namespace FamilyForPets.Domain.SharedValueObjects
 {
     public class PhoneNumber : ValueObject
     {

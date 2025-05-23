@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Domain.SharedValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
 using FamilyForPets.Shared;
@@ -7,10 +8,6 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 {
     public class Volunteer : Entity<VolunteerId>
     {
-        public const int MAX_EMAIL_LENGHT = ProjectConstants.MAX_MEDIUM_TEXT_LENGHT;
-
-        public const int MAX_DESCRIPTION_LENGHT = ProjectConstants.MAX_HIGH_TEXT_LENGHT;
-
         private List<Pet> _allPets = [];
 
         // for EF Core
@@ -19,14 +16,14 @@ namespace FamilyForPets.Domain.VolunteerAgregate
         {
         }
 
-        public Volunteer(
+        private Volunteer(
             FullName fullName,
-            string email,
-            string? description,
+            EmailAdress email,
+            VolunteerDescription description,
             int experienceInYears,
             List<Pet> allPets,
             PhoneNumber phoneNumber,
-            List<SocialNetwork> socialNetworks,
+            VolunteerSocialNetworksList socialNetworks,
             DetailsForPayment detailsForPayment)
         {
             FullName = fullName;
@@ -35,15 +32,15 @@ namespace FamilyForPets.Domain.VolunteerAgregate
             ExperienceInYears = experienceInYears;
             _allPets = allPets;
             PhoneNumber = phoneNumber;
-            VolunteerSocialNetworks = VolunteerSocialNetworksList.Create(socialNetworks).Value;
+            VolunteerSocialNetworks = socialNetworks;
             DetailsForPayment = detailsForPayment;
         }
 
         public FullName FullName { get; private set; } = default!;
 
-        public string Email { get; private set; } = default!;
+        public EmailAdress Email { get; private set; } = default!;
 
-        public string? Description { get; private set; }
+        public VolunteerDescription Description { get; private set; } = VolunteerDescription.Empty() // can be null
 
         public int ExperienceInYears { get; private set; }
 
@@ -55,11 +52,37 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 
         public DetailsForPayment DetailsForPayment { get; private set; } = default!;
 
+        public Result<Volunteer, Error> Create(
+            FullName fullName,
+            EmailAdress email,
+            VolunteerDescription description,
+            int experienceInYears,
+            List<Pet> allPets,
+            PhoneNumber phoneNumber,
+            List<SocialNetwork> socialNetworks,
+            DetailsForPayment detailsForPayment)
+        {
+            if (experienceInYears < 0)
+            {
+                return Result.Failure<Volunteer, Error>(Errors.General.ValueIsInvalid("Volunteer Experience"));
+            }
+
+            return Result.Success<Volunteer, Error>(new Volunteer(
+                fullName,
+                email,
+                description,
+                experienceInYears,
+                allPets,
+                phoneNumber,
+                VolunteerSocialNetworksList.Create(socialNetworks).Value,
+                detailsForPayment));
+        }
 
         public int GetNumeberOfPetsWithHelpNeeded() => AllPets.Where(p => p.HelpStatus == HelpStatus.HelpNeeded).Count();
 
         public int GetNumeberOfPetsWithHelpInProgress() => AllPets.Where(p => p.HelpStatus == HelpStatus.LookingForHome).Count();
 
         public int GetNumeberOfPetsWithFoundedHome() => AllPets.Where(p => p.HelpStatus == HelpStatus.HomeFounded).Count();
+
     }
 }
