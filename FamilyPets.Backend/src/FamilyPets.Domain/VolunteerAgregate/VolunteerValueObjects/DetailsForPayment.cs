@@ -17,11 +17,11 @@ namespace FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects
 
         public string CardNumber { get; private set; } = default!;
 
-        public string? OtherDetails { get; private set; } = default!;
+        public string OtherDetails { get; private set; } = string.Empty;
 
         public static DetailsForPayment Empty() => new DetailsForPayment(string.Empty, string.Empty);
 
-        public static Result<DetailsForPayment, Error> Create(string cardNumber, string otherDetails)
+        public static Result<DetailsForPayment, Error> Create(string cardNumber, string? otherDetails)
         {
             if (string.IsNullOrWhiteSpace(cardNumber))
             {
@@ -29,10 +29,10 @@ namespace FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects
                     Errors.General.CannotBeEmpty("Card number"));
             }
 
-            if (string.IsNullOrWhiteSpace(otherDetails))
+            if (string.IsNullOrEmpty(otherDetails))
             {
-                return Result.Failure<DetailsForPayment, Error>(
-                    Errors.General.CannotBeEmpty("Other Details"));
+                return Result.Success<DetailsForPayment, Error>(
+                    new DetailsForPayment(cardNumber, string.Empty));
             }
 
             return Result.Success<DetailsForPayment, Error>(
