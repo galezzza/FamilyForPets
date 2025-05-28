@@ -19,20 +19,14 @@ namespace FamilyForPets.Domain.VolunteerAgregate
         private Volunteer(
             FullName fullName,
             EmailAdress email,
-            VolunteerDescription description,
             int experienceInYears,
-            List<Pet> allPets,
             PhoneNumber phoneNumber,
-            VolunteerSocialNetworksList socialNetworks,
             DetailsForPayment detailsForPayment)
         {
             FullName = fullName;
             Email = email;
-            Description = description;
             ExperienceInYears = experienceInYears;
-            _allPets = allPets;
             PhoneNumber = phoneNumber;
-            VolunteerSocialNetworks = socialNetworks;
             DetailsForPayment = detailsForPayment;
         }
 
@@ -52,14 +46,11 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 
         public DetailsForPayment DetailsForPayment { get; private set; } = default!;
 
-        public Result<Volunteer, Error> Create(
+        public static Result<Volunteer, Error> Create(
             FullName fullName,
             EmailAdress email,
-            VolunteerDescription description,
             int experienceInYears,
-            List<Pet> allPets,
             PhoneNumber phoneNumber,
-            List<SocialNetwork> socialNetworks,
             DetailsForPayment detailsForPayment)
         {
             if (experienceInYears < 0)
@@ -70,11 +61,8 @@ namespace FamilyForPets.Domain.VolunteerAgregate
             return Result.Success<Volunteer, Error>(new Volunteer(
                 fullName,
                 email,
-                description,
                 experienceInYears,
-                allPets,
                 phoneNumber,
-                VolunteerSocialNetworksList.Create(socialNetworks).Value,
                 detailsForPayment));
         }
 
