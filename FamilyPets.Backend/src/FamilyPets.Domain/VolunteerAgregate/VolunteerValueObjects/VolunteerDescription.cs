@@ -19,7 +19,7 @@ namespace FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects
         public static Result<VolunteerDescription, Error> Create(string description)
         {
             if (string.IsNullOrWhiteSpace(description))
-                return Result.Failure<VolunteerDescription, Error>(Errors.General.CannotBeEmpty("Volunterr description"));
+                return Result.Success<VolunteerDescription, Error>(Empty());
             return Result.Success<VolunteerDescription, Error>(
                 new VolunteerDescription(description));
         }

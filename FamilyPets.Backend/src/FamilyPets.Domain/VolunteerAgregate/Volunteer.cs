@@ -17,16 +17,20 @@ namespace FamilyForPets.Domain.VolunteerAgregate
         }
 
         private Volunteer(
+            VolunteerId id,
             FullName fullName,
             EmailAdress email,
             int experienceInYears,
             PhoneNumber phoneNumber,
+            VolunteerSocialNetworksList volunteerSocialNetworks,
             DetailsForPayment detailsForPayment)
         {
+            Id = id;
             FullName = fullName;
             Email = email;
             ExperienceInYears = experienceInYears;
             PhoneNumber = phoneNumber;
+            VolunteerSocialNetworks = volunteerSocialNetworks;
             DetailsForPayment = detailsForPayment;
         }
 
@@ -59,10 +63,12 @@ namespace FamilyForPets.Domain.VolunteerAgregate
             }
 
             return Result.Success<Volunteer, Error>(new Volunteer(
+                VolunteerId.New(),
                 fullName,
                 email,
                 experienceInYears,
                 phoneNumber,
+                VolunteerSocialNetworksList.Create([]).Value,
                 detailsForPayment));
         }
 
