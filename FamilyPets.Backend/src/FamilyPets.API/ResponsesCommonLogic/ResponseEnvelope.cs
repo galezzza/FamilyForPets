@@ -1,4 +1,4 @@
-﻿namespace FamilyForPets.Shared
+﻿namespace FamilyForPets.API.ResponsesCommonLogic
 {
     public record ErrorForEnvelope(string? ErrorCode, string? ErrorMessage, string? InvalidField);
 

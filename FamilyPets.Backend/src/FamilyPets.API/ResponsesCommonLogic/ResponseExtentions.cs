@@ -2,7 +2,7 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FamilyForPets.API.Extentions
+namespace FamilyForPets.API.ResponsesCommonLogic
 {
     public static class ResponseExtentions
     {

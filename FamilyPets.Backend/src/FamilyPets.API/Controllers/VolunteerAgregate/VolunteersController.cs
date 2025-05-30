@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.API.Controllers.VolunteerAgregate.Requests.CreateVolunteer;
-using FamilyForPets.API.Extentions;
+using FamilyForPets.API.ResponsesCommonLogic;
 using FamilyForPets.Shared;
 using FamilyForPets.UseCases.Abstractions;
 using FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer;
