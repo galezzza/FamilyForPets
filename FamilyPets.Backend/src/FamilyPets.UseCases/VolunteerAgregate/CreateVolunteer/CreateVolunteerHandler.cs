@@ -4,11 +4,12 @@ using FamilyForPets.Domain.SharedValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate;
 using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
 using FamilyForPets.Shared;
+using FamilyForPets.UseCases.Abstractions;
 using FluentValidation;
 
 namespace FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer
 {
-    public class CreateVolunteerHandler
+    public class CreateVolunteerHandler : ICommandHandler<CreateVolunteerCommand, Guid>
     {
         private readonly IVolunteerRepository _volunteerRepository;
 

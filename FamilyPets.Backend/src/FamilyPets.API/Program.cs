@@ -1,4 +1,5 @@
 ﻿using FamilyForPets.Infrastructure;
+using FamilyForPets.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
 

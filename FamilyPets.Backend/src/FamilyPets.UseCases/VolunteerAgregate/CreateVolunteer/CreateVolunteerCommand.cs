@@ -1,11 +1,13 @@
-﻿namespace FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer
+﻿using FamilyForPets.UseCases.Abstractions;
+
+namespace FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer
 {
     public record CreateVolunteerCommand(
         FullNameDto FullName,
         string Email,
         int ExperienceInYears,
         string PhoneNumber,
-        PaymentDetailsDto PaymentDetails);
+        PaymentDetailsDto PaymentDetails) : ICommand;
 
     public record FullNameDto(
         string Name,

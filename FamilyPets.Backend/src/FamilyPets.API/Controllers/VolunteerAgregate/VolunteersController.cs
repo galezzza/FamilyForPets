@@ -1,7 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
-using FamilyForPets.API.Controllers.VolunteerAgregate.Requests;
+using FamilyForPets.API.Controllers.VolunteerAgregate.Requests.CreateVolunteer;
 using FamilyForPets.API.Extentions;
 using FamilyForPets.Shared;
+using FamilyForPets.UseCases.Abstractions;
 using FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer;
 using FluentValidation;
 using FluentValidation.Results;
@@ -16,7 +17,7 @@ namespace FamilyForPets.API.Controllers.VolunteerAgregate
         [HttpPost]
         public async Task<ActionResult> Create(
             [FromBody] CreateVolunteerRequest request,
-            [FromServices] CreateVolunteerHandler handler,
+            [FromServices] ICommandHandler<CreateVolunteerCommand, Guid> handler,
             [FromServices] IValidator<CreateVolunteerCommand> validator,
             CancellationToken cancellationToken = default)
         {
