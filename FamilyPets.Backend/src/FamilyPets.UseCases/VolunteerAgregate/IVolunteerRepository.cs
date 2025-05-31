@@ -10,8 +10,8 @@ namespace FamilyForPets.UseCases.VolunteerAgregate
     {
         Task<Result<Guid, Error>> Add(Volunteer volunteer, CancellationToken cancellationToken);
 
-        Task<Result<Volunteer, Error>> GetById(VolunteerId id);
+        Task<Result<Volunteer, Error>> GetById(VolunteerId id, CancellationToken cancellationToken);
 
-        Task<Result<Volunteer, Error>> GetByEmail(EmailAdress email);
+        Task<Result<Volunteer, Error>> GetByEmail(EmailAdress email, CancellationToken cancellationToken);
     }
 }
