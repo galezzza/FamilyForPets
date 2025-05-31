@@ -16,34 +16,20 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 
         private Pet(
             PetNickname name,
-            PetDescription description,
             PelageColor color,
             DateTime? dateOfBirth,
             PetBreedAndSpecies petBreed,
-            PetHealthDescription petHealthDescription,
-            Adress petCurrentAdress,
-            Mass weight,
-            Length height,
             PhoneNumber contactPhoneNumber,
             CastrationStatus castrationStatus,
-            PetVaccinesList petVaccinesList,
-            HelpStatus helpStatus,
-            DetailsForPayment paymentDatails)
+            HelpStatus helpStatus)
         {
             Name = name;
-            Description = description;
             Color = color;
             DateOfBirth = dateOfBirth;
             PetBreed = petBreed;
-            PetHealthDescription = petHealthDescription;
-            PetCurrentAdress = petCurrentAdress;
-            Weight = weight;
-            Height = height;
             ContactPhoneNumber = contactPhoneNumber;
             CastrationStatus = castrationStatus;
-            PetVaccines = petVaccinesList;
             HelpStatus = helpStatus;
-            PaymentDatails = paymentDatails;
             CreatedAt = DateTime.UtcNow;
         }
 
@@ -95,19 +81,12 @@ namespace FamilyForPets.Domain.VolunteerAgregate
         {
             return Result.Success<Pet, Error>(new Pet(
                 name,
-                description,
                 color,
                 dateOfBirth,
                 petBreed,
-                petHealthDescription,
-                petCurrentAdress,
-                weight,
-                height,
                 contactPhoneNumber,
                 castrationStatus,
-                petVaccinesList,
-                helpStatus,
-                paymentDatails));
+                helpStatus));
         }
     }
 }

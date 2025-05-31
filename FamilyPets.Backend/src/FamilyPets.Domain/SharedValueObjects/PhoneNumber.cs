@@ -7,7 +7,7 @@ namespace FamilyForPets.Domain.SharedValueObjects
     public class PhoneNumber : ValueObject
     {
         public const int MAX_PHONE_NUMBER_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
-        public const string PHONE_NUMBER_PATTERN = "string phonePattern = @\"^\\+?\\d{1,3}?[- .]?\\(?\\d{1,4}?\\)?[- .]?\\d{3,4}[- .]?\\d{3,4}$\";\r\n";
+        public const string PHONE_NUMBER_PATTERN = @"^\+?\d{9,15}$";
 
         private PhoneNumber(string number)
         {
@@ -22,7 +22,7 @@ namespace FamilyForPets.Domain.SharedValueObjects
                 return Result.Failure<PhoneNumber, Error>(Errors.General.CannotBeEmpty("Phone number"));
 
             if (!Regex.IsMatch(number, PHONE_NUMBER_PATTERN))
-                return Result.Failure<PhoneNumber, Error>(Errors.General.ValueIsInvalid("Email adress"));
+                return Result.Failure<PhoneNumber, Error>(Errors.General.ValueIsInvalid("Phone number"));
 
             return Result.Success<PhoneNumber, Error>(
                 new PhoneNumber(number));

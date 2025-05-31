@@ -17,22 +17,20 @@ namespace FamilyForPets.Domain.VolunteerAgregate
         }
 
         private Volunteer(
+            VolunteerId id,
             FullName fullName,
             EmailAdress email,
-            VolunteerDescription description,
             int experienceInYears,
-            List<Pet> allPets,
             PhoneNumber phoneNumber,
-            VolunteerSocialNetworksList socialNetworks,
+            VolunteerSocialNetworksList volunteerSocialNetworks,
             DetailsForPayment detailsForPayment)
         {
+            Id = id;
             FullName = fullName;
             Email = email;
-            Description = description;
             ExperienceInYears = experienceInYears;
-            _allPets = allPets;
             PhoneNumber = phoneNumber;
-            VolunteerSocialNetworks = socialNetworks;
+            VolunteerSocialNetworks = volunteerSocialNetworks;
             DetailsForPayment = detailsForPayment;
         }
 
@@ -52,14 +50,11 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 
         public DetailsForPayment DetailsForPayment { get; private set; } = default!;
 
-        public Result<Volunteer, Error> Create(
+        public static Result<Volunteer, Error> Create(
             FullName fullName,
             EmailAdress email,
-            VolunteerDescription description,
             int experienceInYears,
-            List<Pet> allPets,
             PhoneNumber phoneNumber,
-            List<SocialNetwork> socialNetworks,
             DetailsForPayment detailsForPayment)
         {
             if (experienceInYears < 0)
@@ -68,13 +63,12 @@ namespace FamilyForPets.Domain.VolunteerAgregate
             }
 
             return Result.Success<Volunteer, Error>(new Volunteer(
+                VolunteerId.New(),
                 fullName,
                 email,
-                description,
                 experienceInYears,
-                allPets,
                 phoneNumber,
-                VolunteerSocialNetworksList.Create(socialNetworks).Value,
+                VolunteerSocialNetworksList.Create([]).Value,
                 detailsForPayment));
         }
 

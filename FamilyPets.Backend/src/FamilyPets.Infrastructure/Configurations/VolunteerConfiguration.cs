@@ -29,7 +29,7 @@ namespace FamilyForPets.Infrastructure.Configurations
                     .HasMaxLength(FullName.MAX_NAME_TEXT_LENGHT);
                 vb.Property(fn => fn.Surname)
                     .HasColumnName("last_name")
-                    .IsRequired()
+                    .IsRequired(false)
                     .HasMaxLength(FullName.MAX_NAME_TEXT_LENGHT);
                 vb.Property(fn => fn.AdditionalName)
                     .HasColumnName("additional_name")

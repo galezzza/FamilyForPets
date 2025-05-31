@@ -31,8 +31,8 @@ namespace FamilyForPets.Shared
 
             public static Error NotFound(ErrorNotFoundObjectDto? dto)
             {
-                string label = dto == null ? string.Empty : "for { dto.ObjectName}: {dto.ObjectValue}";
-                return Error.NotFound("record.not.found", $"record not found.");
+                string label = dto == null ? string.Empty : $"for {dto.ObjectName}: {dto.ObjectValue}";
+                return Error.NotFound("record.not.found", $"record not found {label}.");
             }
 
             public static Error Failure()
@@ -40,16 +40,27 @@ namespace FamilyForPets.Shared
                 return Error.Failure("unexpected.error", "An unexpected error occurred.");
             }
 
-            public static Error Conflict()
+            public static Error Conflict(string? conflictName = null)
             {
-                return Error.Conflict("conflict.occured", "A conflict occurred.");
+                string label = conflictName == null ? string.Empty : $"for {conflictName}";
+                return Error.Conflict("conflict.occurred", $"A conflict occurred {label}.");
             }
 
-            public record ErrorNotFoundObjectDto()
-            {
-                public object? ObjectName { get; set; }
+            public record ErrorNotFoundObjectDto(object? ObjectName, object? ObjectValue);
+        }
 
-                public object? ObjectValue { get; set; }
+        public static class Volunteer
+        {
+            public static Error Conflict(string? conflictName = null)
+            {
+                string label = conflictName == null ? string.Empty : $"for {conflictName}";
+                return Error.Conflict("volunteer.conflict", $"A conflict occurred {label}.");
+            }
+
+            public static Error ConflictAlreadyExists(string? conflictName = null)
+            {
+                string label = conflictName == null ? string.Empty : $"Volunteer with such {conflictName} already exists.";
+                return Error.Conflict("record.conflict.already.exists", $"A conflict occurred. {label}");
             }
         }
     }
