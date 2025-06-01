@@ -17,15 +17,18 @@ namespace FamilyForPets.Shared
 
         public ErrorType Type { get; }
 
-        private Error(string code, string message, ErrorType type)
+        public string? InvalidField { get; }
+
+        private Error(string code, string message, ErrorType type, string? invalidField = null)
         {
             Code = code;
             Message = message;
             Type = type;
+            InvalidField = invalidField;
         }
 
-        public static Error Validation(string code, string message)
-            => new Error(code, message, ErrorType.Validation);
+        public static Error Validation(string code, string message, string? invalidField = null)
+            => new Error(code, message, ErrorType.Validation, invalidField);
 
         public static Error NotFound(string code, string message)
             => new Error(code, message, ErrorType.NotFound);
@@ -51,6 +54,11 @@ namespace FamilyForPets.Shared
                 throw new ArgumentException("Invaid serialized format");
 
             return new Error(parts[0], parts[1], type);
+        }
+
+        public ErrorList ToErrorList()
+        {
+            return new ErrorList([this]);
         }
 
     }

@@ -1,25 +1,25 @@
-﻿namespace FamilyForPets.API.ResponsesCommonLogic
-{
-    public record ErrorForEnvelope(string? ErrorCode, string? ErrorMessage, string? InvalidField);
+﻿using FamilyForPets.Shared;
 
+namespace FamilyForPets.API.ResponsesCommonLogic
+{
     public record ResponseEnvelope
     {
         public object? Result { get; }
 
-        public List<ErrorForEnvelope> Errors { get; }
+        public ErrorList? Errors { get; }
         public DateTime TimeGenerated { get; }
 
-        private ResponseEnvelope(object? result, IEnumerable<ErrorForEnvelope> errors)
+        private ResponseEnvelope(object? result, ErrorList? errors)
         {
             Result = result;
-            Errors = errors.ToList();
+            Errors = errors;
             TimeGenerated = DateTime.Now;
         }
 
         public static ResponseEnvelope Correct(object? result = null) =>
-            new ResponseEnvelope(result, []);
+            new ResponseEnvelope(result, null);
 
-        public static ResponseEnvelope Error(IEnumerable<ErrorForEnvelope> errors) =>
+        public static ResponseEnvelope Error(ErrorList errors) =>
             new ResponseEnvelope(null, errors);
 
     }
@@ -28,20 +28,20 @@
     {
         public T? Result { get; }
 
-        public List<ErrorForEnvelope> Errors { get; }
+        public ErrorList? Errors { get; }
         public DateTime TimeGenerated { get; }
 
-        private ResponseEnvelope(T? result, IEnumerable<ErrorForEnvelope> errors)
+        private ResponseEnvelope(T? result, ErrorList? errors)
         {
             Result = result;
-            Errors = errors.ToList();
+            Errors = errors;
             TimeGenerated = DateTime.Now;
         }
 
         public static ResponseEnvelope<T> Correct(T? result = default) =>
-            new ResponseEnvelope<T>(result, []);
+            new ResponseEnvelope<T>(result, null);
 
-        public static ResponseEnvelope<T> Error(IEnumerable<ErrorForEnvelope> errors) =>
+        public static ResponseEnvelope<T> Error(ErrorList errors) =>
             new ResponseEnvelope<T>(default, errors);
 
     }

@@ -11,9 +11,7 @@ namespace FamilyForPets.API.ResponsesCommonLogic
         {
             var statusCode = GetStatusCodeForErrorType(error.Type);
 
-            var responseError = new ErrorForEnvelope(error.Code, error.Message, null);
-
-            ResponseEnvelope envelope = ResponseEnvelope.Error([responseError]);
+            ResponseEnvelope envelope = ResponseEnvelope.Error(error.ToErrorList());
 
             return new ObjectResult(envelope)
             {
@@ -21,7 +19,27 @@ namespace FamilyForPets.API.ResponsesCommonLogic
             };
         }
 
-        public static ActionResult ToResponseFromSuccessResult<T>(this Result<T, Error> correctResult)
+        public static ActionResult ToResponseFromErrorList(this ErrorList errors)
+        {
+            if (errors.Any() == false)
+            {
+                return new ObjectResult(ResponseEnvelope.Error(errors))
+                {
+                    StatusCode = StatusCodes.Status500InternalServerError,
+                };
+            }
+
+            var statusCode = GetStatusCodeForErrorList(errors);
+
+            ResponseEnvelope envelope = ResponseEnvelope.Error(errors);
+
+            return new ObjectResult(envelope)
+            {
+                StatusCode = statusCode,
+            };
+        }
+
+        public static ActionResult ToResponseFromSuccessResult<T>(this Result<T, ErrorList> correctResult)
         {
             if (correctResult.IsFailure)
                 throw new InvalidOperationException("Result cannot be failed");
@@ -31,29 +49,6 @@ namespace FamilyForPets.API.ResponsesCommonLogic
             return new ObjectResult(envelope)
             {
                 StatusCode = StatusCodes.Status200OK,
-            };
-        }
-
-        public static ActionResult ToResponseFromValidationError(this ValidationResult errorResult)
-        {
-            if (errorResult.IsValid)
-                throw new InvalidOperationException("Result cannot be succeed");
-
-            List<ValidationFailure> validationErrors = errorResult.Errors;
-
-            // make from validation errors (FluentValidation) to errors 
-            var errorsForEnvelope = from validationError in validationErrors
-                         let serializedErrorAsMessage = validationError.ErrorMessage
-                         let error = Error.Deserialize(serializedErrorAsMessage)
-                         let resposeError = new ErrorForEnvelope(error.Code, error.Message, validationError.PropertyName)
-                         select resposeError;
-
-            // errors in envelope
-            ResponseEnvelope envelope = ResponseEnvelope.Error(errorsForEnvelope);
-
-            return new ObjectResult(envelope)
-            {
-                StatusCode = GetStatusCodeForValidationErrors(validationErrors),
             };
         }
 
@@ -71,13 +66,8 @@ namespace FamilyForPets.API.ResponsesCommonLogic
             return statusCode;
         }
 
-        private static int GetStatusCodeForValidationErrors(IEnumerable<ValidationFailure> validationErrors)
+        private static int GetStatusCodeForErrorList(ErrorList errors)
         {
-            var errors = from validationError in validationErrors
-                         let serializedErrorAsMessage = validationError.ErrorMessage
-                         let error = Error.Deserialize(serializedErrorAsMessage)
-                         select error;
-
             var distincctErrorTypes = errors
                 .Select(x => x.Type)
                 .Distinct()
@@ -89,5 +79,6 @@ namespace FamilyForPets.API.ResponsesCommonLogic
 
             return statusCode;
         }
+
     }
 }

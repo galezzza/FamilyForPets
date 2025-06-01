@@ -3,6 +3,7 @@ using FamilyForPets.API.Controllers.VolunteerAgregate.Requests.CreateVolunteer;
 using FamilyForPets.API.ResponsesCommonLogic;
 using FamilyForPets.Shared;
 using FamilyForPets.UseCases.Abstractions;
+using FamilyForPets.UseCases.DTOs;
 using FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer;
 using FluentValidation;
 using FluentValidation.Results;
@@ -49,13 +50,9 @@ namespace FamilyForPets.API.Controllers.VolunteerAgregate
                     request.CardNumber,
                     request.OtherPaymentDetails));
 
-            ValidationResult validationResult = await validator.ValidateAsync(command);
-            if (validationResult.IsValid == false)
-                return validationResult.ToResponseFromValidationError();
-
-            Result<Guid, Error> result = await handler.HandleAsync(command, cancellationToken);
+            Result<Guid, ErrorList> result = await handler.HandleAsync(command, cancellationToken);
             if (result.IsFailure)
-                return result.Error.ToResponseFromError();
+                return result.Error.ToResponseFromErrorList();
 
             return Ok(result.ToResponseFromSuccessResult());
         }

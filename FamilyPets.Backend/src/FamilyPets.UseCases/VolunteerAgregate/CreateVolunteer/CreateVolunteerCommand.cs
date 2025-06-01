@@ -1,4 +1,5 @@
 ﻿using FamilyForPets.UseCases.Abstractions;
+using FamilyForPets.UseCases.DTOs;
 
 namespace FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer
 {
@@ -8,13 +9,4 @@ namespace FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer
         int ExperienceInYears,
         string PhoneNumber,
         PaymentDetailsDto PaymentDetails) : ICommand;
-
-    public record FullNameDto(
-        string Name,
-        string? Surname,
-        string? AdditionalName);
-
-    public record PaymentDetailsDto(
-        string CardNumber,
-        string? OtherPaymentDetails);
 }
