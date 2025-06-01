@@ -38,17 +38,7 @@ namespace FamilyForPets.API.Controllers.VolunteerAgregate
             [FromServices] IValidator<CreateVolunteerCommand> validator,
             CancellationToken cancellationToken = default)
         {
-            CreateVolunteerCommand command = new CreateVolunteerCommand(
-                new FullNameDto(
-                    request.Name,
-                    request.Surname,
-                    request.AdditionalName),
-                request.Email,
-                request.ExperienceInYears,
-                request.PhoneNumber,
-                new PaymentDetailsDto(
-                    request.CardNumber,
-                    request.OtherPaymentDetails));
+            CreateVolunteerCommand command = request.ToCommand();
 
             Result<Guid, ErrorList> result = await handler.HandleAsync(command, cancellationToken);
             if (result.IsFailure)
