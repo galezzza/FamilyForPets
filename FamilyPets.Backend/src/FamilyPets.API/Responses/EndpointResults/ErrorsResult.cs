@@ -1,7 +1,8 @@
 ﻿using System.Net;
+using FamilyForPets.API.Responses;
 using FamilyForPets.Shared;
 
-namespace FamilyForPets.API.ResponsesCommonLogic.EndpointResults
+namespace FamilyForPets.API.Responses.EndpointResults
 {
     public class ErrorsResult : IResult
     {

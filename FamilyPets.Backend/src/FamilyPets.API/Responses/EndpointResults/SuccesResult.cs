@@ -1,7 +1,7 @@
 ﻿
 using System.Net;
 
-namespace FamilyForPets.API.ResponsesCommonLogic.EndpointResults
+namespace FamilyForPets.API.Responses.EndpointResults
 {
     public class SuccesResult<TValue> : IResult
     {
