@@ -19,10 +19,10 @@ namespace FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects
 
         public IReadOnlyCollection<SocialNetwork> SocialNetworks => _socialNetworks.AsReadOnly();
 
-        public static Result<VolunteerSocialNetworksList, Error> Create(List<SocialNetwork> socialNetworks)
+        public static Result<VolunteerSocialNetworksList, Error> Create(IEnumerable<SocialNetwork> socialNetworks)
         {
             return Result.Success<VolunteerSocialNetworksList, Error>(
-                new VolunteerSocialNetworksList(socialNetworks));
+                new VolunteerSocialNetworksList(socialNetworks.ToList()));
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

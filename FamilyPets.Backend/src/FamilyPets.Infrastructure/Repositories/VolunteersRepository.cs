@@ -53,5 +53,14 @@ namespace FamilyForPets.Infrastructure.Repositories
 
             return Result.Success<Volunteer, Error>(volunteer);
         }
+
+        public async Task<Result<Guid, Error>> Save(Volunteer volunteer, CancellationToken cancellationToken)
+        {
+            _dbContext.Volunteers.Attach(volunteer);
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return Result.Success<Guid, Error>(volunteer.Id.Value);
+        }
     }
 }
