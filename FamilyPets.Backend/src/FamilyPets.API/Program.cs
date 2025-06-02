@@ -1,4 +1,5 @@
-﻿using FamilyForPets.Infrastructure;
+﻿using FamilyForPets.API.Extentions;
+using FamilyForPets.Infrastructure;
 using FamilyForPets.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    await app.ApplyMigration();
 }
 
 app.UseHttpsRedirection();
