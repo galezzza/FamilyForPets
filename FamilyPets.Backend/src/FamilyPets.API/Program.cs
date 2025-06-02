@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using FamilyForPets.API.Extentions;
+﻿using FamilyForPets.API.Extentions;
 using FamilyForPets.API.Middlewares;
 using FamilyForPets.Infrastructure;
 using FamilyForPets.UseCases;
@@ -22,7 +21,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSerilog();
-builder.Services.AddSingleton<ExceptionMiddleware>();
+builder.Services.AddTransient<ExceptionMiddleware>();
 
 builder.Services
     .AddInfrastrucutre()

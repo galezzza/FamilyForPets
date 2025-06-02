@@ -7,6 +7,7 @@ using FamilyForPets.UseCases.Abstractions;
 using FamilyForPets.UseCases.Extentions.ValidationExtentions;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.Extensions.Logging;
 
 namespace FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer
 {
@@ -14,13 +15,16 @@ namespace FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer
     {
         private readonly IVolunteerRepository _volunteerRepository;
         private readonly IValidator<CreateVolunteerCommand> _validator;
+        private readonly ILogger<CreateVolunteerHandler> _logger;
 
         public CreateVolunteerHandler(
             IVolunteerRepository volunteerRepository,
-            IValidator<CreateVolunteerCommand> validator)
+            IValidator<CreateVolunteerCommand> validator,
+            ILogger<CreateVolunteerHandler> logger)
         {
             _volunteerRepository = volunteerRepository;
             _validator = validator;
+            _logger = logger;
         }
 
         public async Task<Result<Guid, ErrorList>> HandleAsync(
@@ -60,6 +64,8 @@ namespace FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer
             Result<Guid, Error> dbResult = await _volunteerRepository.Add(volunteer, cancellationToken);
             if (dbResult.IsFailure)
                 return Result.Failure<Guid, ErrorList>(dbResult.Error.ToErrorList());
+
+            _logger.LogInformation("Created volunteer with id: {id}", volunteer.Id.Value);
 
             // return
             return Result.Success<Guid, ErrorList>(dbResult.Value);
