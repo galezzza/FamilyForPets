@@ -1,12 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.API.Controllers.VolunteerAgregate.Requests.CreateVolunteer;
 using FamilyForPets.API.ResponsesCommonLogic;
+using FamilyForPets.API.ResponsesCommonLogic.EndpointResults;
 using FamilyForPets.Shared;
 using FamilyForPets.UseCases.Abstractions;
 using FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer;
 using FluentValidation;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using IResult = Microsoft.AspNetCore.Http.IResult;
 
 namespace FamilyForPets.API.Controllers.VolunteerAgregate
 {
@@ -19,45 +20,25 @@ namespace FamilyForPets.API.Controllers.VolunteerAgregate
     //
     // 2) create Command from Request (they are the same)
     //
-    // 3) validate command using FluentValidation
-    //      if result is not valid return envelope with errors
-    //
     // 4) send to UseCases layer to handle logic
     //      if result is not valid return envelope with errors
     //
     // 5) if ok return envelope with response
+    //      5.1) EndpointResult implicits Result<> to Response
     [ApiController]
     [Route("[controller]")]
     public class VolunteersController : ControllerBase
     {
         [HttpPost]
-        public async Task<ActionResult> Create(
+        public async Task<EndpointResult<Guid>> Create(
             [FromBody] CreateVolunteerRequest request,
             [FromServices] ICommandHandler<CreateVolunteerCommand, Guid> handler,
-            [FromServices] IValidator<CreateVolunteerCommand> validator,
             CancellationToken cancellationToken = default)
         {
-            CreateVolunteerCommand command = new CreateVolunteerCommand(
-                new FullNameDto(
-                    request.Name,
-                    request.Surname,
-                    request.AdditionalName),
-                request.Email,
-                request.ExperienceInYears,
-                request.PhoneNumber,
-                new PaymentDetailsDto(
-                    request.CardNumber,
-                    request.OtherPaymentDetails));
+            CreateVolunteerCommand command = request.ToCommand();
 
-            ValidationResult validationResult = await validator.ValidateAsync(command);
-            if (validationResult.IsValid == false)
-                return validationResult.ToResponseFromValidationError();
-
-            Result<Guid, Error> result = await handler.HandleAsync(command, cancellationToken);
-            if (result.IsFailure)
-                return result.Error.ToResponseFromError();
-
-            return Ok(result.ToResponseFromSuccessResult());
+            // implicit from Result<T, E> to ResponseEnvelope
+            return await handler.HandleAsync(command, cancellationToken);
         }
     }
 }

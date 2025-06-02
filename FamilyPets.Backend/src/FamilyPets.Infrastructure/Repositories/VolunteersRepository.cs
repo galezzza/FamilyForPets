@@ -26,7 +26,7 @@ namespace FamilyForPets.Infrastructure.Repositories
             return Result.Success<Guid, Error>(volunteer.Id.Value);
         }
 
-        public async Task<Result<Volunteer, Error>> GetById(VolunteerId id)
+        public async Task<Result<Volunteer, Error>> GetById(VolunteerId id, CancellationToken cancellationToken)
         {
             Volunteer? volunteer = await _dbContext.Volunteers
                 .Include(v => v.AllPets)
@@ -40,7 +40,7 @@ namespace FamilyForPets.Infrastructure.Repositories
             return Result.Success<Volunteer, Error>(volunteer);
         }
 
-        public async Task<Result<Volunteer, Error>> GetByEmail(EmailAdress emailAdress)
+        public async Task<Result<Volunteer, Error>> GetByEmail(EmailAdress emailAdress, CancellationToken cancellationToken)
         {
             Volunteer? volunteer = await _dbContext.Volunteers
                 .Include(v => v.AllPets)
