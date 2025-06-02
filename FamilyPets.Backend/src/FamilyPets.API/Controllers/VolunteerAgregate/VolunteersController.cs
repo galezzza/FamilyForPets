@@ -1,13 +1,8 @@
-﻿using CSharpFunctionalExtensions;
-using FamilyForPets.API.Controllers.VolunteerAgregate.Requests.CreateVolunteer;
-using FamilyForPets.API.ResponsesCommonLogic;
-using FamilyForPets.API.ResponsesCommonLogic.EndpointResults;
-using FamilyForPets.Shared;
+﻿using FamilyForPets.API.Controllers.VolunteerAgregate.Requests.CreateVolunteer;
+using FamilyForPets.API.Responses.EndpointResults;
 using FamilyForPets.UseCases.Abstractions;
 using FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer;
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using IResult = Microsoft.AspNetCore.Http.IResult;
 
 namespace FamilyForPets.API.Controllers.VolunteerAgregate
 {

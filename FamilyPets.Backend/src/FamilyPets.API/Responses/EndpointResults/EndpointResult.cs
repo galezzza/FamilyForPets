@@ -1,9 +1,8 @@
-﻿using System.Runtime.InteropServices.Marshalling;
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 using FamilyForPets.Shared;
 using IResult = Microsoft.AspNetCore.Http.IResult;
 
-namespace FamilyForPets.API.ResponsesCommonLogic.EndpointResults
+namespace FamilyForPets.API.Responses.EndpointResults
 {
     public class EndpointResult<TValue> : IResult
     {
