@@ -9,7 +9,7 @@ namespace FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunte
     {
         public UpdateVolunteerDetailsForPaymentCommandValidator()
         {
-            RuleFor(c => c.details)
+            RuleFor(c => c.Details)
                 .MustBeValueObject(x => DetailsForPayment.Create(x.CardNumber, x.OtherPaymentDetails));
         }
     }

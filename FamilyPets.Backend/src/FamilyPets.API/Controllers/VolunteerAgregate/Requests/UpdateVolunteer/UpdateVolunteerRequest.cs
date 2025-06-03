@@ -15,7 +15,7 @@ namespace FamilyForPets.API.Controllers.VolunteerAgregate.Requests.UpdateVolunte
             return new UpdateVolunteerCommand(
                 id,
                 SocialNetworks,
-                CardNumber, OtherDetails,
+                new PaymentDetailsDto(CardNumber, OtherDetails),
                 new FullNameDto(
                     Name, Surname, AdditionalName),
                 Description,

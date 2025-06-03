@@ -63,27 +63,5 @@ namespace FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunte
 
             return Result.Success<Guid, ErrorList>(resultId);
         }
-
-        public async Task<Result<Volunteer, ErrorList>> HandleAsyncWithoutSavingToDb(
-            Volunteer volunteer,
-            UpdateVolunteerSocialNetworksCommand command,
-            CancellationToken cancellationToken)
-        {
-            ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
-            if (validationResult.IsValid == false)
-                return Result.Failure<Volunteer, ErrorList>(validationResult.ToErrorListFromValidationResult());
-
-            IEnumerable<SocialNetwork> socialNetworks = command.SocialNetworks
-                .Select(sn => SocialNetwork.Create(sn.Name, sn.Url).Value);
-            VolunteerSocialNetworksList socialNetworksList = VolunteerSocialNetworksList.Create(socialNetworks).Value;
-
-            UnitResult<Error> result = volunteer.UpdateSocialNetworks(socialNetworksList);
-            if (result.IsFailure)
-                Result.Failure<Volunteer, ErrorList>(Errors.General.Failure().ToErrorList());
-
-            _logger.LogInformation("Updated social networks for volunteer with id: {id}", volunteer.Id.Value);
-
-            return Result.Success<Volunteer, ErrorList>(volunteer);
-        }
     }
 }

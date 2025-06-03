@@ -84,7 +84,7 @@ namespace FamilyForPets.API.Controllers.VolunteerAgregate
         }
 
         [HttpPatch("{id:guid}/main-info")]
-        public async Task<EndpointResult<Guid>> UpdataContactData(
+        public async Task<EndpointResult<Guid>> UpdataMainInfoData(
             [FromRoute] Guid id,
             [FromBody] UpdateVolunteerMainInfoRequest request,
             [FromServices] ICommandHandler<UpdateVolunteerMainInfoCommand, Guid> handler,
@@ -93,8 +93,8 @@ namespace FamilyForPets.API.Controllers.VolunteerAgregate
             return await handler.HandleAsync(request.ToCommand(id), cancellationToken);
         }
 
-        [HttpPatch("{id:guid}")]
-        public async Task<EndpointResult<Guid>> UpdateSocialNewtworks(
+        [HttpPut("{id:guid}")]
+        public async Task<EndpointResult<Guid>> Update(
             [FromRoute] Guid id,
             [FromBody] UpdateVolunteerRequest request,
             [FromServices] ICommandHandler<UpdateVolunteerCommand, Guid> handler,

@@ -38,7 +38,7 @@ namespace FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunte
 
             VolunteerId id = VolunteerId.Create(command.Id);
             DetailsForPayment detailsForPayment = DetailsForPayment.Create(
-                command.details.CardNumber, command.details.OtherPaymentDetails).Value;
+                command.Details.CardNumber, command.Details.OtherPaymentDetails).Value;
 
             Result<Volunteer, Error> volunteerFoundedById = await _volunteerRepository.GetById(id, cancellationToken);
             if (volunteerFoundedById.IsFailure)
@@ -62,27 +62,6 @@ namespace FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunte
             _logger.LogInformation("Updated payment details for volunteer with id: {id}", resultId);
 
             return Result.Success<Guid, ErrorList>(resultId);
-        }
-
-        public async Task<Result<Volunteer, ErrorList>> HandleAsyncWithoutSavingToDb(
-            Volunteer volunteer,
-            UpdateVolunteerDetailsForPaymentCommand command,
-            CancellationToken cancellationToken)
-        {
-            ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
-            if (validationResult.IsValid == false)
-                return Result.Failure<Volunteer, ErrorList>(validationResult.ToErrorListFromValidationResult());
-
-            DetailsForPayment detailsForPayment = DetailsForPayment.Create(
-                command.details.CardNumber, command.details.OtherPaymentDetails).Value;
-
-            UnitResult<Error> result = volunteer.UpdateDetailsForPayment(detailsForPayment);
-            if (result.IsFailure)
-                Result.Failure<Volunteer, ErrorList>(Errors.General.Failure().ToErrorList());
-
-            _logger.LogInformation("Updated payment details for volunteer with id: {id}", volunteer.Id.Value);
-
-            return Result.Success<Volunteer, ErrorList>(volunteer);
         }
     }
 }

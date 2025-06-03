@@ -64,27 +64,5 @@ namespace FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunte
 
             return Result.Success<Guid, ErrorList>(resultId);
         }
-
-        public async Task<Result<Volunteer, ErrorList>> HandleAsyncWithoutSavingToDb(
-            Volunteer volunteer,
-            UpdateVolunteerMainInfoCommand command,
-            CancellationToken cancellationToken)
-        {
-            ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
-            if (validationResult.IsValid == false)
-                return Result.Failure<Volunteer, ErrorList>(validationResult.ToErrorListFromValidationResult());
-
-            FullName fullName = FullName.Create(
-                command.FullName.Name, command.FullName.Surname, command.FullName.AdditionalName).Value;
-            VolunteerDescription volunteerDescription = VolunteerDescription.Create(command.Description).Value;
-
-            UnitResult<Error> result = volunteer.UpdateMainInfo(fullName, volunteerDescription);
-            if (result.IsFailure)
-                Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
-
-            _logger.LogInformation("Updated main info for volunteer with id: {id}", volunteer.Id.Value);
-
-            return Result.Success<Volunteer, ErrorList>(volunteer);
-        }
     }
 }
