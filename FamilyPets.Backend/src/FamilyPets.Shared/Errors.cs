@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
+using static FamilyForPets.Shared.Errors.General;
 
 namespace FamilyForPets.Shared
 {
@@ -61,6 +62,12 @@ namespace FamilyForPets.Shared
             {
                 string label = conflictName == null ? string.Empty : $"Volunteer with such {conflictName} already exists.";
                 return Error.Conflict("record.conflict.already.exists", $"A conflict occurred. {label}");
+            }
+
+            public static Error NotFound(ErrorNotFoundObjectDto? dto)
+            {
+                string label = dto == null ? string.Empty : $"for volunteer with {dto.ObjectName}: {dto.ObjectValue}";
+                return Error.NotFound("record.not.found", $"record not found {label}.");
             }
         }
     }

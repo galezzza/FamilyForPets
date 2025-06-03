@@ -78,5 +78,30 @@ namespace FamilyForPets.Domain.VolunteerAgregate
 
         public int GetNumeberOfPetsWithFoundedHome() => AllPets.Where(p => p.HelpStatus == HelpStatus.HomeFounded).Count();
 
+        public UnitResult<Error> UpdateSocialNetworks(VolunteerSocialNetworksList socialNetworks)
+        {
+            VolunteerSocialNetworks = socialNetworks;
+            return UnitResult.Success<Error>();
+        }
+
+        public UnitResult<Error> UpdateDetailsForPayment(DetailsForPayment detailsForPayment)
+        {
+            DetailsForPayment = detailsForPayment;
+            return UnitResult.Success<Error>();
+        }
+
+        public UnitResult<Error> UpdateMainInfo(FullName fullName, VolunteerDescription description)
+        {
+            FullName = fullName;
+            Description = description;
+            return UnitResult.Success<Error>();
+        }
+
+        public UnitResult<Error> UpdateContactData(PhoneNumber phoneNumber, EmailAdress emailAdress)
+        {
+            PhoneNumber = phoneNumber;
+            Email = emailAdress;
+            return UnitResult.Success<Error>();
+        }
     }
 }
