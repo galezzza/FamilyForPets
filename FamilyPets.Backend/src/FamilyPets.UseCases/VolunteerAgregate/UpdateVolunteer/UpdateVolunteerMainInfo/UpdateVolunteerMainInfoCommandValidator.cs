@@ -1,4 +1,4 @@
-﻿using FamilyForPets.Domain.SharedValueObjects;
+﻿using FamilyForPets.Shared.ValueObjects;
 using FamilyForPets.UseCases.Validation;
 using FluentValidation;
 

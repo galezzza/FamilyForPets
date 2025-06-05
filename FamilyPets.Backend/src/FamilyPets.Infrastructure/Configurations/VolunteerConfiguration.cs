@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks.Dataflow;
-using FamilyForPets.Domain.SharedValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate;
 using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
+using FamilyForPets.Shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

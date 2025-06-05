@@ -1,9 +1,6 @@
-﻿using System.Drawing;
-using CSharpFunctionalExtensions;
-using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
-using FamilyForPets.Shared;
+﻿using CSharpFunctionalExtensions;
 
-namespace FamilyForPets.Domain.SharedValueObjects
+namespace FamilyForPets.Shared.ValueObjects
 {
     public class Mass : ValueObject
     {

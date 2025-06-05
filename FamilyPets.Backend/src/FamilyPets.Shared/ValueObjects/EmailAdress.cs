@@ -2,7 +2,7 @@
 using CSharpFunctionalExtensions;
 using FamilyForPets.Shared;
 
-namespace FamilyForPets.Domain.SharedValueObjects
+namespace FamilyForPets.Shared.ValueObjects
 {
     public class EmailAdress : ValueObject
     {

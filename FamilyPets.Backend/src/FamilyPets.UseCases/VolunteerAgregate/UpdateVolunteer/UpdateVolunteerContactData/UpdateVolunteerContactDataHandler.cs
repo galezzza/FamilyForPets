@@ -1,9 +1,9 @@
 ﻿using System.Net.Mail;
 using CSharpFunctionalExtensions;
-using FamilyForPets.Domain.SharedValueObjects;
 using FamilyForPets.Domain.VolunteerAgregate;
 using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
 using FamilyForPets.Shared;
+using FamilyForPets.Shared.ValueObjects;
 using FamilyForPets.UseCases.Abstractions;
 using FamilyForPets.UseCases.Extentions.ValidationExtentions;
 using FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunteerMainInfo;
