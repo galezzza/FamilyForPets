@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FamilyForPets.Volunteers.Infrastructure
 {
-    public class ApplicationDbContext(IConfiguration configuration) : DbContext
+    public class VolunteerDbContext(IConfiguration configuration) : DbContext
     {
         private const string DATABASE = "Database";
 
@@ -21,7 +21,7 @@ namespace FamilyForPets.Volunteers.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(VolunteerDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
 

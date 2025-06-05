@@ -1,5 +1,5 @@
 ﻿using FamilyForPets.Shared.Validation;
-using FamilyForPets.Volunteer.Domain.VolunteerValueObjects;
+using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 using FluentValidation;
 
 namespace FamilyForPets.Volunteers.UseCases.UpdateVolunteer.UpdateVolunteerDetailsForPayment

@@ -10,9 +10,9 @@ namespace FamilyForPets.Volunteers.Infrastructure.Repositories
 {
     public class VolunteersRepository : IVolunteerRepository
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly VolunteerDbContext _dbContext;
 
-        public VolunteersRepository(ApplicationDbContext dbContext)
+        public VolunteersRepository(VolunteerDbContext dbContext)
         {
             _dbContext = dbContext;
         }

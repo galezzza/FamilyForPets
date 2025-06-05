@@ -1,4 +1,4 @@
-﻿using FamilyForPets.API.Responses;
+﻿using FamilyForPets.Framework.Responses;
 using FamilyForPets.Shared;
 
 namespace FamilyForPets.API.Middlewares

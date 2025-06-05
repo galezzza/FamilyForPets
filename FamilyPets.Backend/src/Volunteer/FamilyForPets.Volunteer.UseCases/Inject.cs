@@ -14,7 +14,7 @@ namespace FamilyForPets.Volunteers.UseCases
 {
     public static class Inject
     {
-        public static IServiceCollection AddUseCases(this IServiceCollection services)
+        public static IServiceCollection AddVolunteerUseCases(this IServiceCollection services)
         {
             services.AddScoped
                 <ICommandHandler<CreateVolunteerCommand, Guid>, CreateVolunteerHandler>();

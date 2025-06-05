@@ -1,7 +1,6 @@
-﻿using FamilyForPets.API.Extentions;
+﻿using FamilyForPets.API;
+using FamilyForPets.API.Extentions;
 using FamilyForPets.API.Middlewares;
-using FamilyForPets.Infrastructure;
-using FamilyForPets.UseCases;
 using Serilog;
 using Serilog.Events;
 
@@ -23,9 +22,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSerilog();
 builder.Services.AddTransient<ExceptionMiddleware>();
 
-builder.Services
-    .AddInfrastrucutre()
-    .AddUseCases();
+builder.Services.AddVolunteerModule();
 
 var app = builder.Build();
 
@@ -38,8 +35,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
-    await app.ApplyMigration();
-    await app.OpenSeqInBrowser();
+    //await app.ApplyMigration();
+    app.OpenSeqInBrowser();
 }
 
 app.UseHttpsRedirection();

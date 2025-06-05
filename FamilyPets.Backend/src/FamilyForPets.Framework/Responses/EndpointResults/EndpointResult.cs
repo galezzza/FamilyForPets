@@ -3,7 +3,7 @@ using FamilyForPets.Shared;
 using Microsoft.AspNetCore.Http;
 using IResult = Microsoft.AspNetCore.Http.IResult;
 
-namespace FamilyForPets.API.Responses.EndpointResults
+namespace FamilyForPets.Framework.Responses.EndpointResults
 {
     public class EndpointResult<TValue> : IResult
     {

@@ -1,9 +1,9 @@
 ﻿using System.Net;
-using FamilyForPets.API.Responses;
+using FamilyForPets.Framework.Responses;
 using FamilyForPets.Shared;
 using Microsoft.AspNetCore.Http;
 
-namespace FamilyForPets.API.Responses.EndpointResults
+namespace FamilyForPets.Framework.Responses.EndpointResults
 {
     public class ErrorsResult : IResult
     {

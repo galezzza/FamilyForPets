@@ -1,4 +1,4 @@
-﻿using FamilyForPets.API.Responses.EndpointResults;
+﻿using FamilyForPets.Framework.Responses.EndpointResults;
 using FamilyForPets.Shared.Abstractions;
 using FamilyForPets.Volunteers.API.Requests.CreateVolunteer;
 using FamilyForPets.Volunteers.API.Requests.UpdateVolunteer;

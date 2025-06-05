@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FamilyForPets.Species.Domain;
+﻿using FamilyForPets.Species.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SpeciesEntity = FamilyForPets.Species.Domain.Species;

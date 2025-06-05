@@ -1,6 +1,6 @@
 ﻿using FamilyForPets.Shared;
 
-namespace FamilyForPets.API.Responses
+namespace FamilyForPets.Framework.Responses
 {
     public record ResponseEnvelope
     {

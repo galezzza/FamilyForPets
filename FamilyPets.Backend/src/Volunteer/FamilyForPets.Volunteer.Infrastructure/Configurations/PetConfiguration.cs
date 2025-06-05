@@ -1,5 +1,5 @@
-﻿using FamilyForPets.Infrastructure.Configurations.Converters;
-using FamilyForPets.Shared;
+﻿using FamilyForPets.Shared;
+using FamilyForPets.Shared.Configurations.Converters;
 using FamilyForPets.Shared.ValueObjects;
 using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.Domain.PetValueObjects;
@@ -65,16 +65,10 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations
             builder.ComplexProperty(p => p.PetBreed, pbb => {
                 pbb.Property(p => p.BreedId)
                     .HasColumnName("breed_id")
-                    .IsRequired()
-                    .HasConversion(
-                        breedId => breedId.Value,
-                        value => BreedId.Create(value));
+                    .IsRequired();
                 pbb.Property(p => p.SpeciesId)
                     .HasColumnName("species_id")
-                    .IsRequired()
-                    .HasConversion(
-                        speciesId => speciesId.Value,
-                        value => SpeciesId.Create(value));
+                    .IsRequired();
             });
 
             builder.Property(p => p.PetHealthDescription)

@@ -27,7 +27,13 @@
   <ItemGroup>
     <ProjectReference Include="..\FamilyPets.Shared\FamilyForPets.Shared.csproj" />
     <ProjectReference Include="..\Species\FamilyForPets.Species.API\FamilyForPets.Species.API.csproj" />
+    <ProjectReference Include="..\Species\FamilyForPets.Species.Domain\FamilyForPets.Species.Domain.csproj" />
+    <ProjectReference Include="..\Species\FamilyForPets.Species.Infrastructure\FamilyForPets.Species.Infrastructure.csproj" />
+    <ProjectReference Include="..\Species\FamilyForPets.Species.UseCases\FamilyForPets.Species.UseCases.csproj" />
     <ProjectReference Include="..\Volunteer\FamilyForPets.Volunteer.API\FamilyForPets.Volunteers.API.csproj" />
+    <ProjectReference Include="..\Volunteer\FamilyForPets.Volunteer.Domain\FamilyForPets.Volunteers.Domain.csproj" />
+    <ProjectReference Include="..\Volunteer\FamilyForPets.Volunteer.Infrastructure\FamilyForPets.Volunteers.Infrastructure.csproj" />
+    <ProjectReference Include="..\Volunteer\FamilyForPets.Volunteer.UseCases\FamilyForPets.Volunteers.UseCases.csproj" />
   </ItemGroup>
 
 </Project>

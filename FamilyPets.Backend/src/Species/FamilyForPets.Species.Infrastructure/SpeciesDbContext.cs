@@ -3,12 +3,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SpeciesEntity = FamilyForPets.Species.Domain.Species;
 
-namespace FamilyForPets.Volunteers.Infrastructure
+namespace FamilyForPets.Species.Infrastructure
 {
-    public class ApplicationDbContext(IConfiguration configuration) : DbContext
+    public class SpeciesDbContext(IConfiguration configuration) : DbContext
     {
         private const string DATABASE = "Database";
-
 
         public DbSet<SpeciesEntity> Species => Set<SpeciesEntity>();
 
@@ -22,7 +21,7 @@ namespace FamilyForPets.Volunteers.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(SpeciesDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
 

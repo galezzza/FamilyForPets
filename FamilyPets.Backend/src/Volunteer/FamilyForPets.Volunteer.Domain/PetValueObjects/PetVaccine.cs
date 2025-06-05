@@ -1,5 +1,4 @@
 ﻿using CSharpFunctionalExtensions;
-using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
 using FamilyForPets.Shared;
 
 namespace FamilyForPets.Volunteers.Domain.PetValueObjects

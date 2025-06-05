@@ -2,7 +2,7 @@
 using System.Net;
 using Microsoft.AspNetCore.Http;
 
-namespace FamilyForPets.API.Responses.EndpointResults
+namespace FamilyForPets.Framework.Responses.EndpointResults
 {
     public class SuccesResult<TValue> : IResult
     {

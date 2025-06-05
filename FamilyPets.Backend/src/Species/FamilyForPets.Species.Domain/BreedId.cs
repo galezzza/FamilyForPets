@@ -1,6 +1,4 @@
-﻿using FamilyForPets.Domain.VolunteerAgregate;
-using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
-using FamilyForPets.Shared.ValueObjects.IDs;
+﻿using FamilyForPets.Shared.ValueObjects.IDs;
 
 namespace FamilyForPets.Species.Domain
 {

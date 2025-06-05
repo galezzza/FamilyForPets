@@ -1,21 +1,27 @@
 ﻿using System.Diagnostics;
-using FamilyForPets.Infrastructure;
+using FamilyForPets.Species.Infrastructure;
+using FamilyForPets.Volunteers.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace FamilyForPets.API.Extentions
 {
     public static class AppExtensions
     {
-        public static async Task ApplyMigration(this WebApplication app)
-        {
-            await using AsyncServiceScope scope = app.Services.CreateAsyncScope();
+        //public static async Task ApplyMigration(this WebApplication app)
+        //{
+        //    await using AsyncServiceScope scope = app.Services.CreateAsyncScope();
 
-            ApplicationDbContext dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        //    SpeciesDbContext speciesDbContext = scope.ServiceProvider
+        //        .GetRequiredService<SpeciesDbContext>();
+        //    VolunteerDbContext volunteerDbContext = scope.ServiceProvider
+        //        .GetRequiredService<VolunteerDbContext>();
 
-            await dbContext.Database.MigrateAsync();
-        }
+        //    await speciesDbContext.Database.MigrateAsync();
 
-        public static async Task OpenSeqInBrowser(this WebApplication app)
+        //    await volunteerDbContext.Database.MigrateAsync();
+        //}
+
+        public static void OpenSeqInBrowser(this WebApplication app)
         {
             Process.Start(new ProcessStartInfo
             {
