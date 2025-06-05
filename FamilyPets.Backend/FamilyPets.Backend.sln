@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteer.Inf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteer.API", "src\Volunteer\FamilyForPets.Volunteer.API\FamilyForPets.Volunteer.API.csproj", "{F2F4228C-5E4A-4EEA-8E5C-07EFDBAE8CB2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Framework", "src\FamilyForPets.Framework\FamilyForPets.Framework.csproj", "{59556A48-4D27-410E-8D99-D40CDDDC0DEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{F2F4228C-5E4A-4EEA-8E5C-07EFDBAE8CB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2F4228C-5E4A-4EEA-8E5C-07EFDBAE8CB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2F4228C-5E4A-4EEA-8E5C-07EFDBAE8CB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59556A48-4D27-410E-8D99-D40CDDDC0DEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59556A48-4D27-410E-8D99-D40CDDDC0DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59556A48-4D27-410E-8D99-D40CDDDC0DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59556A48-4D27-410E-8D99-D40CDDDC0DEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +98,7 @@ Global
 		{516B475F-48E5-4614-A2A1-E5F4B907212B} = {4ECC13A5-2008-4C93-8811-367772CB9E43}
 		{E946D5B3-B8DC-444C-B968-6E98631744E0} = {4ECC13A5-2008-4C93-8811-367772CB9E43}
 		{F2F4228C-5E4A-4EEA-8E5C-07EFDBAE8CB2} = {4ECC13A5-2008-4C93-8811-367772CB9E43}
+		{59556A48-4D27-410E-8D99-D40CDDDC0DEE} = {4ECC13A5-2008-4C93-8811-367772CB9E43}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BF0D6A16-A1B7-4BD7-B9F0-246FB31ECC14}

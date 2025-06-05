@@ -29,6 +29,7 @@
     <ProjectReference Include="..\FamilyPets.Infrastructure\FamilyForPets.Infrastructure.csproj" />
     <ProjectReference Include="..\FamilyPets.Shared\FamilyForPets.Shared.csproj" />
     <ProjectReference Include="..\FamilyPets.UseCases\FamilyForPets.UseCases.csproj" />
+    <ProjectReference Include="..\Volunteer\FamilyForPets.Volunteer.API\FamilyForPets.Volunteer.API.csproj" />
   </ItemGroup>
 
   <ItemGroup>
