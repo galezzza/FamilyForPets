@@ -1,4 +1,5 @@
-﻿using FamilyForPets.Volunteers.Infrastructure;
+﻿using FamilyForPets.Species.Infrastructure;
+using FamilyForPets.Volunteers.Infrastructure;
 using FamilyForPets.Volunteers.UseCases;
 
 namespace FamilyForPets.API
@@ -10,6 +11,14 @@ namespace FamilyForPets.API
         {
             services.AddVolunteerInfrastrucutre();
             services.AddVolunteerUseCases();
+
+            return services;
+        }
+
+        public static IServiceCollection AddSpeciesModule(
+            this IServiceCollection services)
+        {
+            services.AddSpeciesInfrastrucutre();
 
             return services;
         }

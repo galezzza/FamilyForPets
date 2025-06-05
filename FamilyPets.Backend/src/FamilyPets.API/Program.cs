@@ -23,6 +23,7 @@ builder.Services.AddSerilog();
 builder.Services.AddTransient<ExceptionMiddleware>();
 
 builder.Services.AddVolunteerModule();
+builder.Services.AddSpeciesModule();
 
 var app = builder.Build();
 
@@ -35,7 +36,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
-    //await app.ApplyMigration();
+    await app.ApplyMigration();
     app.OpenSeqInBrowser();
 }
 

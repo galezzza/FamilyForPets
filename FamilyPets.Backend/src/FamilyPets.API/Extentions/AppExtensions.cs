@@ -7,19 +7,20 @@ namespace FamilyForPets.API.Extentions
 {
     public static class AppExtensions
     {
-        //public static async Task ApplyMigration(this WebApplication app)
-        //{
-        //    await using AsyncServiceScope scope = app.Services.CreateAsyncScope();
+        public static async Task ApplyMigration(this WebApplication app)
+        {
+            await using AsyncServiceScope scope2 = app.Services.CreateAsyncScope();
 
-        //    SpeciesDbContext speciesDbContext = scope.ServiceProvider
-        //        .GetRequiredService<SpeciesDbContext>();
-        //    VolunteerDbContext volunteerDbContext = scope.ServiceProvider
-        //        .GetRequiredService<VolunteerDbContext>();
+            VolunteerDbContext volunteerDbContext = scope2.ServiceProvider
+                .GetRequiredService<VolunteerDbContext>();
+            await volunteerDbContext.Database.MigrateAsync();
 
-        //    await speciesDbContext.Database.MigrateAsync();
+            await using AsyncServiceScope scope1 = app.Services.CreateAsyncScope();
 
-        //    await volunteerDbContext.Database.MigrateAsync();
-        //}
+            SpeciesDbContext speciesDbContext = scope1.ServiceProvider
+                .GetRequiredService<SpeciesDbContext>();
+            await speciesDbContext.Database.MigrateAsync();
+        }
 
         public static void OpenSeqInBrowser(this WebApplication app)
         {
