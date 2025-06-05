@@ -11,8 +11,6 @@ namespace FamilyForPets.Volunteers.Infrastructure
 
         public DbSet<Volunteer> Volunteers => Set<Volunteer>();
 
-        //public DbSet<Species> Species => Set<Species>();
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(configuration.GetConnectionString(DATABASE));

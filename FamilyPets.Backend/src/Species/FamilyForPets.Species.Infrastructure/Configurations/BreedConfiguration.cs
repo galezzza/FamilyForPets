@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FamilyForPets.Domain.SpeciesAgregate;
-using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
+using FamilyForPets.Species.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SpeciesEntity = FamilyForPets.Species.Domain.Species;
 
 namespace FamilyForPets.Species.Infrastructure.Configurations
 {
@@ -25,7 +23,7 @@ namespace FamilyForPets.Species.Infrastructure.Configurations
 
             builder.Property(s => s.Name)
                 .IsRequired()
-                .HasMaxLength(Species.MAX_NAME_LENGHT);
+                .HasMaxLength(SpeciesEntity.MAX_NAME_LENGHT);
         }
     }
 

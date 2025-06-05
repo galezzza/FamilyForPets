@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FamilyForPets.Domain.SpeciesAgregate;
-using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
+﻿using FamilyForPets.Species.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SpeciesEntity = FamilyForPets.Species.Domain.Species;
 
 namespace FamilyForPets.Species.Infrastructure.Configurations
 {
-    public class SpeciesConfiguration : IEntityTypeConfiguration<Species>
+    public class SpeciesConfiguration : IEntityTypeConfiguration<SpeciesEntity>
     {
-        public void Configure(EntityTypeBuilder<Species> builder)
+        public void Configure(EntityTypeBuilder<SpeciesEntity> builder)
         {
             builder.ToTable("species");
 
@@ -25,7 +20,7 @@ namespace FamilyForPets.Species.Infrastructure.Configurations
 
             builder.Property(s => s.Name)
                 .IsRequired()
-                .HasMaxLength(Species.MAX_NAME_LENGHT);
+                .HasMaxLength(SpeciesEntity.MAX_NAME_LENGHT);
 
             builder.HasMany(v => v.Breeds)
                 .WithOne()

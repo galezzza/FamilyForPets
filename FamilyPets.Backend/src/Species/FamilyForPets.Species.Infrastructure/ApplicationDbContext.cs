@@ -1,7 +1,7 @@
-﻿using FamilyForPets.Volunteers.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using SpeciesEntity = FamilyForPets.Species.Domain.Species;
 
 namespace FamilyForPets.Volunteers.Infrastructure
 {
@@ -10,7 +10,7 @@ namespace FamilyForPets.Volunteers.Infrastructure
         private const string DATABASE = "Database";
 
 
-        public DbSet<Species> Species => Set<Species>();
+        public DbSet<SpeciesEntity> Species => Set<SpeciesEntity>();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
