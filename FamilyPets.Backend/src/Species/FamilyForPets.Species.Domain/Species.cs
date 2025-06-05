@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.Shared;
 
-namespace FamilyForPets.Domain.SpeciesAgregate
+namespace FamilyForPets.Species.Domain
 {
     public class Species : Entity<SpeciesId>
     {

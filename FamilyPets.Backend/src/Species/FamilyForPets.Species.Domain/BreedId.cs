@@ -2,7 +2,7 @@
 using FamilyForPets.Domain.VolunteerAgregate.PetValueObjects;
 using FamilyForPets.Shared.ValueObjects.IDs;
 
-namespace FamilyForPets.Domain.SpeciesAgregate
+namespace FamilyForPets.Species.Domain
 {
     public class BreedId : CustomId<BreedId>, ICustomId<BreedId>
     {

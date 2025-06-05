@@ -8,25 +8,30 @@ using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FamilyForPets.Infrastructure.Configurations
+namespace FamilyForPets.Species.Infrastructure.Configurations
 {
-    public class BreedConfiguration : IEntityTypeConfiguration<Breed>
+    public class SpeciesConfiguration : IEntityTypeConfiguration<Species>
     {
-        public void Configure(EntityTypeBuilder<Breed> builder)
+        public void Configure(EntityTypeBuilder<Species> builder)
         {
-            builder.ToTable("breeds");
+            builder.ToTable("species");
 
             builder.HasKey(s => s.Id);
 
             builder.Property(s => s.Id)
                 .HasConversion(
                     id => id.Value,
-                    value => BreedId.Create(value));
+                    value => SpeciesId.Create(value));
 
             builder.Property(s => s.Name)
                 .IsRequired()
                 .HasMaxLength(Species.MAX_NAME_LENGHT);
+
+            builder.HasMany(v => v.Breeds)
+                .WithOne()
+                .HasForeignKey("species_id")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
         }
     }
-
 }
