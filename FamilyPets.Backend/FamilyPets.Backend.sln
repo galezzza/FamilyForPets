@@ -23,13 +23,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Shared", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4ECC13A5-2008-4C93-8811-367772CB9E43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteer.Domain", "src\Volunteer\FamilyForPets.Volunteer.Domain\FamilyForPets.Volunteer.Domain.csproj", "{F9D39D83-9843-41BF-8929-CF36E3199DA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteers.Domain", "src\Volunteer\FamilyForPets.Volunteer.Domain\FamilyForPets.Volunteers.Domain.csproj", "{F9D39D83-9843-41BF-8929-CF36E3199DA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteer.UseCases", "src\Volunteer\FamilyForPets.Volunteer.UseCases\FamilyForPets.Volunteer.UseCases.csproj", "{516B475F-48E5-4614-A2A1-E5F4B907212B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteers.UseCases", "src\Volunteer\FamilyForPets.Volunteer.UseCases\FamilyForPets.Volunteers.UseCases.csproj", "{516B475F-48E5-4614-A2A1-E5F4B907212B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteer.Infrastructure", "src\Volunteer\FamilyForPets.Volunteer.Infrastructure\FamilyForPets.Volunteer.Infrastructure.csproj", "{E946D5B3-B8DC-444C-B968-6E98631744E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteers.Infrastructure", "src\Volunteer\FamilyForPets.Volunteer.Infrastructure\FamilyForPets.Volunteers.Infrastructure.csproj", "{E946D5B3-B8DC-444C-B968-6E98631744E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteer.API", "src\Volunteer\FamilyForPets.Volunteer.API\FamilyForPets.Volunteer.API.csproj", "{F2F4228C-5E4A-4EEA-8E5C-07EFDBAE8CB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteers.API", "src\Volunteer\FamilyForPets.Volunteer.API\FamilyForPets.Volunteers.API.csproj", "{F2F4228C-5E4A-4EEA-8E5C-07EFDBAE8CB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Framework", "src\FamilyForPets.Framework\FamilyForPets.Framework.csproj", "{59556A48-4D27-410E-8D99-D40CDDDC0DEE}"
 EndProject
