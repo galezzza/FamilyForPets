@@ -1,7 +1,7 @@
 ﻿using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
 using FamilyForPets.Shared;
+using FamilyForPets.Shared.Validation;
 using FamilyForPets.Shared.ValueObjects;
-using FamilyForPets.UseCases.Validation;
 using FluentValidation;
 
 namespace FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer

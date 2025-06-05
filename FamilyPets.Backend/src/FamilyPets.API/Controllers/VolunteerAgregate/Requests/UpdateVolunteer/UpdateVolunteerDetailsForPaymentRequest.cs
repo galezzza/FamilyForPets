@@ -1,6 +1,4 @@
-﻿using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
-using FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunteerDetailsForPayment;
-using FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunteerSocialNetworks;
+﻿using FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunteerDetailsForPayment;
 
 namespace FamilyForPets.API.Controllers.VolunteerAgregate.Requests.UpdateVolunteer
 {

@@ -1,4 +1,4 @@
-﻿using FamilyForPets.UseCases.Abstractions;
+﻿using FamilyForPets.Shared.Abstractions;
 
 namespace FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunteerContactData
 {

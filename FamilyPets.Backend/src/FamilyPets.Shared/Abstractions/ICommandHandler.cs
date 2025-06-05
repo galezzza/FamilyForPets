@@ -1,8 +1,6 @@
-﻿
-using CSharpFunctionalExtensions;
-using FamilyForPets.Shared;
+﻿using CSharpFunctionalExtensions;
 
-namespace FamilyForPets.UseCases.Abstractions
+namespace FamilyForPets.Shared.Abstractions
 {
     public interface ICommandHandler<in TCommand, TResponse>
         where TCommand : ICommand

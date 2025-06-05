@@ -1,5 +1,5 @@
-﻿using FamilyForPets.Shared.ValueObjects;
-using FamilyForPets.UseCases.Validation;
+﻿using FamilyForPets.Shared.Validation;
+using FamilyForPets.Shared.ValueObjects;
 using FluentValidation;
 
 namespace FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunteerMainInfo

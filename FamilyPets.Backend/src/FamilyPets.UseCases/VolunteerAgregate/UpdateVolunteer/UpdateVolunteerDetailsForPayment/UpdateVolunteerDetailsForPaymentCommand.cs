@@ -1,5 +1,5 @@
-﻿using FamilyForPets.UseCases.Abstractions;
-using FamilyForPets.UseCases.DTOs;
+﻿using FamilyForPets.Shared.Abstractions;
+using FamilyForPets.Shared.DTOs;
 
 namespace FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunteerDetailsForPayment
 {

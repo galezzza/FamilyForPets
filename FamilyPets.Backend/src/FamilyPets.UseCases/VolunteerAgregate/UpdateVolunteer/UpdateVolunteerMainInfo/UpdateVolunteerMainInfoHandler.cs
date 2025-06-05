@@ -2,10 +2,9 @@
 using FamilyForPets.Domain.VolunteerAgregate;
 using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
 using FamilyForPets.Shared;
+using FamilyForPets.Shared.Abstractions;
+using FamilyForPets.Shared.Extentions.ValidationExtentions;
 using FamilyForPets.Shared.ValueObjects;
-using FamilyForPets.UseCases.Abstractions;
-using FamilyForPets.UseCases.Extentions.ValidationExtentions;
-using FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunteerDetailsForPayment;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;

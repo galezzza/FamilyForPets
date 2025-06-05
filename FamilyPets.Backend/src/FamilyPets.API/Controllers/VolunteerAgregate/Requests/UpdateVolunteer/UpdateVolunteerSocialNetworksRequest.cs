@@ -1,4 +1,4 @@
-﻿using FamilyForPets.UseCases.DTOs;
+﻿using FamilyForPets.Shared.DTOs;
 using FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunteerSocialNetworks;
 
 namespace FamilyForPets.API.Controllers.VolunteerAgregate.Requests.UpdateVolunteer

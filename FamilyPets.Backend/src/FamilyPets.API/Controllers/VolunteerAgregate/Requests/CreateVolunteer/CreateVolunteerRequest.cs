@@ -1,5 +1,4 @@
-﻿using FamilyForPets.UseCases.DTOs;
-using FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer;
+﻿using FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer;
 
 namespace FamilyForPets.API.Controllers.VolunteerAgregate.Requests.CreateVolunteer
 {
@@ -15,14 +14,14 @@ namespace FamilyForPets.API.Controllers.VolunteerAgregate.Requests.CreateVolunte
     {
         public CreateVolunteerCommand ToCommand() =>
             new CreateVolunteerCommand(
-                new FullNameDto(
+                new Shared.DTOs.FullNameDto(
                     Name,
                     Surname,
                     AdditionalName),
                 Email,
                 ExperienceInYears,
                 PhoneNumber,
-                new PaymentDetailsDto(
+                new Shared.DTOs.PaymentDetailsDto(
                     CardNumber,
                     OtherPaymentDetails));
     };

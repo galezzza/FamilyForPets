@@ -1,8 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
-using FamilyForPets.Shared;
 using FluentValidation.Results;
 
-namespace FamilyForPets.UseCases.Extentions.ValidationExtentions
+namespace FamilyForPets.Shared.Extentions.ValidationExtentions
 {
     public static class ValidationExtentions
     {

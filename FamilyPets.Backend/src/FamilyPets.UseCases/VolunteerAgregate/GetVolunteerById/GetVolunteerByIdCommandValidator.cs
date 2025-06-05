@@ -1,6 +1,5 @@
 ﻿using FamilyForPets.Shared;
-using FamilyForPets.UseCases.Validation;
-using FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunteerDetailsForPayment;
+using FamilyForPets.Shared.Validation;
 using FluentValidation;
 
 namespace FamilyForPets.UseCases.VolunteerAgregate.GetVolunteerById

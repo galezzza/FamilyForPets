@@ -2,7 +2,7 @@
 using FamilyForPets.Shared;
 using FluentValidation;
 
-namespace FamilyForPets.UseCases.Validation
+namespace FamilyForPets.Shared.Validation
 {
     public static class ValueObjectValidator
     {

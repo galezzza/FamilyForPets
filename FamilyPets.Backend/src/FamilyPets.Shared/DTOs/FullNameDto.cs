@@ -1,4 +1,4 @@
-﻿namespace FamilyForPets.UseCases.DTOs
+﻿namespace FamilyForPets.Shared.DTOs
 {
     public record FullNameDto(
         string Name,

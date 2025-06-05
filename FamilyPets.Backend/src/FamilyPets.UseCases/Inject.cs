@@ -1,5 +1,5 @@
 ﻿using FamilyForPets.Domain.VolunteerAgregate;
-using FamilyForPets.UseCases.Abstractions;
+using FamilyForPets.Shared.Abstractions;
 using FamilyForPets.UseCases.VolunteerAgregate.CreateVolunteer;
 using FamilyForPets.UseCases.VolunteerAgregate.GetVolunteerById;
 using FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer;

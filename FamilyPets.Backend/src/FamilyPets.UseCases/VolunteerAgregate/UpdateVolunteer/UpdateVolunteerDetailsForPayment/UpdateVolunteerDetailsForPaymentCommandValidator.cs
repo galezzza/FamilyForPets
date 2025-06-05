@@ -1,6 +1,5 @@
 ﻿using FamilyForPets.Domain.VolunteerAgregate.VolunteerValueObjects;
-using FamilyForPets.UseCases.Validation;
-using FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunteerSocialNetworks;
+using FamilyForPets.Shared.Validation;
 using FluentValidation;
 
 namespace FamilyForPets.UseCases.VolunteerAgregate.UpdateVolunteer.UpdateVolunteerDetailsForPayment
