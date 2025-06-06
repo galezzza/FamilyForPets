@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.WEB", "src\FamilyPets.API\FamilyForPets.WEB.csproj", "{1E3C2BC2-B9FC-41AB-8BF7-EFCEC5C3FC47}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.WEB", "src\FamilyPets.WEB\FamilyForPets.WEB.csproj", "{1E3C2BC2-B9FC-41AB-8BF7-EFCEC5C3FC47}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,13 +17,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Core", "src\S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4ECC13A5-2008-4C93-8811-367772CB9E43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteers.Domain", "src\Volunteer\FamilyForPets.Volunteer.Domain\FamilyForPets.Volunteers.Domain.csproj", "{F9D39D83-9843-41BF-8929-CF36E3199DA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteers.Domain", "src\Volunteers\FamilyForPets.Volunteers.Domain\FamilyForPets.Volunteers.Domain.csproj", "{F9D39D83-9843-41BF-8929-CF36E3199DA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteers.UseCases", "src\Volunteer\FamilyForPets.Volunteer.UseCases\FamilyForPets.Volunteers.UseCases.csproj", "{516B475F-48E5-4614-A2A1-E5F4B907212B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteers.UseCases", "src\Volunteers\FamilyForPets.Volunteers.UseCases\FamilyForPets.Volunteers.UseCases.csproj", "{516B475F-48E5-4614-A2A1-E5F4B907212B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteers.Infrastructure", "src\Volunteer\FamilyForPets.Volunteer.Infrastructure\FamilyForPets.Volunteers.Infrastructure.csproj", "{E946D5B3-B8DC-444C-B968-6E98631744E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteers.Infrastructure", "src\Volunteers\FamilyForPets.Volunteers.Infrastructure\FamilyForPets.Volunteers.Infrastructure.csproj", "{E946D5B3-B8DC-444C-B968-6E98631744E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteers.API", "src\Volunteer\FamilyForPets.Volunteer.API\FamilyForPets.Volunteers.API.csproj", "{F2F4228C-5E4A-4EEA-8E5C-07EFDBAE8CB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteers.API", "src\Volunteers\FamilyForPets.Volunteers.API\FamilyForPets.Volunteers.API.csproj", "{F2F4228C-5E4A-4EEA-8E5C-07EFDBAE8CB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Framework", "src\Shared\FamilyForPets.Framework\FamilyForPets.Framework.csproj", "{59556A48-4D27-410E-8D99-D40CDDDC0DEE}"
 EndProject
@@ -35,11 +35,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Species.API",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Species.Infrastructure", "src\Species\FamilyForPets.Species.Infrastructure\FamilyForPets.Species.Infrastructure.csproj", "{3364A8D1-51E7-4337-9DE2-90D51B74E70C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteers.Contracts", "src\Volunteer\FamilyForPets.Volunteer.Contracts\FamilyForPets.Volunteers.Contracts.csproj", "{CF832F59-63B8-4AC5-8932-3B5B2154D511}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Volunteers.Contracts", "src\Volunteers\FamilyForPets.Volunteers.Contracts\FamilyForPets.Volunteers.Contracts.csproj", "{CF832F59-63B8-4AC5-8932-3B5B2154D511}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyForPets.Species.Contracts", "src\Species\FamilyForPets.Species.Contracts\FamilyForPets.Species.Contracts.csproj", "{321743EB-2592-48AF-810A-B0B801BDF411}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Volunteer", "Volunteer", "{4B4A023F-6FF8-4325-8FB0-2ACA0DE2AD3A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Volunteers", "Volunteers", "{4B4A023F-6FF8-4325-8FB0-2ACA0DE2AD3A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Species", "Species", "{64F82029-63E7-4E3B-BA61-387F8E9C9F95}"
 EndProject
