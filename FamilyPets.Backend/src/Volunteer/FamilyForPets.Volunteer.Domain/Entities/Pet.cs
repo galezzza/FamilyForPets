@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
-using FamilyForPets.Shared;
-using FamilyForPets.Shared.ValueObjects;
+using FamilyForPets.SharedKernel;
+using FamilyForPets.SharedKernel.ValueObjects;
 using FamilyForPets.Volunteers.Domain.PetValueObjects;
 using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 

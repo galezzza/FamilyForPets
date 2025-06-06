@@ -1,4 +1,4 @@
-﻿using FamilyForPets.Shared.ValueObjects.IDs;
+﻿using FamilyForPets.SharedKernel.ValueObjects.IDs;
 
 namespace FamilyForPets.Volunteers.Domain.VolunteerValueObjects
 {

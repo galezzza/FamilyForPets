@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.Shared.Abstractions
 {

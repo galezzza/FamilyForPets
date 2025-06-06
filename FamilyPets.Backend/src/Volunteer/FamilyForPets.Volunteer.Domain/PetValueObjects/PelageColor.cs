@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using CSharpFunctionalExtensions;
-using FamilyForPets.Shared;
+using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.Volunteers.Domain.PetValueObjects
 {

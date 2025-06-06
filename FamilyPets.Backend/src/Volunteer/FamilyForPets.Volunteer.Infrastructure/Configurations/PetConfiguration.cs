@@ -1,6 +1,6 @@
-﻿using FamilyForPets.Shared;
-using FamilyForPets.Shared.Configurations.Converters;
-using FamilyForPets.Shared.ValueObjects;
+﻿using FamilyForPets.Shared.Configurations.Converters;
+using FamilyForPets.SharedKernel;
+using FamilyForPets.SharedKernel.ValueObjects;
 using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.Domain.PetValueObjects;
 using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;

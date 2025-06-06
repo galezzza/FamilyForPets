@@ -1,6 +1,4 @@
-﻿using System.Net;
-using FamilyForPets.Framework.Responses;
-using FamilyForPets.Shared;
+﻿using FamilyForPets.SharedKernel;
 using Microsoft.AspNetCore.Http;
 
 namespace FamilyForPets.Framework.Responses.EndpointResults

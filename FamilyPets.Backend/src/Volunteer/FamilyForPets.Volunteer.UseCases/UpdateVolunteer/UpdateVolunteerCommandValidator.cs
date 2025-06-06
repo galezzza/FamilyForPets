@@ -1,6 +1,6 @@
-﻿using FamilyForPets.Shared;
+﻿using FamilyForPets.SharedKernel;
 using FamilyForPets.Shared.Validation;
-using FamilyForPets.Shared.ValueObjects;
+using FamilyForPets.SharedKernel.ValueObjects;
 using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 using FluentValidation;
 

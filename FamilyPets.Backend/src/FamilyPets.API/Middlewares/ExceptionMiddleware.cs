@@ -1,5 +1,5 @@
 ﻿using FamilyForPets.Framework.Responses;
-using FamilyForPets.Shared;
+using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.API.Middlewares
 {

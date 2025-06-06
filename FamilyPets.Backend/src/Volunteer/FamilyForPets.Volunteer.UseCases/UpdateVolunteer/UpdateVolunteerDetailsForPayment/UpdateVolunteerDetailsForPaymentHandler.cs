@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
-using FamilyForPets.Shared;
 using FamilyForPets.Shared.Abstractions;
 using FamilyForPets.Shared.Extentions.ValidationExtentions;
+using FamilyForPets.SharedKernel;
 using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 using FluentValidation;

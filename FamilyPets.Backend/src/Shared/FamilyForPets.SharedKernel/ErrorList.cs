@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace FamilyForPets.Shared
+namespace FamilyForPets.SharedKernel
 {
     public record ErrorList : IEnumerable<Error>
     {

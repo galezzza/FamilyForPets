@@ -1,4 +1,4 @@
-﻿namespace FamilyForPets.Shared
+﻿namespace FamilyForPets.SharedKernel
 {
     public class ProjectConstants
     {

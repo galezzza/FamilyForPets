@@ -1,4 +1,4 @@
-﻿using FamilyForPets.Shared;
+﻿using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.Framework.Responses
 {

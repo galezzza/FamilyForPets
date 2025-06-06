@@ -1,5 +1,5 @@
 ﻿using FamilyForPets.Shared.Validation;
-using FamilyForPets.Shared.ValueObjects;
+using FamilyForPets.SharedKernel.ValueObjects;
 using FluentValidation;
 
 namespace FamilyForPets.Volunteers.UseCases.UpdateVolunteer.UpdateVolunteerContactData

@@ -1,8 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using CSharpFunctionalExtensions;
-using FamilyForPets.Shared;
 
-namespace FamilyForPets.Shared.ValueObjects
+namespace FamilyForPets.SharedKernel.ValueObjects
 {
     public class PhoneNumber : ValueObject
     {

@@ -1,5 +1,5 @@
-﻿using FamilyForPets.Shared;
-using FamilyForPets.Shared.Validation;
+﻿using FamilyForPets.Shared.Validation;
+using FamilyForPets.SharedKernel;
 using FluentValidation;
 
 namespace FamilyForPets.Volunteers.UseCases.GetVolunteerById

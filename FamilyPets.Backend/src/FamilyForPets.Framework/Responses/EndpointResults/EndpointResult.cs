@@ -1,5 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
-using FamilyForPets.Shared;
+using FamilyForPets.SharedKernel;
 using Microsoft.AspNetCore.Http;
 using IResult = Microsoft.AspNetCore.Http.IResult;
 

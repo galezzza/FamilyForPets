@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.SharedKernel;
 using FluentValidation.Results;
 
 namespace FamilyForPets.Shared.Extentions.ValidationExtentions

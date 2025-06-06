@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FamilyForPets.Shared
+﻿namespace FamilyForPets.SharedKernel
 {
     public record Error
     {
@@ -50,7 +43,7 @@ namespace FamilyForPets.Shared
             if (parts.Length < 3)
                 throw new ArgumentException("Invaid serialized format");
 
-            if (Enum.TryParse<ErrorType>(parts[2], out ErrorType type) == false)
+            if (Enum.TryParse(parts[2], out ErrorType type) == false)
                 throw new ArgumentException("Invaid serialized format");
 
             return new Error(parts[0], parts[1], type);

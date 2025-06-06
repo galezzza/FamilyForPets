@@ -1,4 +1,4 @@
-﻿namespace FamilyForPets.Shared.ValueObjects.IDs
+﻿namespace FamilyForPets.SharedKernel.ValueObjects.IDs
 {
     public interface ICustomId<T>
         where T : CustomId<T>

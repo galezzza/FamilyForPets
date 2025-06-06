@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FamilyPets.Shared\FamilyForPets.Shared.csproj" />
+    <ProjectReference Include="..\Shared\FamilyForPets.SharedKernel\FamilyForPets.SharedKernel.csproj" />
     <ProjectReference Include="..\Species\FamilyForPets.Species.API\FamilyForPets.Species.API.csproj" />
     <ProjectReference Include="..\Species\FamilyForPets.Species.Domain\FamilyForPets.Species.Domain.csproj" />
     <ProjectReference Include="..\Species\FamilyForPets.Species.Infrastructure\FamilyForPets.Species.Infrastructure.csproj" />

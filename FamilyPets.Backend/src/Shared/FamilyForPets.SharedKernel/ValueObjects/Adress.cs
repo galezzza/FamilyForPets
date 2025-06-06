@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
-using FamilyForPets.Shared;
+using FamilyForPets.SharedKernel;
 
-namespace FamilyForPets.Shared.ValueObjects
+namespace FamilyForPets.SharedKernel.ValueObjects
 {
     public class Adress : ValueObject
     {

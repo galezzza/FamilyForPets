@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace FamilyForPets.Shared.ValueObjects
+namespace FamilyForPets.SharedKernel.ValueObjects
 {
     public class Mass : ValueObject
     {
