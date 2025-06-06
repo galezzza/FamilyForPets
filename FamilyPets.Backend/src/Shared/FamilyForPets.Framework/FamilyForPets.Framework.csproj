@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\FamilyForPets.SharedKernel\FamilyForPets.SharedKernel.csproj" />
+    <ProjectReference Include="..\FamilyForPets.SharedKernel\FamilyForPets.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>
