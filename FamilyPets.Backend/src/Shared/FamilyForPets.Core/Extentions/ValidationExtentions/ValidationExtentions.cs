@@ -2,7 +2,7 @@
 using FamilyForPets.SharedKernel;
 using FluentValidation.Results;
 
-namespace FamilyForPets.Shared.Extentions.ValidationExtentions
+namespace FamilyForPets.Core.Extentions.ValidationExtentions
 {
     public static class ValidationExtentions
     {

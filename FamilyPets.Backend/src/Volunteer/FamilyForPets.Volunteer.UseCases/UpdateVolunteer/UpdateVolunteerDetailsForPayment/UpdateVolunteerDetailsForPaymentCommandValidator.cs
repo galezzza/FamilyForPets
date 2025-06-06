@@ -1,4 +1,4 @@
-﻿using FamilyForPets.Shared.Validation;
+﻿using FamilyForPets.Core.Validation;
 using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 using FluentValidation;
 

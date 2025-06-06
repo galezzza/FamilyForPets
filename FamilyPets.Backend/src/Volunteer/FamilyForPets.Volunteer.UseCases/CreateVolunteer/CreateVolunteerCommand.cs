@@ -1,5 +1,5 @@
-﻿using FamilyForPets.Shared.Abstractions;
-using FamilyForPets.Shared.DTOs;
+﻿using FamilyForPets.Core.Abstractions;
+using FamilyForPets.Core.DTOs;
 
 namespace FamilyForPets.Volunteers.UseCases.CreateVolunteer
 {

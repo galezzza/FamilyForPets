@@ -1,4 +1,4 @@
-﻿using FamilyForPets.Shared.DTOs;
+﻿using FamilyForPets.Core.DTOs;
 
 namespace FamilyForPets.Volunteers.Contracts.Requests.UpdateVolunteer
 {

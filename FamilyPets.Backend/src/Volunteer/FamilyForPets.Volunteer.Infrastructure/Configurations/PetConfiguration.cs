@@ -1,4 +1,4 @@
-﻿using FamilyForPets.Shared.Configurations.Converters;
+﻿using FamilyForPets.Core.Configurations.Converters;
 using FamilyForPets.SharedKernel;
 using FamilyForPets.SharedKernel.ValueObjects;
 using FamilyForPets.Volunteers.Domain.Entities;

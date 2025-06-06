@@ -1,4 +1,4 @@
-﻿using FamilyForPets.Shared.Abstractions;
+﻿using FamilyForPets.Core.Abstractions;
 using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.UseCases.CreateVolunteer;
 using FamilyForPets.Volunteers.UseCases.GetVolunteerById;

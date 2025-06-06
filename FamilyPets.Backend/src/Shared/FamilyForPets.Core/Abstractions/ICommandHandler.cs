@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.SharedKernel;
 
-namespace FamilyForPets.Shared.Abstractions
+namespace FamilyForPets.Core.Abstractions
 {
     public interface ICommandHandler<in TCommand, TResponse>
         where TCommand : ICommand

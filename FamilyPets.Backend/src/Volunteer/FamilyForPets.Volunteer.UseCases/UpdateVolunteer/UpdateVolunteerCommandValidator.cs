@@ -1,8 +1,8 @@
 ﻿using FamilyForPets.SharedKernel;
-using FamilyForPets.Shared.Validation;
 using FamilyForPets.SharedKernel.ValueObjects;
 using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 using FluentValidation;
+using FamilyForPets.Core.Validation;
 
 namespace FamilyForPets.Volunteers.UseCases.UpdateVolunteer
 {

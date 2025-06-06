@@ -3,7 +3,7 @@ using FamilyForPets.Species.Infrastructure;
 using FamilyForPets.Volunteers.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-namespace FamilyForPets.API.Extentions
+namespace FamilyForPets.WEB.Extentions
 {
     public static class AppExtensions
     {

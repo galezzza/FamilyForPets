@@ -2,7 +2,7 @@
 using FamilyForPets.Volunteers.Infrastructure;
 using FamilyForPets.Volunteers.UseCases;
 
-namespace FamilyForPets.API
+namespace FamilyForPets.WEB
 {
     public static class DependencyInjection
     {

@@ -1,6 +1,6 @@
-﻿using FamilyForPets.API;
-using FamilyForPets.API.Extentions;
-using FamilyForPets.API.Middlewares;
+﻿using FamilyForPets.WEB;
+using FamilyForPets.WEB.Extentions;
+using FamilyForPets.WEB.Middlewares;
 using Serilog;
 using Serilog.Events;
 

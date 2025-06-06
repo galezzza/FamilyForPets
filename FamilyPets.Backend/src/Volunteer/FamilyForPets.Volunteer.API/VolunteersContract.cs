@@ -1,5 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
-using FamilyForPets.Shared.DTOs;
+using FamilyForPets.Core.DTOs;
 using FamilyForPets.SharedKernel;
 using FamilyForPets.Volunteers.Contracts;
 using FamilyForPets.Volunteers.Contracts.Requests.CreateVolunteer;

@@ -1,4 +1,4 @@
-﻿namespace FamilyForPets.Shared.DTOs
+﻿namespace FamilyForPets.Core.DTOs
 {
     public record PaymentDetailsDto(
         string CardNumber,

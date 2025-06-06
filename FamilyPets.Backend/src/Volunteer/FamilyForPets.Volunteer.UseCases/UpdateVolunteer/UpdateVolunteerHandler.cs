@@ -1,13 +1,13 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.SharedKernel;
-using FamilyForPets.Shared.Abstractions;
-using FamilyForPets.Shared.Extentions.ValidationExtentions;
 using FamilyForPets.SharedKernel.ValueObjects;
 using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
+using FamilyForPets.Core.Extentions.ValidationExtentions;
+using FamilyForPets.Core.Abstractions;
 
 namespace FamilyForPets.Volunteers.UseCases.UpdateVolunteer
 {

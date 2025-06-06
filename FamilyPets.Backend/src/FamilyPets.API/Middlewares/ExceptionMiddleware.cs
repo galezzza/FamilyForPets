@@ -1,7 +1,7 @@
 ﻿using FamilyForPets.Framework.Responses;
 using FamilyForPets.SharedKernel;
 
-namespace FamilyForPets.API.Middlewares
+namespace FamilyForPets.WEB.Middlewares
 {
     public class ExceptionMiddleware : IMiddleware
     {

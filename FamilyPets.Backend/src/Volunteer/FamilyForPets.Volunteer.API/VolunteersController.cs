@@ -1,6 +1,6 @@
-﻿using FamilyForPets.Framework.Responses.EndpointResults;
-using FamilyForPets.Shared.Abstractions;
-using FamilyForPets.Shared.DTOs;
+﻿using FamilyForPets.Core.Abstractions;
+using FamilyForPets.Core.DTOs;
+using FamilyForPets.Framework.Responses.EndpointResults;
 using FamilyForPets.Volunteers.Contracts.Requests.CreateVolunteer;
 using FamilyForPets.Volunteers.Contracts.Requests.UpdateVolunteer;
 using FamilyForPets.Volunteers.Domain.Entities;
