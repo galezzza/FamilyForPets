@@ -1,11 +1,9 @@
-{
+﻿{
   "profiles": {
     "Docker Compose": {
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
-      "serviceActions": {
-        "familyforpets.api": "StartDebugging"
-      }
+      "serviceActions": {}
     }
   }
 }
