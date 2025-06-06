@@ -1,7 +1,8 @@
 ﻿using FamilyForPets.Framework.Responses.EndpointResults;
 using FamilyForPets.Shared.Abstractions;
-using FamilyForPets.Volunteers.API.Requests.CreateVolunteer;
-using FamilyForPets.Volunteers.API.Requests.UpdateVolunteer;
+using FamilyForPets.Shared.DTOs;
+using FamilyForPets.Volunteers.Contracts.Requests.CreateVolunteer;
+using FamilyForPets.Volunteers.Contracts.Requests.UpdateVolunteer;
 using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.UseCases.CreateVolunteer;
 using FamilyForPets.Volunteers.UseCases.GetVolunteerById;
@@ -38,7 +39,17 @@ namespace FamilyForPets.Volunteers.API
             [FromServices] ICommandHandler<CreateVolunteerCommand, Guid> handler,
             CancellationToken cancellationToken = default)
         {
-            CreateVolunteerCommand command = request.ToCommand();
+            CreateVolunteerCommand command = new CreateVolunteerCommand(
+                new FullNameDto(
+                    request.Name,
+                    request.Surname,
+                    request.AdditionalName),
+                request.Email,
+                request.ExperienceInYears,
+                request.PhoneNumber,
+                new PaymentDetailsDto(
+                    request.CardNumber,
+                    request.OtherPaymentDetails));
 
             // implicit from Result<T, E> to ResponseEnvelope
             return await handler.HandleAsync(command, cancellationToken);
@@ -60,7 +71,10 @@ namespace FamilyForPets.Volunteers.API
             [FromServices] ICommandHandler<UpdateVolunteerSocialNetworksCommand, Guid> handler,
             CancellationToken cancellationToken = default)
         {
-            return await handler.HandleAsync(request.ToCommand(id), cancellationToken);
+            UpdateVolunteerSocialNetworksCommand command = new UpdateVolunteerSocialNetworksCommand(
+                id, request.SocialNetworks);
+
+            return await handler.HandleAsync(command, cancellationToken);
         }
 
         [HttpPatch("{id:guid}/details-for-payment")]
@@ -70,27 +84,36 @@ namespace FamilyForPets.Volunteers.API
             [FromServices] ICommandHandler<UpdateVolunteerDetailsForPaymentCommand, Guid> handler,
             CancellationToken cancellationToken = default)
         {
-            return await handler.HandleAsync(request.ToCommand(id), cancellationToken);
+            UpdateVolunteerDetailsForPaymentCommand command = new UpdateVolunteerDetailsForPaymentCommand(
+                id, new(request.CardNumber, request.OtherDetails));
+
+            return await handler.HandleAsync(command, cancellationToken);
         }
 
         [HttpPatch("{id:guid}/contact-data")]
-        public async Task<EndpointResult<Guid>> UpdataContactData(
+        public async Task<EndpointResult<Guid>> UpdateContactData(
             [FromRoute] Guid id,
             [FromBody] UpdateVolunteerContactDataRequest request,
             [FromServices] ICommandHandler<UpdateVolunteerContactDataCommand, Guid> handler,
             CancellationToken cancellationToken = default)
         {
-            return await handler.HandleAsync(request.ToCommand(id), cancellationToken);
+            UpdateVolunteerContactDataCommand command = new UpdateVolunteerContactDataCommand(
+                id, request.Email, request.PhoneNumber);
+
+            return await handler.HandleAsync(command, cancellationToken);
         }
 
         [HttpPatch("{id:guid}/main-info")]
-        public async Task<EndpointResult<Guid>> UpdataMainInfoData(
+        public async Task<EndpointResult<Guid>> UpdateMainInfoData(
             [FromRoute] Guid id,
             [FromBody] UpdateVolunteerMainInfoRequest request,
             [FromServices] ICommandHandler<UpdateVolunteerMainInfoCommand, Guid> handler,
             CancellationToken cancellationToken = default)
         {
-            return await handler.HandleAsync(request.ToCommand(id), cancellationToken);
+            UpdateVolunteerMainInfoCommand command = new UpdateVolunteerMainInfoCommand(
+                id, new(request.Name, request.Surname, request.AdditionalName), request.Description);
+
+            return await handler.HandleAsync(command, cancellationToken);
         }
 
         [HttpPut("{id:guid}")]
@@ -100,7 +123,16 @@ namespace FamilyForPets.Volunteers.API
             [FromServices] ICommandHandler<UpdateVolunteerCommand, Guid> handler,
             CancellationToken cancellationToken = default)
         {
-            return await handler.HandleAsync(request.ToCommand(id), cancellationToken);
+            UpdateVolunteerCommand command = new UpdateVolunteerCommand(
+                id,
+                request.SocialNetworks,
+                new PaymentDetailsDto(request.CardNumber, request.OtherDetails),
+                new FullNameDto(
+                    request.Name, request.Surname, request.AdditionalName),
+                request.Description,
+                request.PhoneNumber, request.Email);
+
+            return await handler.HandleAsync(command, cancellationToken);
         }
     }
 }
