@@ -1,9 +1,4 @@
 ﻿services:
-  familyforpets.api:
-    image: ${DOCKER_REGISTRY-}familyforpetsapi
-    build:
-      context: .
-      dockerfile: src/FamilyPets.API/Dockerfile
   postgres:
     image: postgres
     container_name: postgres
