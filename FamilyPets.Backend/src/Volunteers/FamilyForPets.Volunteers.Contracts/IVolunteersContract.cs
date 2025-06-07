@@ -12,9 +12,9 @@ namespace FamilyForPets.Volunteers.Contracts
             CreateVolunteerRequest request,
             CancellationToken cancellationToken);
 
-        public Task<Result<Volunteer, ErrorList>> GetById(
-            Guid id,
-            CancellationToken cancellationToken);
+        //public Task<Result<Volunteer, ErrorList>> GetById(
+        //    Guid id,
+        //    CancellationToken cancellationToken);
 
         public Task<Result<Guid, ErrorList>> UpdateSocialNewtworks(
             Guid id,
