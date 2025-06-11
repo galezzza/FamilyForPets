@@ -302,7 +302,7 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                     b.HasOne("FamilyForPets.Volunteers.Domain.Entities.Volunteer", null)
                         .WithMany("AllPets")
                         .HasForeignKey("volunteer_id")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_pets_volunteers_volunteer_id");
 

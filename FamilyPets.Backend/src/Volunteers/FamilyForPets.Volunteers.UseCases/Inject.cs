@@ -1,6 +1,8 @@
 ﻿using FamilyForPets.Core.Abstractions;
 using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.UseCases.CreateVolunteer;
+using FamilyForPets.Volunteers.UseCases.DeleteVolunteer.DeleteVolunteerHard;
+using FamilyForPets.Volunteers.UseCases.DeleteVolunteer.DeleteVolunteerSoft;
 using FamilyForPets.Volunteers.UseCases.GetVolunteerById;
 using FamilyForPets.Volunteers.UseCases.UpdateVolunteer;
 using FamilyForPets.Volunteers.UseCases.UpdateVolunteer.UpdateVolunteerContactData;
@@ -39,6 +41,12 @@ namespace FamilyForPets.Volunteers.UseCases
 
             services.AddScoped<ICommandHandler<UpdateVolunteerCommand, Guid>,
                 UpdateVolunteerHandler>();
+
+            services.AddScoped<ICommandHandler<HardDeleteVolunteerCommand, Guid>,
+                HardDeleteVolunteerHandler>();
+
+            services.AddScoped<ICommandHandler<SoftDeleteVolunteerCommand, Guid>,
+                SoftDeleteVolunteerHandler>();
 
             services.AddValidatorsFromAssembly(typeof(Inject).Assembly);
 

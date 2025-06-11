@@ -24,7 +24,6 @@ namespace FamilyForPets.Volunteers.Domain.PetValueObjects
 
         public string Value { get; }
 
-
         public static Result<HelpStatus, Error> Create(string input)
         {
             if (string.IsNullOrWhiteSpace(input))

@@ -17,7 +17,7 @@ namespace FamilyForPets.SharedKernel
         public virtual void SoftDelete()
         {
             IsDeleted = true;
-            DeletionDate = DateTime.Now;
+            DeletionDate = DateTime.UtcNow;
         }
 
         public virtual void Restore()
