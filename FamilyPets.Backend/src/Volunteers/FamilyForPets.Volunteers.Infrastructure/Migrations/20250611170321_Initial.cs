@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FamilyForPets.Volunteers.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class newInitialMigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,6 +25,8 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                     additional_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     first_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     last_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    is_deleted = table.Column<bool>(type: "boolean", nullable: false),
+                    deletion_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     volunteer_social_newtworks = table.Column<string>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>
@@ -61,6 +63,8 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                     street = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     weight = table.Column<double>(type: "double precision", nullable: false),
                     mass_type_enum = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    is_deleted = table.Column<bool>(type: "boolean", nullable: false),
+                    deletion_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     pet_vaccienes = table.Column<string>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>
