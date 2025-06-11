@@ -2,7 +2,7 @@
 
 namespace FamilyForPets.SharedKernel.ValueObjects
 {
-    public class FullName : ValueObject
+    public class FullName : ComparableValueObject
     {
         public const int MAX_NAME_TEXT_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
 
@@ -27,7 +27,7 @@ namespace FamilyForPets.SharedKernel.ValueObjects
                 new FullName(name, surname, additionalName));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             throw new NotImplementedException();
         }

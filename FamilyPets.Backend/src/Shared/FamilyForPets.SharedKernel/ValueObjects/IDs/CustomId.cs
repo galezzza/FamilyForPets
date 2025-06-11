@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-public abstract class CustomId<T> : ValueObject, IComparable<T>, IComparable
+public abstract class CustomId<T> : ComparableValueObject, IComparable<T>, IComparable
     where T : CustomId<T>
 {
     protected CustomId(Guid value)
@@ -25,7 +25,7 @@ public abstract class CustomId<T> : ValueObject, IComparable<T>, IComparable
         throw new ArgumentException($"Object must be of type {typeof(T).Name}");
     }
 
-    protected override IEnumerable<object> GetEqualityComponents()
+    protected override IEnumerable<IComparable> GetComparableEqualityComponents()
     {
         yield return Value;
     }

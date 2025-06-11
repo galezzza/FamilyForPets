@@ -4,7 +4,7 @@ using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.Volunteers.Domain.PetValueObjects
 {
-    public class PelageColor : ValueObject
+    public class PelageColor : ComparableValueObject
     {
         private PelageColor(Color primaryColor, Color? secondaryColor, Color? tertiaryColor)
         {
@@ -30,7 +30,7 @@ namespace FamilyForPets.Volunteers.Domain.PetValueObjects
                 new PelageColor(primaryColor, secondaryColor, tertiaryColor));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             yield return PrimaryColor;
             if (SecondaryColor.HasValue)

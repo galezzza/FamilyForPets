@@ -4,7 +4,7 @@ using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.Volunteers.Domain.PetValueObjects
 {
-    public class CastrationStatus : ValueObject
+    public class CastrationStatus : ComparableValueObject
     {
         public static readonly CastrationStatus Normal = new CastrationStatus(nameof(Normal));
         public static readonly CastrationStatus Neutered = new CastrationStatus(nameof(Neutered));
@@ -35,7 +35,7 @@ namespace FamilyForPets.Volunteers.Domain.PetValueObjects
             return Result.Success<CastrationStatus, Error>(new CastrationStatus(status));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             throw new NotImplementedException();
         }

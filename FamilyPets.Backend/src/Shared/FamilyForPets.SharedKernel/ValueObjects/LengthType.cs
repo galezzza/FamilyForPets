@@ -3,7 +3,7 @@ using CSharpFunctionalExtensions;
 
 namespace FamilyForPets.SharedKernel.ValueObjects
 {
-    public class LengthType : ValueObject
+    public class LengthType : ComparableValueObject
     {
         public static readonly LengthType Metre = new LengthType(nameof(Metre));
         public static readonly LengthType Сentimeters = new LengthType(nameof(Сentimeters));
@@ -34,7 +34,7 @@ namespace FamilyForPets.SharedKernel.ValueObjects
             return Result.Success<LengthType, Error>(new LengthType(status));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             throw new NotImplementedException();
         }

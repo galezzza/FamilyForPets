@@ -3,7 +3,7 @@ using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.Volunteers.Domain.VolunteerValueObjects
 {
-    public class DetailsForPayment : ValueObject
+    public class DetailsForPayment : ComparableValueObject
     {
         public const int MAX_DETAILS_LENGHT = ProjectConstants.MAX_HIGH_TEXT_LENGHT;
 
@@ -39,7 +39,7 @@ namespace FamilyForPets.Volunteers.Domain.VolunteerValueObjects
                 new DetailsForPayment(cardNumber, otherDetails));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             yield return CardNumber;
         }

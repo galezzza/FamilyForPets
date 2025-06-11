@@ -3,7 +3,7 @@ using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.Volunteers.Domain.PetValueObjects
 {
-    public class PetVaccine : ValueObject
+    public class PetVaccine : ComparableValueObject
     {
         public const int MAX_NAME_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
 
@@ -22,7 +22,7 @@ namespace FamilyForPets.Volunteers.Domain.PetValueObjects
             return Result.Success<PetVaccine, Error>(new PetVaccine(name));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             yield return Name;
         }

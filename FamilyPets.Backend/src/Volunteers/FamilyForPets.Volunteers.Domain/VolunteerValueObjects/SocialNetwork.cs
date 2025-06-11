@@ -3,7 +3,7 @@ using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.Volunteers.Domain.VolunteerValueObjects
 {
-    public class SocialNetwork : ValueObject
+    public class SocialNetwork : ComparableValueObject
     {
         public const int MAX_NAME_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
 
@@ -28,7 +28,7 @@ namespace FamilyForPets.Volunteers.Domain.VolunteerValueObjects
             return Result.Success<SocialNetwork, Error>(new SocialNetwork(name, url));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             yield return Name;
             yield return Url;
