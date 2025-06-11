@@ -3,7 +3,6 @@ using FamilyForPets.Core.DTOs;
 using FamilyForPets.SharedKernel;
 using FamilyForPets.Volunteers.Contracts;
 using FamilyForPets.Volunteers.Contracts.Requests.CreateVolunteer;
-using FamilyForPets.Volunteers.Contracts.Requests.DeleteVolunteer;
 using FamilyForPets.Volunteers.Contracts.Requests.UpdateVolunteer;
 using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.UseCases.CreateVolunteer;
@@ -139,15 +138,18 @@ namespace FamilyForPets.Volunteers.API
             return await _updateVolunteerHandler.HandleAsync(command, cancellationToken);
         }
 
-        public async Task<Result<Guid, ErrorList>> Delete(
-            Guid id, DeleteVolunteerRequest request,
+        public async Task<Result<Guid, ErrorList>> DeleteSoft(
+            Guid id,
             CancellationToken cancellationToken)
         {
-            return request.IsSoftDelete switch
-            {
-                true => await _softDeleteVolunteerHandler.HandleAsync(new(id), cancellationToken),
-                false => await _hardDeleteVolunteerHandler.HandleAsync(new(id), cancellationToken)
-            };
+            return await _hardDeleteVolunteerHandler.HandleAsync(new(id), cancellationToken);
+        }
+
+        public async Task<Result<Guid, ErrorList>> DeleteHard(
+            Guid id,
+            CancellationToken cancellationToken)
+        {
+            return await _softDeleteVolunteerHandler.HandleAsync(new(id), cancellationToken);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.SharedKernel;
 using FamilyForPets.Volunteers.Contracts.Requests.CreateVolunteer;
-using FamilyForPets.Volunteers.Contracts.Requests.DeleteVolunteer;
 using FamilyForPets.Volunteers.Contracts.Requests.UpdateVolunteer;
 using FamilyForPets.Volunteers.Domain.Entities;
 
@@ -42,9 +41,12 @@ namespace FamilyForPets.Volunteers.Contracts
             UpdateVolunteerRequest request,
             CancellationToken cancellationToken);
 
-        public Task<Result<Guid, ErrorList>> Delete(
+        public Task<Result<Guid, ErrorList>> DeleteSoft(
             Guid id,
-            DeleteVolunteerRequest request,
+            CancellationToken cancellationToken);
+    
+        public Task<Result<Guid, ErrorList>> DeleteHard(
+            Guid id,
             CancellationToken cancellationToken);
     }
 }
