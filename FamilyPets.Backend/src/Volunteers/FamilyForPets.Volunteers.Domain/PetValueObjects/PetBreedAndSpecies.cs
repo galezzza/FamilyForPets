@@ -3,7 +3,7 @@ using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.Volunteers.Domain.PetValueObjects
 {
-    public class PetBreedAndSpecies : ValueObject
+    public class PetBreedAndSpecies : ComparableValueObject
     {
         private PetBreedAndSpecies(Guid speciesId, Guid breedId)
         {
@@ -25,7 +25,7 @@ namespace FamilyForPets.Volunteers.Domain.PetValueObjects
                 new PetBreedAndSpecies(speciesId, breedId));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             yield return SpeciesId;
             yield return BreedId;

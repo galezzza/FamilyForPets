@@ -81,7 +81,7 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations
             builder.HasMany(v => v.AllPets)
                 .WithOne()
                 .HasForeignKey("volunteer_id")
-                .OnDelete(DeleteBehavior.NoAction)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
             builder.OwnsOne(v => v.VolunteerSocialNetworks, vb =>

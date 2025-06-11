@@ -3,7 +3,7 @@ using CSharpFunctionalExtensions;
 
 namespace FamilyForPets.SharedKernel.ValueObjects
 {
-    public class PhoneNumber : ValueObject
+    public class PhoneNumber : ComparableValueObject
     {
         public const int MAX_PHONE_NUMBER_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
         public const string PHONE_NUMBER_PATTERN = @"^\+?\d{9,15}$";
@@ -27,7 +27,7 @@ namespace FamilyForPets.SharedKernel.ValueObjects
                 new PhoneNumber(number));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             yield return Number;
         }

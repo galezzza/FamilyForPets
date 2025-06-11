@@ -1,10 +1,13 @@
 ﻿using FamilyForPets.Core.Abstractions;
 using FamilyForPets.Core.DTOs;
 using FamilyForPets.Framework.Responses.EndpointResults;
+using FamilyForPets.Volunteers.Contracts;
 using FamilyForPets.Volunteers.Contracts.Requests.CreateVolunteer;
 using FamilyForPets.Volunteers.Contracts.Requests.UpdateVolunteer;
 using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.UseCases.CreateVolunteer;
+using FamilyForPets.Volunteers.UseCases.DeleteVolunteer.DeleteVolunteerHard;
+using FamilyForPets.Volunteers.UseCases.DeleteVolunteer.DeleteVolunteerSoft;
 using FamilyForPets.Volunteers.UseCases.GetVolunteerById;
 using FamilyForPets.Volunteers.UseCases.UpdateVolunteer;
 using FamilyForPets.Volunteers.UseCases.UpdateVolunteer.UpdateVolunteerContactData;
@@ -133,6 +136,24 @@ namespace FamilyForPets.Volunteers.API
                 request.PhoneNumber, request.Email);
 
             return await handler.HandleAsync(command, cancellationToken);
+        }
+
+        [HttpPatch("{id:guid}/deletion-status/soft")]
+        public async Task<EndpointResult<Guid>> DeleteSoft(
+            [FromRoute] Guid id,
+            [FromServices] ICommandHandler<SoftDeleteVolunteerCommand, Guid> softDeleteHandler,
+            CancellationToken cancellationToken)
+        {
+            return await softDeleteHandler.HandleAsync(new(id), cancellationToken);
+        }
+
+        [HttpDelete("{id:guid}/deletion-status/hard")]
+        public async Task<EndpointResult<Guid>> DeleteHard(
+            [FromRoute] Guid id,
+            [FromServices] ICommandHandler<HardDeleteVolunteerCommand, Guid> hardDeleteHandler,
+            CancellationToken cancellationToken)
+        {
+            return await hardDeleteHandler.HandleAsync(new(id), cancellationToken);
         }
     }
 }

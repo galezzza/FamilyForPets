@@ -40,5 +40,13 @@ namespace FamilyForPets.Volunteers.Contracts
             Guid id,
             UpdateVolunteerRequest request,
             CancellationToken cancellationToken);
+
+        public Task<Result<Guid, ErrorList>> DeleteSoft(
+            Guid id,
+            CancellationToken cancellationToken);
+    
+        public Task<Result<Guid, ErrorList>> DeleteHard(
+            Guid id,
+            CancellationToken cancellationToken);
     }
 }

@@ -6,6 +6,8 @@ using FamilyForPets.Volunteers.Contracts.Requests.CreateVolunteer;
 using FamilyForPets.Volunteers.Contracts.Requests.UpdateVolunteer;
 using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.UseCases.CreateVolunteer;
+using FamilyForPets.Volunteers.UseCases.DeleteVolunteer.DeleteVolunteerHard;
+using FamilyForPets.Volunteers.UseCases.DeleteVolunteer.DeleteVolunteerSoft;
 using FamilyForPets.Volunteers.UseCases.GetVolunteerById;
 using FamilyForPets.Volunteers.UseCases.UpdateVolunteer;
 using FamilyForPets.Volunteers.UseCases.UpdateVolunteer.UpdateVolunteerContactData;
@@ -24,6 +26,8 @@ namespace FamilyForPets.Volunteers.API
         private readonly UpdateVolunteerSocialNetworksHandler _updateVolunteerSocialNetworksHandler;
         private readonly UpdateVolunteerDetailsForPaymentHandler _updateVolunteerDetailsForPaymentHandler;
         private readonly UpdateVolunteerHandler _updateVolunteerHandler;
+        private readonly HardDeleteVolunteerHandler _hardDeleteVolunteerHandler;
+        private readonly SoftDeleteVolunteerHandler _softDeleteVolunteerHandler;
 
         public VolunteersContract(
             GetVolunteerByIdHandler getVolunteerByIdHandler,
@@ -32,7 +36,9 @@ namespace FamilyForPets.Volunteers.API
             UpdateVolunteerContactDataHandler updateVolunteerContactDataHandler,
             UpdateVolunteerSocialNetworksHandler updateVolunteerSocialNetworksHandler,
             UpdateVolunteerDetailsForPaymentHandler updateVolunteerDetailsForPaymentHandler,
-            UpdateVolunteerHandler updateVolunteerHandler)
+            UpdateVolunteerHandler updateVolunteerHandler,
+            HardDeleteVolunteerHandler hardDeleteVolunteerHandler,
+            SoftDeleteVolunteerHandler softDeleteVolunteerHandler)
         {
             _getVolunteerByIdHandler = getVolunteerByIdHandler;
             _createVolunteerHandler = createVolunteerHandler;
@@ -41,6 +47,8 @@ namespace FamilyForPets.Volunteers.API
             _updateVolunteerSocialNetworksHandler = updateVolunteerSocialNetworksHandler;
             _updateVolunteerDetailsForPaymentHandler = updateVolunteerDetailsForPaymentHandler;
             _updateVolunteerHandler = updateVolunteerHandler;
+            _hardDeleteVolunteerHandler = hardDeleteVolunteerHandler;
+            _softDeleteVolunteerHandler = softDeleteVolunteerHandler;
         }
 
         public async Task<Result<Guid, ErrorList>> Create(
@@ -128,6 +136,20 @@ namespace FamilyForPets.Volunteers.API
                 request.PhoneNumber, request.Email);
 
             return await _updateVolunteerHandler.HandleAsync(command, cancellationToken);
+        }
+
+        public async Task<Result<Guid, ErrorList>> DeleteSoft(
+            Guid id,
+            CancellationToken cancellationToken)
+        {
+            return await _hardDeleteVolunteerHandler.HandleAsync(new(id), cancellationToken);
+        }
+
+        public async Task<Result<Guid, ErrorList>> DeleteHard(
+            Guid id,
+            CancellationToken cancellationToken)
+        {
+            return await _softDeleteVolunteerHandler.HandleAsync(new(id), cancellationToken);
         }
     }
 }

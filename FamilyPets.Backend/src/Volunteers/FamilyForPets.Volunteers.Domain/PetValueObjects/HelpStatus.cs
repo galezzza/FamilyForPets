@@ -4,7 +4,7 @@ using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.Volunteers.Domain.PetValueObjects
 {
-    public class HelpStatus : ValueObject
+    public class HelpStatus : ComparableValueObject
     {
         public static readonly HelpStatus HelpNeeded = new HelpStatus(nameof(HelpNeeded));
         public static readonly HelpStatus LookingForHome = new HelpStatus(nameof(LookingForHome));
@@ -24,7 +24,6 @@ namespace FamilyForPets.Volunteers.Domain.PetValueObjects
 
         public string Value { get; }
 
-
         public static Result<HelpStatus, Error> Create(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
@@ -38,7 +37,7 @@ namespace FamilyForPets.Volunteers.Domain.PetValueObjects
             return Result.Success<HelpStatus, Error>(new HelpStatus(status));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             throw new NotImplementedException();
         }

@@ -3,7 +3,7 @@ using CSharpFunctionalExtensions;
 
 namespace FamilyForPets.SharedKernel.ValueObjects
 {
-    public class EmailAdress : ValueObject
+    public class EmailAdress : ComparableValueObject
     {
         public const int MAX_EMAIL_ADDRESS_LENGTH = ProjectConstants.MAX_MEDIUM_TEXT_LENGHT;
         private const string EMAIL_PATTERN = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
@@ -29,7 +29,7 @@ namespace FamilyForPets.SharedKernel.ValueObjects
                 new EmailAdress(email));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             yield return Email;
         }

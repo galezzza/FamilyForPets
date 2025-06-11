@@ -2,7 +2,7 @@
 
 namespace FamilyForPets.SharedKernel.ValueObjects
 {
-    public class Mass : ValueObject
+    public class Mass : ComparableValueObject
     {
         private Mass() { }
 
@@ -43,7 +43,7 @@ namespace FamilyForPets.SharedKernel.ValueObjects
             return Result.Success<Mass, Error>(new Mass(newValue, toType));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             yield return Value;
         }

@@ -15,5 +15,7 @@ namespace FamilyForPets.Volunteers.UseCases
         Task<Result<Volunteer, Error>> GetByEmail(EmailAdress email, CancellationToken cancellationToken);
 
         Task<Result<Guid, Error>> Save(Volunteer volunteer, CancellationToken cancellationToken);
+
+        Task<Result<Guid, Error>> Delete(Volunteer volunteer, CancellationToken cancellationToken);
     }
 }

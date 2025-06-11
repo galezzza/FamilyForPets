@@ -6,7 +6,7 @@ using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 
 namespace FamilyForPets.Volunteers.Domain.Entities
 {
-    public class Volunteer : Entity<VolunteerId>
+    public class Volunteer : SoftDeletableEntity<VolunteerId>
     {
         private List<Pet> _allPets = [];
 
@@ -24,8 +24,8 @@ namespace FamilyForPets.Volunteers.Domain.Entities
             PhoneNumber phoneNumber,
             VolunteerSocialNetworksList volunteerSocialNetworks,
             DetailsForPayment detailsForPayment)
+            : base(id)
         {
-            Id = id;
             FullName = fullName;
             Email = email;
             ExperienceInYears = experienceInYears;
@@ -102,6 +102,18 @@ namespace FamilyForPets.Volunteers.Domain.Entities
             PhoneNumber = phoneNumber;
             Email = emailAdress;
             return UnitResult.Success<Error>();
+        }
+
+        public override void SoftDelete()
+        {
+            base.SoftDelete();
+            _allPets.ForEach(p => p.SoftDelete());
+        }
+
+        public override void Restore()
+        {
+            base.Restore();
+            _allPets.ForEach(p => p.Restore());
         }
     }
 }

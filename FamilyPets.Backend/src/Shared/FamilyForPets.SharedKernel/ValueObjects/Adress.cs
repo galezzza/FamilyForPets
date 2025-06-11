@@ -3,7 +3,7 @@ using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.SharedKernel.ValueObjects
 {
-    public class Adress : ValueObject
+    public class Adress : ComparableValueObject
     {
         public const int MAX_ADRESS_TEXT_LENGHT = ProjectConstants.MAX_LOW_TEXT_LENGHT;
 
@@ -39,7 +39,7 @@ namespace FamilyForPets.SharedKernel.ValueObjects
                 new Adress(houseNumber, street, city, country));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             yield return HouseNumber;
             yield return Street;

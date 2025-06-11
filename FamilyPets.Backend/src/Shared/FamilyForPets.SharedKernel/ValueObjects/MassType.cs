@@ -3,7 +3,7 @@ using CSharpFunctionalExtensions;
 
 namespace FamilyForPets.SharedKernel.ValueObjects
 {
-    public class MassType : ValueObject
+    public class MassType : ComparableValueObject
     {
         public static readonly MassType Kilograms = new MassType(nameof(Kilograms));
         public static readonly MassType Pounds = new MassType(nameof(Pounds));
@@ -34,7 +34,7 @@ namespace FamilyForPets.SharedKernel.ValueObjects
             return Result.Success<MassType, Error>(new MassType(status));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             throw new NotImplementedException();
         }

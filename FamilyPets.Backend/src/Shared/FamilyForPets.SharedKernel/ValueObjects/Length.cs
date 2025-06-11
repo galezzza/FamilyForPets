@@ -3,7 +3,7 @@ using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.SharedKernel.ValueObjects
 {
-    public class Length : ValueObject
+    public class Length : ComparableValueObject
     {
         private Length() { }
 
@@ -44,7 +44,7 @@ namespace FamilyForPets.SharedKernel.ValueObjects
             return Result.Success<Length, Error>(new Length(newValue, toType));
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             yield return Value;
         }

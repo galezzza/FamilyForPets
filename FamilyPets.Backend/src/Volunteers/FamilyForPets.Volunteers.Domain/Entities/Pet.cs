@@ -6,7 +6,7 @@ using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 
 namespace FamilyForPets.Volunteers.Domain.Entities
 {
-    public class Pet : Entity<PetId>
+    public class Pet : SoftDeletableEntity<PetId>
     {
         // empty constructor for EF Core
         private Pet(PetId id)
@@ -15,6 +15,7 @@ namespace FamilyForPets.Volunteers.Domain.Entities
         }
 
         private Pet(
+            PetId id,
             PetNickname name,
             PelageColor color,
             DateTime? dateOfBirth,
@@ -22,6 +23,7 @@ namespace FamilyForPets.Volunteers.Domain.Entities
             PhoneNumber contactPhoneNumber,
             CastrationStatus castrationStatus,
             HelpStatus helpStatus)
+            : base(id)
         {
             Name = name;
             Color = color;
@@ -80,6 +82,7 @@ namespace FamilyForPets.Volunteers.Domain.Entities
             DetailsForPayment paymentDatails)
         {
             return Result.Success<Pet, Error>(new Pet(
+                PetId.New(),
                 name,
                 color,
                 dateOfBirth,
