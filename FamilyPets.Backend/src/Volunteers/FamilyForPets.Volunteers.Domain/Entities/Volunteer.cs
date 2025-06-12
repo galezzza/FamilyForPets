@@ -115,5 +115,113 @@ namespace FamilyForPets.Volunteers.Domain.Entities
             base.Restore();
             _allPets.ForEach(p => p.Restore());
         }
+
+        public UnitResult<Error> CreateNewPet(
+            PetNickname name,
+            PelageColor color,
+            DateTime? dateOfBirth,
+            PetBreedAndSpecies petBreed,
+            PhoneNumber contactPhoneNumber,
+            CastrationStatus castrationStatus,
+            HelpStatus helpStatus,
+            DetailsForPayment paymentDatails)
+        {
+            // add new pet to the end
+            PetPosition petPosition = PetPosition.Create(_allPets.Count + 1).Value;
+
+            Pet pet = Pet.Create(
+                name,
+                color,
+                dateOfBirth,
+                petBreed,
+                contactPhoneNumber,
+                castrationStatus,
+                helpStatus,
+                paymentDatails,
+                petPosition).Value;
+
+            _allPets.Add(pet);
+            return UnitResult.Success<Error>();
+        }
+
+        public UnitResult<Error> ChangePetPositionToTheVeryBegging(Pet pet)
+        {
+            UnitResult<Error> result = ChangePetPosition(pet, 1);
+            if (result.IsFailure)
+                return result.Error;
+
+            return UnitResult.Success<Error>();
+        }
+
+        public UnitResult<Error> ChangePetPositionToTheVeryEnd(Pet pet)
+        {
+            UnitResult<Error> result = ChangePetPosition(pet, _allPets.Count);
+            if (result.IsFailure)
+                return result.Error;
+
+            return UnitResult.Success<Error>();
+        }
+
+        public UnitResult<Error> ChangePetPosition(Pet pet, int newPosition)
+        {
+            // new position == current position
+            int petCurrentPosition = pet.PetPosition.PositionNumber;
+            if (petCurrentPosition == newPosition)
+                return UnitResult.Success<Error>();
+
+            // new position should not be greater than total number of pets
+            if (newPosition > _allPets.Count)
+                return UnitResult.Failure<Error>(Errors.General.ValueIsInvalid(nameof(newPosition)));
+
+            // new position must be greater than 0
+            var newPetPositionResult = PetPosition.Create(newPosition);
+            if (newPetPositionResult.IsFailure)
+                return newPetPositionResult.Error;
+
+            bool isPetPositionIncreasing = newPosition > petCurrentPosition;
+
+            int petCurrentIndex = petCurrentPosition - 1;
+            int newPositionIndex = newPosition - 1;
+
+            if (isPetPositionIncreasing)
+            {
+                ChangeIntermediatesPetsPositions(
+                    petCurrentIndex + 1, newPositionIndex, !isPetPositionIncreasing);
+            }
+            else
+            {
+                ChangeIntermediatesPetsPositions(
+                        newPositionIndex, petCurrentIndex - 1, !isPetPositionIncreasing);
+            }
+
+            PetPosition newPetPosition = newPetPositionResult.Value;
+            pet.ChangePetPosition(newPetPosition);
+
+            return UnitResult.Success<Error>();
+        }
+
+        private UnitResult<Error> ChangeIntermediatesPetsPositions(
+            int fromIndex,
+            int toIndex,
+            bool isChangesIncreasing)
+        {
+            int positionChanger = isChangesIncreasing ? +1 : -1;
+
+            for (int petIndex = fromIndex; petIndex <= toIndex; petIndex += 1)
+            {
+                Pet petToChangePosition = _allPets[petIndex];
+                PetPosition oldPetPosition = petToChangePosition.PetPosition;
+
+                int newPositionNumber = oldPetPosition.PositionNumber + positionChanger;
+                var newPetPositionResult = PetPosition.Create(newPositionNumber);
+                if (newPetPositionResult.IsFailure)
+                    throw new ArgumentException("volunteer have pets with incorrect positions");
+
+                PetPosition newPetPosition = newPetPositionResult.Value;
+                petToChangePosition.ChangePetPosition(newPetPosition);
+            }
+
+            return UnitResult.Success<Error>();
+        }
     }
 }
