@@ -146,7 +146,8 @@ namespace FamilyForPets.Volunteers.Domain.Entities
 
         public UnitResult<Error> ChangePetPositionToTheVeryBegging(Pet pet)
         {
-            UnitResult<Error> result = ChangePetPosition(pet, 1);
+            PetPosition newPosition = PetPosition.Create(1).Value;
+            UnitResult<Error> result = ChangePetPosition(pet, newPosition);
             if (result.IsFailure)
                 return result.Error;
 
@@ -155,47 +156,44 @@ namespace FamilyForPets.Volunteers.Domain.Entities
 
         public UnitResult<Error> ChangePetPositionToTheVeryEnd(Pet pet)
         {
-            UnitResult<Error> result = ChangePetPosition(pet, _allPets.Count);
+            PetPosition newPosition = PetPosition.Create(_allPets.Count).Value;
+            UnitResult<Error> result = ChangePetPosition(pet, newPosition);
             if (result.IsFailure)
                 return result.Error;
 
             return UnitResult.Success<Error>();
         }
 
-        public UnitResult<Error> ChangePetPosition(Pet pet, int newPosition)
+        public UnitResult<Error> ChangePetPosition(Pet pet, PetPosition newPosition)
         {
             // new position == current position
-            int petCurrentPosition = pet.PetPosition.PositionNumber;
+            PetPosition petCurrentPosition = pet.PetPosition;
             if (petCurrentPosition == newPosition)
                 return UnitResult.Success<Error>();
 
             // new position should not be greater than total number of pets
-            if (newPosition > _allPets.Count)
+            if (newPosition.PositionNumber > _allPets.Count)
                 return UnitResult.Failure<Error>(Errors.General.ValueIsInvalid(nameof(newPosition)));
 
-            // new position must be greater than 0
-            var newPetPositionResult = PetPosition.Create(newPosition);
-            if (newPetPositionResult.IsFailure)
-                return newPetPositionResult.Error;
+            bool isPetPositionIncreasing = newPosition.PositionNumber 
+                > petCurrentPosition.PositionNumber;
 
-            bool isPetPositionIncreasing = newPosition > petCurrentPosition;
+            int petCurrentIndex = petCurrentPosition.PositionNumber - 1;
+            int newPositionIndex = newPosition.PositionNumber - 1;
 
-            int petCurrentIndex = petCurrentPosition - 1;
-            int newPositionIndex = newPosition - 1;
-
-            if (isPetPositionIncreasing)
+            switch (isPetPositionIncreasing)
             {
-                ChangeIntermediatesPetsPositions(
-                    petCurrentIndex + 1, newPositionIndex, !isPetPositionIncreasing);
-            }
-            else
-            {
-                ChangeIntermediatesPetsPositions(
+                case true:
+                    ChangeIntermediatesPetsPositions(
+                        petCurrentIndex + 1, newPositionIndex, !isPetPositionIncreasing);
+                    break;
+                case false:
+                    ChangeIntermediatesPetsPositions(
                         newPositionIndex, petCurrentIndex - 1, !isPetPositionIncreasing);
+                    break;
             }
 
-            PetPosition newPetPosition = newPetPositionResult.Value;
-            pet.ChangePetPosition(newPetPosition);
+            pet.ChangePetPosition(newPosition);
 
             return UnitResult.Success<Error>();
         }
@@ -213,7 +211,7 @@ namespace FamilyForPets.Volunteers.Domain.Entities
                 PetPosition oldPetPosition = petToChangePosition.PetPosition;
 
                 int newPositionNumber = oldPetPosition.PositionNumber + positionChanger;
-                var newPetPositionResult = PetPosition.Create(newPositionNumber);
+                Result<PetPosition, Error> newPetPositionResult = PetPosition.Create(newPositionNumber);
                 if (newPetPositionResult.IsFailure)
                     throw new ArgumentException("volunteer have pets with incorrect positions");
 
