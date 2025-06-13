@@ -116,20 +116,19 @@ namespace FamilyForPets.Volunteers.Domain.Entities
             _allPets.ForEach(p => p.Restore());
         }
 
-        public UnitResult<Error> CreateNewPet(
+        public Result<PetId, Error> CreateNewPet(
             PetNickname name,
             PelageColor color,
             DateTime? dateOfBirth,
             PetBreedAndSpecies petBreed,
             PhoneNumber contactPhoneNumber,
             CastrationStatus castrationStatus,
-            HelpStatus helpStatus,
-            DetailsForPayment paymentDatails)
+            HelpStatus helpStatus)
         {
             // add new pet to the end
             PetPosition petPosition = PetPosition.Create(_allPets.Count + 1).Value;
 
-            Pet pet = Pet.Create(
+            Result<Pet, Error> petResult = Pet.Create(
                 name,
                 color,
                 dateOfBirth,
@@ -137,11 +136,14 @@ namespace FamilyForPets.Volunteers.Domain.Entities
                 contactPhoneNumber,
                 castrationStatus,
                 helpStatus,
-                paymentDatails,
-                petPosition).Value;
+                DetailsForPayment,
+                petPosition);
 
-            _allPets.Add(pet);
-            return UnitResult.Success<Error>();
+            if (petResult.IsFailure)
+                return petResult.Error;
+
+            _allPets.Add(petResult.Value);
+            return Result.Success<PetId, Error>(petResult.Value.Id);
         }
 
         public UnitResult<Error> ChangePetPositionToTheVeryBegging(Pet pet)
