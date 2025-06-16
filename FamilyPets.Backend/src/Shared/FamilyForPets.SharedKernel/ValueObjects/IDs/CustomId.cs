@@ -17,13 +17,6 @@ public abstract class CustomId<T> : ComparableValueObject, IComparable<T>, IComp
         return Value.CompareTo(other.Value);
     }
 
-    public int CompareTo(object? obj)
-    {
-        if (obj is T other)
-            return CompareTo(other);
-
-        throw new ArgumentException($"Object must be of type {typeof(T).Name}");
-    }
 
     protected override IEnumerable<IComparable> GetComparableEqualityComponents()
     {

@@ -24,6 +24,7 @@ builder.Services.AddTransient<ExceptionMiddleware>();
 
 builder.Services.AddVolunteerModule();
 builder.Services.AddSpeciesModule();
+builder.Services.AddFilesModule(builder.Configuration);
 
 var app = builder.Build();
 
