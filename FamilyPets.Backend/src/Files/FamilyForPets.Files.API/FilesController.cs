@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FamilyForPets.Files.Infrastructure.Options;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace FamilyForPets.Files.API
 {
@@ -6,9 +8,12 @@ namespace FamilyForPets.Files.API
     [Route("[controller]")]
     public class FilesController : ControllerBase
     {
-        //public FilesController( IOptions<MinioOptions>)
-        public FilesController()
+        private readonly MinioOptions _options;
+
+        public FilesController( IOptionsMonitor<MinioOptions> options)
         {
+            _options = options.CurrentValue;
         }
+
     }
 }
