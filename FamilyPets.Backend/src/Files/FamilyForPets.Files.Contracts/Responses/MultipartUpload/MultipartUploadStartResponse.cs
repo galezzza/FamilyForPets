@@ -1,4 +1,4 @@
-﻿using FamilyForPets.Files.Shared.DTOs;
+﻿using FamilyForPets.Core.DTOs;
 
 namespace FamilyForPets.Files.Contracts.Responses.MultipartUpload
 {

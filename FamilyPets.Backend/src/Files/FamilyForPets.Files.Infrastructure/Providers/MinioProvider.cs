@@ -1,4 +1,5 @@
-﻿using FamilyForPets.Files.Shared.DTOs;
+﻿using FamilyForPets.Core.DTOs;
+using FamilyForPets.Files.Shared.DTOs;
 using FamilyForPets.Files.UseCases;
 using Minio;
 

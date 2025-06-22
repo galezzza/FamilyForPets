@@ -1,4 +1,5 @@
-﻿using FamilyForPets.Core.Validation;
+﻿using FamilyForPets.Core.DTOs;
+using FamilyForPets.Core.Validation;
 using FamilyForPets.Files.Shared.DTOs;
 using FamilyForPets.SharedKernel;
 using FluentValidation;

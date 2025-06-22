@@ -1,5 +1,5 @@
 ﻿using FamilyForPets.Core.Abstractions;
-using FamilyForPets.Files.Shared.DTOs;
+using FamilyForPets.Core.DTOs;
 
 namespace FamilyForPets.Files.UseCases.Delete
 {
