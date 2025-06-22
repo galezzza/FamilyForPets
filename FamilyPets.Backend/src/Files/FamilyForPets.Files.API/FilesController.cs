@@ -113,7 +113,7 @@ namespace FamilyForPets.Files.API
             [FromBody] GetPresignedUrlToUploadChunkOfFileToFileServiceRequest request,
             [FromServices] ICommandHandler<
                 GetPresignedUrlToUploadChunkOfFileToFileServiceCommand,
-                GetPresignedUrlToUploadChunkOfFileToFileServiceResponse> handler,
+                GetPresignedUrlToUploadChunkOfFileToFileServiceCommandResponse> handler,
             CancellationToken cancellationToken = default)
         {
             GetPresignedUrlToUploadChunkOfFileToFileServiceCommand command = new(
@@ -121,7 +121,7 @@ namespace FamilyForPets.Files.API
                 request.UploadId,
                 request.PartNumber);
 
-            Result<GetPresignedUrlToUploadChunkOfFileToFileServiceResponse, ErrorList> result
+            Result<GetPresignedUrlToUploadChunkOfFileToFileServiceCommandResponse, ErrorList> result
                 = await handler.HandleAsync(command, cancellationToken);
             if (result.IsFailure)
             {
