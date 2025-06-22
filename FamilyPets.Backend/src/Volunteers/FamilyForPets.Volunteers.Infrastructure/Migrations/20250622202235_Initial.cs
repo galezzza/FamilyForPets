@@ -65,6 +65,7 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                     mass_type_enum = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     is_deleted = table.Column<bool>(type: "boolean", nullable: false),
                     deletion_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    pet_photos_paths = table.Column<string>(type: "jsonb", nullable: false),
                     pet_vaccienes = table.Column<string>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>

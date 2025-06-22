@@ -306,6 +306,49 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_pets_volunteers_volunteer_id");
 
+                    b.OwnsOne("FamilyForPets.Volunteers.Domain.Entities.FilePathsList", "PetPhotos", b1 =>
+                        {
+                            b1.Property<Guid>("PetId")
+                                .HasColumnType("uuid");
+
+                            b1.HasKey("PetId");
+
+                            b1.ToTable("pets");
+
+                            b1.ToJson("pet_photos_paths");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PetId")
+                                .HasConstraintName("fk_pets_pets_id");
+
+                            b1.OwnsMany("FamilyForPets.Volunteers.Domain.Entities.FilePath", "FilePaths", b2 =>
+                                {
+                                    b2.Property<Guid>("FilePathsListPetId")
+                                        .HasColumnType("uuid");
+
+                                    b2.Property<int>("__synthesizedOrdinal")
+                                        .ValueGeneratedOnAdd()
+                                        .HasColumnType("integer");
+
+                                    b2.Property<string>("Path")
+                                        .IsRequired()
+                                        .HasColumnType("text")
+                                        .HasColumnName("photo_path");
+
+                                    b2.HasKey("FilePathsListPetId", "__synthesizedOrdinal");
+
+                                    b2.ToTable("pets");
+
+                                    b2.ToJson("pet_photos_paths");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("FilePathsListPetId")
+                                        .HasConstraintName("fk_pets_pets_file_paths_list_pet_id");
+                                });
+
+                            b1.Navigation("FilePaths");
+                        });
+
                     b.OwnsOne("FamilyForPets.Volunteers.Domain.PetValueObjects.PetVaccinesList", "PetVaccines", b1 =>
                         {
                             b1.Property<Guid>("PetId")
@@ -348,6 +391,9 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
 
                             b1.Navigation("PetVaccines");
                         });
+
+                    b.Navigation("PetPhotos")
+                        .IsRequired();
 
                     b.Navigation("PetVaccines")
                         .IsRequired();

@@ -1,12 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.Core.DTOs;
 using FamilyForPets.SharedKernel;
-using FamilyForPets.Volunteers.Domain.PetValueObjects;
 
 namespace FamilyForPets.Volunteers.Domain.Entities
 {
     public class FilePath : ComparableValueObject
     {
+        private FilePath() { }
 
         private FilePath(FileName filePath) {
             Path = filePath;
