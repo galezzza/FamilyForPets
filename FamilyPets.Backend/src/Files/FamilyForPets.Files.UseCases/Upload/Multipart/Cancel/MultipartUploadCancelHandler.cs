@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace FamilyForPets.Files.UseCases.Upload.Multipart.Cancel
 {
     public class MultipartUploadCancelHandler
-        : ICommandHandler<MultipartUploadCancelCommand, Guid>
+        : ICommandHandler<MultipartUploadCancelCommand>
     {
         private readonly IFilesProvider _filesProvider;
         private readonly IValidator<MultipartUploadCancelCommand> _validator;
@@ -25,19 +25,17 @@ namespace FamilyForPets.Files.UseCases.Upload.Multipart.Cancel
             _logger = logger;
         }
 
-        public async Task<Result<Guid, ErrorList>> HandleAsync(
+        public async Task<UnitResult<ErrorList>> HandleAsync(
             MultipartUploadCancelCommand command,
             CancellationToken cancellationToken)
         {
             ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
             if (validationResult.IsValid == false)
-                return Result.Failure<Guid, ErrorList>(validationResult.ToErrorListFromValidationResult());
+                return UnitResult.Failure<ErrorList>(validationResult.ToErrorListFromValidationResult());
 
             await _filesProvider.MultipartUploadCancel();
 
-            Guid result = Guid.Parse(command.FileName.BucketName);
-
-            return Result.Success<Guid, ErrorList>(result);
+            return UnitResult.Success<ErrorList>();
 
         }
     }

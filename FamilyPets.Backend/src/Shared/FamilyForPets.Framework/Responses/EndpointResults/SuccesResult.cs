@@ -23,4 +23,22 @@ namespace FamilyForPets.Framework.Responses.EndpointResults
             return httpContext.Response.WriteAsJsonAsync(envelope);
         }
     }
+
+    public class SuccesResult : IResult
+    {
+        public SuccesResult()
+        {
+        }
+
+        public Task ExecuteAsync(HttpContext httpContext)
+        {
+            ArgumentNullException.ThrowIfNull(httpContext);
+
+            ResponseEnvelope envelope = ResponseEnvelope.Correct();
+
+            httpContext.Response.StatusCode = (int)HttpStatusCode.OK;
+
+            return httpContext.Response.WriteAsJsonAsync(envelope);
+        }
+    }
 }

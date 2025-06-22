@@ -87,9 +87,9 @@ namespace FamilyForPets.Files.API
         }
 
         [HttpDelete("files/multipart")]
-        public async Task<EndpointResult<Guid>> CancelMultipartUpload(
+        public async Task<EndpointResult> CancelMultipartUpload(
             [FromBody] MultipartUploadCancelRequest request,
-            [FromServices] ICommandHandler<MultipartUploadCancelCommand, Guid> handler,
+            [FromServices] ICommandHandler<MultipartUploadCancelCommand> handler,
             CancellationToken cancellationToken = default)
         {
             MultipartUploadCancelCommand command = new(
