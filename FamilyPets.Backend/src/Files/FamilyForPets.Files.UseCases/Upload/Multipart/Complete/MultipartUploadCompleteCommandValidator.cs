@@ -2,10 +2,10 @@
 
 namespace FamilyForPets.Files.UseCases.Upload.Multipart.Complete
 {
-    public class MulipartUploadCompleteCommandValidator
-        : AbstractValidator<MulipartUploadCompleteCommand>
+    public class MultipartUploadCompleteCommandValidator
+        : AbstractValidator<MultipartUploadCompleteCommand>
     {
-        public MulipartUploadCompleteCommandValidator()
+        public MultipartUploadCompleteCommandValidator()
         {
             RuleFor(c => c.FileName.Key)
                 .NotEmpty();

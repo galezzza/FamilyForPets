@@ -6,19 +6,19 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 
-namespace FamilyForPets.Files.UseCases.Delete
+namespace FamilyForPets.Files.UseCases.Upload.Multipart.Cancel
 {
-    public class DeleteFileFromFileServiceHandler
-        : ICommandHandler<DeleteFileFromFileServiceCommand, Guid>
+    public class MultipartUploadCancelHandler
+        : ICommandHandler<MultipartUploadCancelCommand, Guid>
     {
-        private readonly ILogger<DeleteFileFromFileServiceHandler> _logger;
         private readonly IFilesProvider _filesProvider;
-        private readonly IValidator<DeleteFileFromFileServiceCommand> _validator;
+        private readonly IValidator<MultipartUploadCancelCommand> _validator;
+        private readonly ILogger<MultipartUploadCancelCommand> _logger;
 
-        public DeleteFileFromFileServiceHandler(
+        public MultipartUploadCancelHandler(
             IFilesProvider filesProvider,
-            IValidator<DeleteFileFromFileServiceCommand> validator,
-            ILogger<DeleteFileFromFileServiceHandler> logger)
+            IValidator<MultipartUploadCancelCommand> validator,
+            ILogger<MultipartUploadCancelCommand> logger)
         {
             _filesProvider = filesProvider;
             _validator = validator;
@@ -26,18 +26,19 @@ namespace FamilyForPets.Files.UseCases.Delete
         }
 
         public async Task<Result<Guid, ErrorList>> HandleAsync(
-            DeleteFileFromFileServiceCommand command,
+            MultipartUploadCancelCommand command,
             CancellationToken cancellationToken)
         {
             ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
             if (validationResult.IsValid == false)
                 return Result.Failure<Guid, ErrorList>(validationResult.ToErrorListFromValidationResult());
 
-            await _filesProvider.DeleteFileFromFileService();
+            await _filesProvider.MultipartUploadCancel();
 
             Guid result = Guid.Parse(command.FileName.BucketName);
 
             return Result.Success<Guid, ErrorList>(result);
+
         }
     }
 }

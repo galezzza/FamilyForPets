@@ -3,7 +3,7 @@ using FamilyForPets.Files.Shared.DTOs;
 
 namespace FamilyForPets.Files.UseCases.Upload.Multipart.Complete
 {
-    public record MulipartUploadCompleteCommand(
+    public record MultipartUploadCompleteCommand(
         FileName FileName,
         string UploadId,
         List<ETag> ETags) : ICommand;

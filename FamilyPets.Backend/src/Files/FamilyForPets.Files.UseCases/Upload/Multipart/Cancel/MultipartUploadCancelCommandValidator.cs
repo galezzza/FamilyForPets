@@ -2,10 +2,10 @@
 
 namespace FamilyForPets.Files.UseCases.Upload.Multipart.Cancel
 {
-    public class MulipartUploadCancelCommandValidator
-        : AbstractValidator<MulipartUploadCancelCommand>
+    public class MultipartUploadCancelCommandValidator
+        : AbstractValidator<MultipartUploadCancelCommand>
     {
-        public MulipartUploadCancelCommandValidator()
+        public MultipartUploadCancelCommandValidator()
         {
             RuleFor(c => c.FileName.Key)
                 .NotEmpty();

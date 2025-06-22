@@ -3,6 +3,6 @@ using FamilyForPets.Files.Shared.DTOs;
 
 namespace FamilyForPets.Files.UseCases.Upload.Multipart.Start
 {
-    public record MulipartUploadStartCommand(
+    public record MultipartUploadStartCommand(
         FileName FileName) : ICommand;
 }

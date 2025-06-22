@@ -1,27 +1,24 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.Core.Abstractions;
 using FamilyForPets.Core.Extentions.ValidationExtentions;
-using FamilyForPets.Files.Contracts.Requests.Download;
-using FamilyForPets.Files.UseCases.Delete;
 using FamilyForPets.SharedKernel;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
 
-namespace FamilyForPets.Files.UseCases.Download
+namespace FamilyForPets.Files.UseCases.Upload.Multipart.Complete
 {
-    public class GetPresignedUrlToDownloadFullFileFromFileServiceHandler
-        : ICommandHandler<GetPresignedUrlToDownloadFullFileFromFileServiceCommand, string>
+    public class MultipartUploadCompleteHandler
+        : ICommandHandler<MultipartUploadCompleteCommand, string>
     {
-
         private readonly IFilesProvider _filesProvider;
-        private readonly IValidator<GetPresignedUrlToDownloadFullFileFromFileServiceCommand> _validator;
-        private readonly ILogger<GetPresignedUrlToDownloadFullFileFromFileServiceHandler> _logger;
+        private readonly IValidator<MultipartUploadCompleteCommand> _validator;
+        private readonly ILogger<MultipartUploadCompleteHandler> _logger;
 
-        public GetPresignedUrlToDownloadFullFileFromFileServiceHandler(
+        public MultipartUploadCompleteHandler(
             IFilesProvider filesProvider,
-            IValidator<GetPresignedUrlToDownloadFullFileFromFileServiceCommand> validator,
-            ILogger<GetPresignedUrlToDownloadFullFileFromFileServiceHandler> logger)
+            IValidator<MultipartUploadCompleteCommand> validator,
+            ILogger<MultipartUploadCompleteHandler> logger)
         {
             _filesProvider = filesProvider;
             _validator = validator;
@@ -29,14 +26,14 @@ namespace FamilyForPets.Files.UseCases.Download
         }
 
         public async Task<Result<string, ErrorList>> HandleAsync(
-            GetPresignedUrlToDownloadFullFileFromFileServiceCommand command,
+            MultipartUploadCompleteCommand command,
             CancellationToken cancellationToken)
         {
             ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
             if (validationResult.IsValid == false)
                 return Result.Failure<string, ErrorList>(validationResult.ToErrorListFromValidationResult());
 
-            await _filesProvider.GetPresignedUrlToDownloadFullFileFromFileService();
+            await _filesProvider.MultipartUploadComplete();
 
             string result = command.FileName.BucketName;
 
