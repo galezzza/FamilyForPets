@@ -33,11 +33,10 @@ namespace FamilyForPets.Files.UseCases.Upload.Multipart.Complete
             if (validationResult.IsValid == false)
                 return Result.Failure<string, ErrorList>(validationResult.ToErrorListFromValidationResult());
 
-            await _filesProvider.MultipartUploadComplete();
+            string key = await _filesProvider.MultipartUploadComplete(
+                command.FileName, command.UploadId, command.ETags, cancellationToken);
 
-            string result = command.FileName.BucketName;
-
-            return Result.Success<string, ErrorList>(result);
+            return Result.Success<string, ErrorList>(key);
 
         }
     }

@@ -5,6 +5,6 @@ namespace FamilyForPets.Files.Contracts.Requests.Upload.Multipart
     public record MultipartUploadCompleteRequest(
         FileName FileName,
         string UploadId,
-        List<ETag> ETags);
+        List<PartETag> ETags);
 
 }

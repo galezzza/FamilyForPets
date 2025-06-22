@@ -36,11 +36,10 @@ namespace FamilyForPets.Files.UseCases.Download
             if (validationResult.IsValid == false)
                 return Result.Failure<string, ErrorList>(validationResult.ToErrorListFromValidationResult());
 
-            await _filesProvider.GetPresignedUrlToDownloadFullFileFromFileService();
+            string downloadUrl = await _filesProvider
+                .GetPresignedUrlToDownloadFullFileFromFileService(command.FileName);
 
-            string result = command.FileName.BucketName;
-
-            return Result.Success<string, ErrorList>(result);
+            return Result.Success<string, ErrorList>(downloadUrl);
 
         }
     }

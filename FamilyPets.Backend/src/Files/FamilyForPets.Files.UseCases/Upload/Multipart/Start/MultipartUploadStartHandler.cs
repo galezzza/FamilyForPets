@@ -36,13 +36,16 @@ namespace FamilyForPets.Files.UseCases.Upload.Multipart.Start
                     validationResult.ToErrorListFromValidationResult());
             }
 
-            await _filesProvider.MultipartUploadStart();
+            string uploadId = await _filesProvider.MultipartUploadStart(
+                command.FileName, cancellationToken);
+
+            (long chunkSize, int totalChunks) = ChunkSizeCalculator.Calculate(command.FileSize);
 
             MultipartUploadStartCommandResponse response = new(
-                new(string.Empty, string.Empty),
-                string.Empty,
-                0,
-                0);
+                command.FileName,
+                uploadId,
+                chunkSize,
+                totalChunks);
             return Result.Success<MultipartUploadStartCommandResponse, ErrorList>(response);
         }
     }

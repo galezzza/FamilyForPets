@@ -37,11 +37,13 @@ namespace FamilyForPets.Files.UseCases.Upload.Multipart.UploadChunk
                     ErrorList>(validationResult.ToErrorListFromValidationResult());
             }
 
-            await _filesProvider.GetPresignedUrlToUploadChunkOfFileToFileService();
+            string uploadUrl = await _filesProvider
+                .GetPresignedUrlToUploadChunkOfFileToFileService(
+                    command.FileName, command.UploadId, command.PartNumber);
 
             GetPresignedUrlToUploadChunkOfFileToFileServiceCommandResponse response = new(
-                string.Empty,
-                0);
+                uploadUrl,
+                command.PartNumber);
             return Result.Success<GetPresignedUrlToUploadChunkOfFileToFileServiceCommandResponse,
                 ErrorList>(response);
         }

@@ -6,5 +6,5 @@ namespace FamilyForPets.Files.UseCases.Upload.Multipart.Complete
     public record MultipartUploadCompleteCommand(
         FileName FileName,
         string UploadId,
-        List<ETag> ETags) : ICommand;
+        List<PartETag> ETags) : ICommand;
 }

@@ -33,10 +33,10 @@ namespace FamilyForPets.Files.UseCases.Upload.Multipart.Cancel
             if (validationResult.IsValid == false)
                 return UnitResult.Failure<ErrorList>(validationResult.ToErrorListFromValidationResult());
 
-            await _filesProvider.MultipartUploadCancel();
+            await _filesProvider.MultipartUploadCancel(
+                command.FileName, command.UploadId, cancellationToken);
 
             return UnitResult.Success<ErrorList>();
-
         }
     }
 }

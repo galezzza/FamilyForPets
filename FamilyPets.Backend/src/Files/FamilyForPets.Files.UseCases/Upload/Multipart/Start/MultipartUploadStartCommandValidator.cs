@@ -12,6 +12,9 @@ namespace FamilyForPets.Files.UseCases.Upload.Multipart.Start
 
             RuleFor(c => c.FileName.BucketName)
                 .NotEmpty();
+
+            RuleFor(c => c.FileSize)
+                .GreaterThanOrEqualTo(0);
         }
     }
 }

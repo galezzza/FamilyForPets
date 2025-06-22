@@ -1,4 +1,5 @@
-﻿using FamilyForPets.Files.UseCases;
+﻿using FamilyForPets.Files.Shared.DTOs;
+using FamilyForPets.Files.UseCases;
 using Minio;
 
 namespace FamilyForPets.Files.Infrastructure.Providers
@@ -12,18 +13,18 @@ namespace FamilyForPets.Files.Infrastructure.Providers
             _minioClient = minioClient;
         }
 
-        public Task DeleteFileFromFileService() => throw new NotImplementedException();
+        public Task<string> GetPresignedUrlToUploadFullFileToFileService(FileName fileName) => throw new NotImplementedException();
 
-        public Task GetPresignedUrlToDownloadFullFileFromFileService() => throw new NotImplementedException();
+        public Task<string> GetPresignedUrlToDownloadFullFileFromFileService(FileName fileName) => throw new NotImplementedException();
 
-        public Task GetPresignedUrlToUploadChunkOfFileToFileService() => throw new NotImplementedException();
+        public Task<string> MultipartUploadStart(FileName fileName, CancellationToken cancellationToken) => throw new NotImplementedException();
 
-        public Task GetPresignedUrlToUploadFullFileToFileService() => throw new NotImplementedException();
+        public Task MultipartUploadCancel(FileName fileName, string uploadId, CancellationToken cancellationToken) => throw new NotImplementedException();
 
-        public Task MultipartUploadCancel() => throw new NotImplementedException();
+        public Task<string> MultipartUploadComplete(FileName fileName, string uploadId, List<PartETag> partETags, CancellationToken cancellationToken) => throw new NotImplementedException();
 
-        public Task MultipartUploadComplete() => throw new NotImplementedException();
+        public Task<string> GetPresignedUrlToUploadChunkOfFileToFileService(FileName fileName, string uploadId, int partNumber) => throw new NotImplementedException();
 
-        public Task MultipartUploadStart() => throw new NotImplementedException();
+        public Task<string> DeleteFileFromFileService(FileName fileName, CancellationToken cancellationToken) => throw new NotImplementedException();
     }
 }

@@ -30,7 +30,7 @@ namespace FamilyForPets.Files.API
             _options = options.CurrentValue;
         }
 
-        [HttpDelete("files")]
+        [HttpDelete]
         public async Task<EndpointResult<Guid>> Delete(
             [FromBody] DeleteFileFromFileServiceRequest request,
             [FromServices] ICommandHandler<DeleteFileFromFileServiceCommand, Guid> handler,
@@ -40,7 +40,7 @@ namespace FamilyForPets.Files.API
             return await handler.HandleAsync(command, cancellationToken);
         }
 
-        [HttpPost("files")]
+        [HttpPost("uploading")]
         public async Task<EndpointResult<string>> GetUploadFullFileUrl(
             [FromBody] GetPresignedUrlToUploadFullFileToFileServiceRequest request,
             [FromServices] ICommandHandler<
@@ -51,7 +51,7 @@ namespace FamilyForPets.Files.API
             return await handler.HandleAsync(command, cancellationToken);
         }
 
-        [HttpGet("files")]
+        [HttpPost("downloading")]
         public async Task<EndpointResult<string>> GetDownloadFileUrl(
             [FromBody] GetPresignedUrlToDownloadFullFileFromFileServiceRequest request,
             [FromServices] ICommandHandler<
@@ -63,13 +63,13 @@ namespace FamilyForPets.Files.API
             return await handler.HandleAsync(command, cancellationToken);
         }
 
-        [HttpPost("files/multipart")]
+        [HttpPost("multipart/starting")]
         public async Task<EndpointResult<MultipartUploadStartResponse>> GetStartUploadMultipartFileUrl(
             [FromBody] MultipartUploadStartRequest request,
             [FromServices] ICommandHandler<MultipartUploadStartCommand, MultipartUploadStartCommandResponse> handler,
             CancellationToken cancellationToken = default)
         {
-            MultipartUploadStartCommand command = new(request.FileName);
+            MultipartUploadStartCommand command = new(request.FileName, request.FileSize);
             Result<MultipartUploadStartCommandResponse, ErrorList> result = await handler
                 .HandleAsync(command, cancellationToken);
             if (result.IsFailure)
@@ -86,7 +86,7 @@ namespace FamilyForPets.Files.API
             return Result.Success<MultipartUploadStartResponse, ErrorList>(response);
         }
 
-        [HttpDelete("files/multipart")]
+        [HttpPost("multipart/canceling")]
         public async Task<EndpointResult> CancelMultipartUpload(
             [FromBody] MultipartUploadCancelRequest request,
             [FromServices] ICommandHandler<MultipartUploadCancelCommand> handler,
@@ -97,7 +97,7 @@ namespace FamilyForPets.Files.API
             return await handler.HandleAsync(command, cancellationToken);
         }
 
-        [HttpPut("files/multipart")]
+        [HttpPost("multipart/ending")]
         public async Task<EndpointResult<string>> CompleteMultipartUpload(
             [FromBody] MultipartUploadCompleteRequest request,
             [FromServices] ICommandHandler<MultipartUploadCompleteCommand, string> handler,
@@ -108,7 +108,7 @@ namespace FamilyForPets.Files.API
             return await handler.HandleAsync(command, cancellationToken);
         }
 
-        [HttpPost("files/miltipart/chunk")]
+        [HttpPost("miltipart/chunk/uploading")]
         public async Task<EndpointResult<GetPresignedUrlToUploadChunkOfFileToFileServiceResponse>> GetUploadChunkFileUrl(
             [FromBody] GetPresignedUrlToUploadChunkOfFileToFileServiceRequest request,
             [FromServices] ICommandHandler<

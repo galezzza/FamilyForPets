@@ -33,12 +33,10 @@ namespace FamilyForPets.Files.UseCases.Upload.Fullfile
             if (validationResult.IsValid == false)
                 return Result.Failure<string, ErrorList>(validationResult.ToErrorListFromValidationResult());
 
-            await _filesProvider.GetPresignedUrlToUploadFullFileToFileService();
+            string uploadUrl = await _filesProvider
+                .GetPresignedUrlToUploadFullFileToFileService(command.FileName);
 
-            string result = command.FileName.BucketName;
-
-            return Result.Success<string, ErrorList>(result);
-
+            return Result.Success<string, ErrorList>(uploadUrl);
         }
     }
 }

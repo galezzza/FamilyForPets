@@ -1,35 +1,139 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Mime;
+using System.Threading;
+using System.Threading.Tasks;
 using Amazon.S3;
 using Amazon.S3.Model;
+using FamilyForPets.Files.Infrastructure.Options;
+using FamilyForPets.Files.Shared.DTOs;
 using FamilyForPets.Files.UseCases;
+using FamilyForPets.SharedKernel.ValueObjects;
+using Minio.DataModel;
 
 namespace FamilyForPets.Files.Infrastructure.Providers
 {
     public class S3Provider : IFilesProvider
     {
         private readonly IAmazonS3 _s3Client;
+        private readonly MinioOptions _minioOptions;
 
-        public S3Provider(IAmazonS3 amazonClient)
+        public S3Provider(IAmazonS3 amazonClient, MinioOptions minioOptions)
         {
             _s3Client = amazonClient;
+            _minioOptions = minioOptions;
         }
 
-        public Task GetPresignedUrlToDownloadFullFileFromFileService() => throw new NotImplementedException();
+        public async Task<string> GetPresignedUrlToUploadFullFileToFileService(
+            FileName fileName)
+        {
+            var request = new GetPreSignedUrlRequest
+            {
+                BucketName = fileName.BucketName,
+                Key = fileName.Key,
+                Verb = HttpVerb.PUT,
+                Expires = DateTime.UtcNow.AddMinutes(60),
+                Protocol = _minioOptions.IsWithSSL ? Protocol.HTTPS : Protocol.HTTP,
+            };
 
-        public Task GetPresignedUrlToDownloadSingleFile() => throw new NotImplementedException();
+            return await _s3Client.GetPreSignedURLAsync(request);
+        }
 
-        public Task GetPresignedUrlToUploadChunkOfFileToFileService() => throw new NotImplementedException();
+        public async Task<string> GetPresignedUrlToDownloadFullFileFromFileService(
+            FileName fileName)
+        {
+            var request = new GetPreSignedUrlRequest
+            {
+                BucketName = fileName.BucketName,
+                Key = fileName.Key,
+                Verb = HttpVerb.GET,
+                Expires = DateTime.UtcNow.AddHours(24),
+                Protocol = _minioOptions.IsWithSSL ? Protocol.HTTPS : Protocol.HTTP,
+            };
 
-        public Task GetPresignedUrlToUploadFullFileToFileService() => throw new NotImplementedException();
+            return await _s3Client.GetPreSignedURLAsync(request);
+        }
 
-        public Task GetPresignedUrlToUploadSingleFile() => throw new NotImplementedException();
+        public async Task<string> MultipartUploadStart(
+            FileName fileName,
+            CancellationToken cancellationToken)
+        {
+            var initiateRequest = new InitiateMultipartUploadRequest
+            {
+                BucketName = fileName.BucketName,
+                Key = fileName.Key,
+            };
 
-        public Task MultipartUploadCancel() => throw new NotImplementedException();
+            InitiateMultipartUploadResponse result = await _s3Client
+                .InitiateMultipartUploadAsync(initiateRequest, cancellationToken);
 
-        public Task MultipartUploadComplete() => throw new NotImplementedException();
+            return result.UploadId;
+        }
 
-        public Task MultipartUploadStart() => throw new NotImplementedException();
+        public async Task MultipartUploadCancel(
+            FileName fileName,
+            string uploadId,
+            CancellationToken cancellationToken)
+        {
+            var abortRequest = new AbortMultipartUploadRequest
+            {
+                BucketName = fileName.BucketName,
+                Key = fileName.Key,
+                UploadId = uploadId,
+            };
 
-        public Task DeleteFileFromFileService() => throw new NotImplementedException();
+            await _s3Client.AbortMultipartUploadAsync(abortRequest, cancellationToken);
+        }
+
+        public async Task<string> MultipartUploadComplete(
+            FileName fileName,
+            string uploadId,
+            List<Shared.DTOs.PartETag> partETags,
+            CancellationToken cancellationToken)
+        {
+            var completeRequest = new CompleteMultipartUploadRequest
+            {
+                BucketName = fileName.BucketName,
+                Key = fileName.Key,
+                UploadId = uploadId,
+                PartETags = partETags.Select(pt => new Amazon.S3.Model.PartETag(pt.PartNumber, pt.Value)).ToList(),
+            };
+
+            var response = await _s3Client.CompleteMultipartUploadAsync(completeRequest, cancellationToken);
+
+            return response.Key;
+        }
+
+        public async Task<string> GetPresignedUrlToUploadChunkOfFileToFileService(
+            FileName fileName,
+            string uploadId,
+            int partNumber)
+        {
+            var request = new GetPreSignedUrlRequest
+            {
+                BucketName = fileName.BucketName,
+                Key = fileName.Key,
+                Verb = HttpVerb.PUT,
+                Expires = DateTime.UtcNow.AddMinutes(60),
+                PartNumber = partNumber,
+                UploadId = uploadId,
+                Protocol = _minioOptions.IsWithSSL ? Protocol.HTTPS : Protocol.HTTP,
+            };
+
+            return await _s3Client.GetPreSignedURLAsync(request);
+        }
+
+        public async Task<string> DeleteFileFromFileService(
+            FileName fileName,
+            CancellationToken cancellationToken)
+        {
+            var request = new DeleteObjectRequest
+            {
+                BucketName = fileName.BucketName,
+                Key = fileName.Key,
+            };
+
+            await _s3Client.DeleteObjectAsync(request, cancellationToken);
+
+            return fileName.Key;
+        }
     }
 }

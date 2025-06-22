@@ -33,9 +33,14 @@ namespace FamilyForPets.Files.UseCases.Delete
             if (validationResult.IsValid == false)
                 return Result.Failure<Guid, ErrorList>(validationResult.ToErrorListFromValidationResult());
 
-            await _filesProvider.DeleteFileFromFileService();
+            string deletedId = await _filesProvider.DeleteFileFromFileService(command.FileName, cancellationToken);
+            if (string.IsNullOrWhiteSpace(deletedId))
+            {
+                return Result.Failure<Guid, ErrorList>(Errors.General.NotFound(
+                    new(nameof(command.FileName.Key), command.FileName.Key)).ToErrorList());
+            }
 
-            Guid result = Guid.Parse(command.FileName.BucketName);
+            Guid result = Guid.Parse(deletedId);
 
             return Result.Success<Guid, ErrorList>(result);
         }

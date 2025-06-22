@@ -4,5 +4,6 @@ using FamilyForPets.Files.Shared.DTOs;
 namespace FamilyForPets.Files.UseCases.Upload.Multipart.Start
 {
     public record MultipartUploadStartCommand(
-        FileName FileName) : ICommand;
+        FileName FileName,
+        long FileSize) : ICommand;
 }

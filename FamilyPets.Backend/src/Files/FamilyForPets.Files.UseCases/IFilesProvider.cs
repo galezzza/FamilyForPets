@@ -1,21 +1,37 @@
-﻿namespace FamilyForPets.Files.UseCases
-{
+﻿using FamilyForPets.Files.Shared.DTOs;
 
+namespace FamilyForPets.Files.UseCases
+{
     public interface IFilesProvider
     {
-        Task GetPresignedUrlToUploadFullFileToFileService();
+        Task<string> GetPresignedUrlToUploadFullFileToFileService(
+            FileName fileName);
 
-        Task GetPresignedUrlToDownloadFullFileFromFileService();
+        Task<string> GetPresignedUrlToDownloadFullFileFromFileService(
+            FileName fileName);
 
-        Task MultipartUploadStart();
+        Task<string> MultipartUploadStart(
+            FileName fileName,
+            CancellationToken cancellationToken);
 
-        Task MultipartUploadCancel();
+        Task MultipartUploadCancel(
+            FileName fileName,
+            string uploadId,
+            CancellationToken cancellationToken);
 
-        Task MultipartUploadComplete();
+        Task<string> MultipartUploadComplete(
+            FileName fileName, string uploadId,
+            List<PartETag> partETags,
+            CancellationToken cancellationToken);
 
-        Task GetPresignedUrlToUploadChunkOfFileToFileService();
+        Task<string> GetPresignedUrlToUploadChunkOfFileToFileService(
+            FileName fileName,
+            string uploadId,
+            int partNumber);
 
-        Task DeleteFileFromFileService();
+        Task<string> DeleteFileFromFileService(
+            FileName fileName,
+            CancellationToken cancellationToken);
 
     }
 }
