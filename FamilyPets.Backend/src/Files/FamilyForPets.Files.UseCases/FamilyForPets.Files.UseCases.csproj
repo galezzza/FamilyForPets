@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\FamilyForPets.Core\FamilyForPets.Core.csproj" />
+    <ProjectReference Include="..\FamilyForPets.Files.Shared\FamilyForPets.Files.Shared.csproj" />
   </ItemGroup>
 
 </Project>

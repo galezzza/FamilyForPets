@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Responses\Delete\" />
+    <Folder Include="Responses\Download\" />
+    <Folder Include="Responses\Upload\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FamilyForPets.Files.Shared\FamilyForPets.Files.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
