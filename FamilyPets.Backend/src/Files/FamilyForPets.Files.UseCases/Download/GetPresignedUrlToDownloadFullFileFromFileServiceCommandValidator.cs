@@ -1,4 +1,7 @@
-﻿using FamilyForPets.Files.Contracts.Requests.Download;
+﻿using FamilyForPets.Core.Validation;
+using FamilyForPets.Files.Contracts.Requests.Download;
+using FamilyForPets.Files.Shared.DTOs;
+using FamilyForPets.SharedKernel;
 using FluentValidation;
 
 namespace FamilyForPets.Files.UseCases.Download
@@ -9,10 +12,12 @@ namespace FamilyForPets.Files.UseCases.Download
         public GetPresignedUrlToDownloadFullFileFromFileServiceCommandValidator()
         {
             RuleFor(c => c.FileName.Key)
-                .NotEmpty();
+                .NotEmpty()
+                .WithError(Errors.General.CannotBeEmpty(nameof(FileName.Key)));
 
             RuleFor(c => c.FileName.BucketName)
-                .NotEmpty();
+                .NotEmpty()
+                .WithError(Errors.General.CannotBeEmpty(nameof(FileName.BucketName)));
         }
     }
 }

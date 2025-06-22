@@ -1,4 +1,7 @@
-﻿using FluentValidation;
+﻿using FamilyForPets.Core.Validation;
+using FamilyForPets.Files.Shared.DTOs;
+using FamilyForPets.SharedKernel;
+using FluentValidation;
 
 namespace FamilyForPets.Files.UseCases.Upload.Multipart.Start
 {
@@ -8,13 +11,16 @@ namespace FamilyForPets.Files.UseCases.Upload.Multipart.Start
         public MultipartUploadStartCommandValidator()
         {
             RuleFor(c => c.FileName.Key)
-                .NotEmpty();
+                .NotEmpty()
+                .WithError(Errors.General.CannotBeEmpty(nameof(FileName.Key)));
 
             RuleFor(c => c.FileName.BucketName)
-                .NotEmpty();
+                .NotEmpty()
+                .WithError(Errors.General.CannotBeEmpty(nameof(FileName.BucketName)));
 
             RuleFor(c => c.FileSize)
-                .GreaterThanOrEqualTo(0);
+                .GreaterThanOrEqualTo(0)
+                .WithError(Errors.General.ValueIsInvalid("File Size"));
         }
     }
 }

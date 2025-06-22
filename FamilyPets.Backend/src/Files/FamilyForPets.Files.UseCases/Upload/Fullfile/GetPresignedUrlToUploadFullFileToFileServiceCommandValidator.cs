@@ -1,4 +1,7 @@
-﻿using FluentValidation;
+﻿using FamilyForPets.Core.Validation;
+using FamilyForPets.Files.Shared.DTOs;
+using FamilyForPets.SharedKernel;
+using FluentValidation;
 
 namespace FamilyForPets.Files.UseCases.Upload.Fullfile
 {
@@ -8,10 +11,12 @@ namespace FamilyForPets.Files.UseCases.Upload.Fullfile
         public GetPresignedUrlToUploadFullFileToFileServiceCommandValidator()
         {
             RuleFor(c => c.FileName.Key)
-                .NotEmpty();
+                .NotEmpty()
+                .WithError(Errors.General.CannotBeEmpty(nameof(FileName.Key)));
 
             RuleFor(c => c.FileName.BucketName)
-                .NotEmpty();
+                .NotEmpty()
+                .WithError(Errors.General.CannotBeEmpty(nameof(FileName.BucketName)));
         }
     }
 
