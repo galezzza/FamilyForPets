@@ -39,7 +39,7 @@ namespace FamilyForPets.Volunteers.Domain.PetValueObjects
 
         protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
-            throw new NotImplementedException();
+            yield return Value;
         }
     }
 }

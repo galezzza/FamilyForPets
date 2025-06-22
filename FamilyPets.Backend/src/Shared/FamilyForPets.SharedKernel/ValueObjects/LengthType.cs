@@ -36,7 +36,7 @@ namespace FamilyForPets.SharedKernel.ValueObjects
 
         protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
-            throw new NotImplementedException();
+            yield return Value;
         }
     }
 }
