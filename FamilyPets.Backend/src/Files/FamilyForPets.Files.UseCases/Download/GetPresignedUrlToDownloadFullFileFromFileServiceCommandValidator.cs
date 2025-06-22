@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using FamilyForPets.Files.Contracts.Requests.Download;
+using FluentValidation;
 
 namespace FamilyForPets.Files.UseCases.Download
 {
@@ -7,6 +8,11 @@ namespace FamilyForPets.Files.UseCases.Download
     {
         public GetPresignedUrlToDownloadFullFileFromFileServiceCommandValidator()
         {
+            RuleFor(c => c.FileName.Key)
+                .NotEmpty();
+
+            RuleFor(c => c.FileName.BucketName)
+                .NotEmpty();
         }
     }
 }

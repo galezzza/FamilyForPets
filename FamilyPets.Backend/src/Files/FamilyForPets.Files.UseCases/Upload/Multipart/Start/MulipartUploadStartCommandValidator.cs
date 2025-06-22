@@ -7,6 +7,11 @@ namespace FamilyForPets.Files.UseCases.Upload.Multipart.Start
     {
         public MulipartUploadStartCommandValidator()
         {
+            RuleFor(c => c.FileName.Key)
+                .NotEmpty();
+
+            RuleFor(c => c.FileName.BucketName)
+                .NotEmpty();
         }
     }
 }

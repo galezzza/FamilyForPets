@@ -7,6 +7,11 @@ namespace FamilyForPets.Files.UseCases.Upload.Fullfile
     {
         public GetPresignedUrlToUploadFullFileToFileServiceCommandValidator()
         {
+            RuleFor(c => c.FileName.Key)
+                .NotEmpty();
+
+            RuleFor(c => c.FileName.BucketName)
+                .NotEmpty();
         }
     }
 
