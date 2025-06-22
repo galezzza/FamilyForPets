@@ -65,6 +65,8 @@ namespace FamilyForPets.Volunteers.Domain.Entities
 
         public DateTime CreatedAt { get; private set; } = default!;
 
+        public FilePathsList PetPhotos { get; private set; } = default!;
+
         public static Result<Pet, Error> Create(
             PetNickname name,
             PetDescription description,
