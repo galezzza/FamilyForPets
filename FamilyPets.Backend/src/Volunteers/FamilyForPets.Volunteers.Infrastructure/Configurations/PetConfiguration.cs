@@ -211,6 +211,16 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations
                 .IsRequired()
                 .HasConversion(new DateTimeToBinaryConverter());
 
+            builder.Property(p => p.PetPosition)
+                .HasColumnName("pet_position")
+                .IsRequired()
+                .HasConversion(
+                    petPosition => petPosition.PositionNumber,
+                    position => PetPosition.Create(position).Value);
+
+            builder.HasIndex(p => p.PetPosition)
+                .IsUnique();
+
             builder.OwnsOne(p => p.PetPhotos, pb =>
             {
                 pb.ToJson("pet_photos_paths");

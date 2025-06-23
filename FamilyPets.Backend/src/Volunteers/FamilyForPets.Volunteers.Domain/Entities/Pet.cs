@@ -22,7 +22,8 @@ namespace FamilyForPets.Volunteers.Domain.Entities
             PetBreedAndSpecies petBreed,
             PhoneNumber contactPhoneNumber,
             CastrationStatus castrationStatus,
-            HelpStatus helpStatus)
+            HelpStatus helpStatus,
+            PetPosition petPosition)
             : base(id)
         {
             Name = name;
@@ -32,6 +33,7 @@ namespace FamilyForPets.Volunteers.Domain.Entities
             ContactPhoneNumber = contactPhoneNumber;
             CastrationStatus = castrationStatus;
             HelpStatus = helpStatus;
+            PetPosition = petPosition;
             CreatedAt = DateTime.UtcNow;
         }
 
@@ -65,23 +67,26 @@ namespace FamilyForPets.Volunteers.Domain.Entities
 
         public DateTime CreatedAt { get; private set; } = default!;
 
+        public PetPosition PetPosition { get; private set; } = default!;
+
         public FilePathsList PetPhotos { get; private set; } = default!;
 
         public static Result<Pet, Error> Create(
             PetNickname name,
-            PetDescription description,
+            //PetDescription description,
             PelageColor color,
             DateTime? dateOfBirth,
             PetBreedAndSpecies petBreed,
-            PetHealthDescription petHealthDescription,
-            Adress petCurrentAdress,
-            Mass weight,
-            Length height,
+            //PetHealthDescription petHealthDescription,
+            //Adress petCurrentAdress,
+            //Mass weight,
+            //Length height,
             PhoneNumber contactPhoneNumber,
             CastrationStatus castrationStatus,
-            PetVaccinesList petVaccinesList,
+            //PetVaccinesList petVaccinesList,
             HelpStatus helpStatus,
-            DetailsForPayment paymentDatails)
+            DetailsForPayment paymentDatails,
+            PetPosition petPosition)
         {
             return Result.Success<Pet, Error>(new Pet(
                 PetId.New(),
@@ -91,7 +96,14 @@ namespace FamilyForPets.Volunteers.Domain.Entities
                 petBreed,
                 contactPhoneNumber,
                 castrationStatus,
-                helpStatus));
+                helpStatus,
+                petPosition));
+        }
+
+        internal UnitResult<Error> ChangePetPosition(PetPosition newPetPosition)
+        {
+            PetPosition = newPetPosition;
+            return UnitResult.Success<Error>();
         }
     }
 }

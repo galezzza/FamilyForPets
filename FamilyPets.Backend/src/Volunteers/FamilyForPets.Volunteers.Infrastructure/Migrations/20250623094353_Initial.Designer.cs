@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FamilyForPets.Volunteers.Infrastructure.Migrations
 {
     [DbContext(typeof(VolunteerDbContext))]
-    [Migration("20250622202235_Initial")]
+    [Migration("20250623094353_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -69,6 +69,10 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                         .HasMaxLength(2000)
                         .HasColumnType("character varying(2000)")
                         .HasColumnName("pet_health_description");
+
+                    b.Property<int>("PetPosition")
+                        .HasColumnType("integer")
+                        .HasColumnName("pet_position");
 
                     b.Property<Guid>("volunteer_id")
                         .HasColumnType("uuid")
@@ -208,6 +212,10 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_pets");
+
+                    b.HasIndex("PetPosition")
+                        .IsUnique()
+                        .HasDatabaseName("ix_pets_pet_position");
 
                     b.HasIndex("volunteer_id")
                         .HasDatabaseName("ix_pets_volunteer_id");

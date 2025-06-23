@@ -67,6 +67,10 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                         .HasColumnType("character varying(2000)")
                         .HasColumnName("pet_health_description");
 
+                    b.Property<int>("PetPosition")
+                        .HasColumnType("integer")
+                        .HasColumnName("pet_position");
+
                     b.Property<Guid>("volunteer_id")
                         .HasColumnType("uuid")
                         .HasColumnName("volunteer_id");
@@ -205,6 +209,10 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_pets");
+
+                    b.HasIndex("PetPosition")
+                        .IsUnique()
+                        .HasDatabaseName("ix_pets_pet_position");
 
                     b.HasIndex("volunteer_id")
                         .HasDatabaseName("ix_pets_volunteer_id");
