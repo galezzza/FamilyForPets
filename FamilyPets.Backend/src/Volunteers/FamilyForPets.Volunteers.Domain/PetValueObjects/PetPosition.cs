@@ -5,12 +5,17 @@ namespace FamilyForPets.Volunteers.Domain.PetValueObjects
 {
     public class PetPosition : ComparableValueObject
     {
-        public int PositionNumber { get; }
+        // ef core
+        private PetPosition()
+        {
+        }
 
         private PetPosition(int positionNumber)
         {
             PositionNumber = positionNumber;
         }
+
+        public int PositionNumber { get; }
 
         public static Result<PetPosition, Error> Create(int positionNumber)
         {

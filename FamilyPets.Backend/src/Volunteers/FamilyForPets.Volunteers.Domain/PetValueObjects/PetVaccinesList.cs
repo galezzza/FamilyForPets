@@ -19,10 +19,10 @@ namespace FamilyForPets.Volunteers.Domain.PetValueObjects
 
         public IReadOnlyCollection<PetVaccine> PetVaccines => _petVaccines.AsReadOnly();
 
-        public static Result<PetVaccinesList, Error> Create(List<PetVaccine> socialNetworks)
+        public static Result<PetVaccinesList, Error> Create(List<PetVaccine> petVaccines)
         {
             return Result.Success<PetVaccinesList, Error>(
-                new PetVaccinesList(socialNetworks));
+                new PetVaccinesList(petVaccines));
         }
 
         public static PetVaccinesList Empty() => new PetVaccinesList([]);

@@ -6,7 +6,7 @@ namespace FamilyForPets.Volunteers.Infrastructure
 {
     public static class Inject
     {
-        public static IServiceCollection AddVolunteerInfrastrucutre(this IServiceCollection services)
+        public static IServiceCollection AddVolunteersInfrastrucutre(this IServiceCollection services)
         {
             services.AddScoped<VolunteerDbContext>();
 

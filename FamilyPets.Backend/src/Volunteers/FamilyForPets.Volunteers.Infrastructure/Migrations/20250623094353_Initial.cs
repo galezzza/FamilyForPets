@@ -45,6 +45,7 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                     pet_health_description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
                     contact_phone_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     created_at = table.Column<long>(type: "bigint", nullable: false),
+                    pet_position = table.Column<int>(type: "integer", nullable: false),
                     volunteer_id = table.Column<Guid>(type: "uuid", nullable: false),
                     castration_status_enum = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     primary_color = table.Column<int>(type: "integer", nullable: false),
@@ -65,6 +66,7 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                     mass_type_enum = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     is_deleted = table.Column<bool>(type: "boolean", nullable: false),
                     deletion_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    pet_photos_paths = table.Column<string>(type: "jsonb", nullable: false),
                     pet_vaccienes = table.Column<string>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>
@@ -80,6 +82,12 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_pets_pet_position",
+                table: "pets",
+                column: "pet_position",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_pets_volunteer_id",

@@ -1,4 +1,6 @@
-﻿using FamilyForPets.Core.Configurations.Converters;
+﻿using System.Text.Json;
+using FamilyForPets.Core.Configurations.Converters;
+using FamilyForPets.Core.DTOs;
 using FamilyForPets.SharedKernel;
 using FamilyForPets.SharedKernel.ValueObjects;
 using FamilyForPets.Volunteers.Domain.Entities;
@@ -209,6 +211,29 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations
                 .IsRequired()
                 .HasConversion(new DateTimeToBinaryConverter());
 
+            builder.Property(p => p.PetPosition)
+                .HasColumnName("pet_position")
+                .IsRequired()
+                .HasConversion(
+                    petPosition => petPosition.PositionNumber,
+                    position => PetPosition.Create(position).Value);
+
+            builder.HasIndex(p => p.PetPosition)
+                .IsUnique();
+
+            builder.OwnsOne(p => p.PetPhotos, pb =>
+            {
+                pb.ToJson("pet_photos_paths");
+                pb.OwnsMany(fpb => fpb.FilePaths, fp =>
+                {
+                    fp.Property(sn => sn.Path)
+                        .IsRequired()
+                        .HasColumnName("photo_path")
+                        .HasConversion(
+                            x => JsonSerializer.Serialize(x, JsonSerializerOptions.Default),
+                            json => JsonSerializer.Deserialize<FileName>(json, JsonSerializerOptions.Default));
+                });
+            });
         }
 
     }
