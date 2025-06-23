@@ -19,30 +19,30 @@ namespace FamilyForPets.Files.API
 {
     public class FilesContract : IFilesContract
     {
-        private readonly DeleteFileFromFileServiceHandler _handler1;
-        private readonly GetPresignedUrlToUploadFullFileToFileServiceHandler _handler2;
-        private readonly GetPresignedUrlToDownloadFullFileFromFileServiceHandler _handler3;
-        private readonly MultipartUploadStartHandler _handler4;
-        private readonly MultipartUploadCancelHandler _handler5;
-        private readonly MultipartUploadCompleteHandler _handler6;
-        private readonly GetPresignedUrlToUploadChunkOfFileToFileServiceHandler _handler7;
+        private readonly DeleteFileFromFileServiceHandler _deleteFileHandler;
+        private readonly GetPresignedUrlToUploadFullFileToFileServiceHandler _uploadFullFileHandler;
+        private readonly GetPresignedUrlToDownloadFullFileFromFileServiceHandler _downloadFullFileHandler;
+        private readonly MultipartUploadStartHandler _multipartUploadStartHandler;
+        private readonly MultipartUploadCancelHandler _multipartUploadCancelHandler;
+        private readonly MultipartUploadCompleteHandler _multipartUploadCompleteHandler;
+        private readonly GetPresignedUrlToUploadChunkOfFileToFileServiceHandler _uploadChunkOfFileHandler;
 
         public FilesContract(
-            DeleteFileFromFileServiceHandler handler1,
-            GetPresignedUrlToUploadFullFileToFileServiceHandler handler2,
-            GetPresignedUrlToDownloadFullFileFromFileServiceHandler handler3,
-            MultipartUploadStartHandler handler4,
-            MultipartUploadCancelHandler handler5,
-            MultipartUploadCompleteHandler handler6,
-            GetPresignedUrlToUploadChunkOfFileToFileServiceHandler handler7)
+            DeleteFileFromFileServiceHandler deleteFileHandler,
+            GetPresignedUrlToUploadFullFileToFileServiceHandler uploadFullFileHandler,
+            GetPresignedUrlToDownloadFullFileFromFileServiceHandler downloadFullFileHandler,
+            MultipartUploadStartHandler multipartUploadStartHandler,
+            MultipartUploadCancelHandler multipartUploadCancelHandler,
+            MultipartUploadCompleteHandler multipartUploadCompleteHandler,
+            GetPresignedUrlToUploadChunkOfFileToFileServiceHandler uploadChunkOfFileHandlerndler7)
         {
-            _handler1 = handler1;
-            _handler2 = handler2;
-            _handler3 = handler3;
-            _handler4 = handler4;
-            _handler5 = handler5;
-            _handler6 = handler6;
-            _handler7 = handler7;
+            _deleteFileHandler = deleteFileHandler;
+            _uploadFullFileHandler = uploadFullFileHandler;
+            _downloadFullFileHandler = downloadFullFileHandler;
+            _multipartUploadStartHandler = multipartUploadStartHandler;
+            _multipartUploadCancelHandler = multipartUploadCancelHandler;
+            _multipartUploadCompleteHandler = multipartUploadCompleteHandler;
+            _uploadChunkOfFileHandler = uploadChunkOfFileHandlerndler7;
         }
 
         public async Task<Result<Guid, ErrorList>> Delete(
@@ -50,7 +50,7 @@ namespace FamilyForPets.Files.API
             CancellationToken cancellationToken = default)
         {
             DeleteFileFromFileServiceCommand command = new(request.FileName);
-            return await _handler1.HandleAsync(command, cancellationToken);
+            return await _deleteFileHandler.HandleAsync(command, cancellationToken);
         }
 
         public async Task<Result<string, ErrorList>> GetUploadFullFileUrl(
@@ -58,7 +58,7 @@ namespace FamilyForPets.Files.API
             CancellationToken cancellationToken = default)
         {
             GetPresignedUrlToUploadFullFileToFileServiceCommand command = new(request.FileName);
-            return await _handler2.HandleAsync(command, cancellationToken);
+            return await _uploadFullFileHandler.HandleAsync(command, cancellationToken);
         }
 
         public async Task<Result<string, ErrorList>> GetDownloadFileUrl(
@@ -67,28 +67,20 @@ namespace FamilyForPets.Files.API
         {
             GetPresignedUrlToDownloadFullFileFromFileServiceCommand command = new(
                 request.FileName);
-            return await _handler3.HandleAsync(command, cancellationToken);
+            return await _downloadFullFileHandler.HandleAsync(command, cancellationToken);
         }
 
         public async Task<Result<MultipartUploadStartResponse, ErrorList>> GetStartUploadMultipartFileUrl(
             MultipartUploadStartRequest request,
             CancellationToken cancellationToken = default)
         {
-            MultipartUploadStartCommand command = new(request.FileName, request.FileSize);
-            Result<MultipartUploadStartCommandResponse, ErrorList> result = await _handler4
+            MultipartUploadStartCommand command = new(request.FileName, request.ContentType, request.FileSize);
+            Result<MultipartUploadStartResponse, ErrorList> result = await _multipartUploadStartHandler
                 .HandleAsync(command, cancellationToken);
             if (result.IsFailure)
-            {
-                return Result.Failure<
-                    MultipartUploadStartResponse, ErrorList>(result.Error);
-            }
+                return Result.Failure<MultipartUploadStartResponse, ErrorList>(result.Error);
 
-            MultipartUploadStartResponse response = new(
-                result.Value.FileName,
-                result.Value.UploadId,
-                result.Value.ChunkSize,
-                result.Value.TotalChunks);
-            return Result.Success<MultipartUploadStartResponse, ErrorList>(response);
+            return Result.Success<MultipartUploadStartResponse, ErrorList>(result.Value);
         }
 
         public async Task<UnitResult<ErrorList>> CancelMultipartUpload(
@@ -97,7 +89,7 @@ namespace FamilyForPets.Files.API
         {
             MultipartUploadCancelCommand command = new(
                 request.FileName, request.UploadId);
-            return await _handler5.HandleAsync(command, cancellationToken);
+            return await _multipartUploadCancelHandler.HandleAsync(command, cancellationToken);
         }
 
         public async Task<Result<string, ErrorList>> CompleteMultipartUpload(
@@ -106,7 +98,7 @@ namespace FamilyForPets.Files.API
         {
             MultipartUploadCompleteCommand command = new(
                 request.FileName, request.UploadId, request.ETags);
-            return await _handler6.HandleAsync(command, cancellationToken);
+            return await _multipartUploadCompleteHandler.HandleAsync(command, cancellationToken);
         }
 
         public async Task<Result<GetPresignedUrlToUploadChunkOfFileToFileServiceResponse, ErrorList>> GetUploadChunkFileUrl(
@@ -118,8 +110,8 @@ namespace FamilyForPets.Files.API
                 request.UploadId,
                 request.PartNumber);
 
-            Result<GetPresignedUrlToUploadChunkOfFileToFileServiceCommandResponse, ErrorList> result
-                = await _handler7.HandleAsync(command, cancellationToken);
+            Result<GetPresignedUrlToUploadChunkOfFileToFileServiceResponse, ErrorList> result
+                = await _uploadChunkOfFileHandler.HandleAsync(command, cancellationToken);
             if (result.IsFailure)
             {
                 return Result.Failure<
@@ -127,13 +119,8 @@ namespace FamilyForPets.Files.API
                     result.Error);
             }
 
-            GetPresignedUrlToUploadChunkOfFileToFileServiceResponse response = new(
-                result.Value.Url,
-                result.Value.PartNumber);
-
             return Result.Success<
-                GetPresignedUrlToUploadChunkOfFileToFileServiceResponse, ErrorList>(
-                response);
+                GetPresignedUrlToUploadChunkOfFileToFileServiceResponse, ErrorList>(result.Value);
         }
     }
 }

@@ -5,14 +5,15 @@ namespace FamilyForPets.Files.UseCases
 {
     public interface IFilesProvider
     {
-        Task<string> GetPresignedUrlToUploadFullFileToFileService(
+        Task<string> GetPresignedUrlToUploadFullFile(
             FileName fileName);
 
-        Task<string> GetPresignedUrlToDownloadFullFileFromFileService(
+        Task<string> GetPresignedUrlToDownloadFullFile(
             FileName fileName);
 
         Task<string> MultipartUploadStart(
             FileName fileName,
+            string contentType,
             CancellationToken cancellationToken);
 
         Task MultipartUploadCancel(
@@ -25,7 +26,7 @@ namespace FamilyForPets.Files.UseCases
             List<PartETag> partETags,
             CancellationToken cancellationToken);
 
-        Task<string> GetPresignedUrlToUploadChunkOfFileToFileService(
+        Task<string> GetPresignedUrlToUploadChunkOfFile(
             FileName fileName,
             string uploadId,
             int partNumber);

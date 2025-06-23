@@ -66,24 +66,15 @@ namespace FamilyForPets.Files.API
         [HttpPost("multipart/starting")]
         public async Task<EndpointResult<MultipartUploadStartResponse>> GetStartUploadMultipartFileUrl(
             [FromBody] MultipartUploadStartRequest request,
-            [FromServices] ICommandHandler<MultipartUploadStartCommand, MultipartUploadStartCommandResponse> handler,
+            [FromServices] ICommandHandler<MultipartUploadStartCommand, MultipartUploadStartResponse> handler,
             CancellationToken cancellationToken = default)
         {
-            MultipartUploadStartCommand command = new(request.FileName, request.FileSize);
-            Result<MultipartUploadStartCommandResponse, ErrorList> result = await handler
+            MultipartUploadStartCommand command = new(request.FileName, request.ContentType, request.FileSize);
+            Result<MultipartUploadStartResponse, ErrorList> result = await handler
                 .HandleAsync(command, cancellationToken);
             if (result.IsFailure)
-            {
-                return Result.Failure<
-                    MultipartUploadStartResponse, ErrorList>(result.Error);
-            }
-
-            MultipartUploadStartResponse response = new(
-                result.Value.FileName,
-                result.Value.UploadId,
-                result.Value.ChunkSize,
-                result.Value.TotalChunks);
-            return Result.Success<MultipartUploadStartResponse, ErrorList>(response);
+                return Result.Failure<MultipartUploadStartResponse, ErrorList>(result.Error);
+            return Result.Success<MultipartUploadStartResponse, ErrorList>(result.Value);
         }
 
         [HttpPost("multipart/canceling")]
@@ -113,7 +104,7 @@ namespace FamilyForPets.Files.API
             [FromBody] GetPresignedUrlToUploadChunkOfFileToFileServiceRequest request,
             [FromServices] ICommandHandler<
                 GetPresignedUrlToUploadChunkOfFileToFileServiceCommand,
-                GetPresignedUrlToUploadChunkOfFileToFileServiceCommandResponse> handler,
+                GetPresignedUrlToUploadChunkOfFileToFileServiceResponse> handler,
             CancellationToken cancellationToken = default)
         {
             GetPresignedUrlToUploadChunkOfFileToFileServiceCommand command = new(
@@ -121,7 +112,7 @@ namespace FamilyForPets.Files.API
                 request.UploadId,
                 request.PartNumber);
 
-            Result<GetPresignedUrlToUploadChunkOfFileToFileServiceCommandResponse, ErrorList> result
+            Result<GetPresignedUrlToUploadChunkOfFileToFileServiceResponse, ErrorList> result
                 = await handler.HandleAsync(command, cancellationToken);
             if (result.IsFailure)
             {
@@ -130,12 +121,8 @@ namespace FamilyForPets.Files.API
                     result.Error);
             }
 
-            GetPresignedUrlToUploadChunkOfFileToFileServiceResponse response = new(
-                result.Value.Url,
-                result.Value.PartNumber);
             return Result.Success<
-                GetPresignedUrlToUploadChunkOfFileToFileServiceResponse, ErrorList>(
-                response);
+                GetPresignedUrlToUploadChunkOfFileToFileServiceResponse, ErrorList>(result.Value);
         }
     }
 }

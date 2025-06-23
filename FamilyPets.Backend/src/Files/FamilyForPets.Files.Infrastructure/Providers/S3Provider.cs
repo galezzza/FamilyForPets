@@ -22,7 +22,7 @@ namespace FamilyForPets.Files.Infrastructure.Providers
             _minioOptions = minioOptions;
         }
 
-        public async Task<string> GetPresignedUrlToUploadFullFileToFileService(
+        public async Task<string> GetPresignedUrlToUploadFullFile(
             FileName fileName)
         {
             var request = new GetPreSignedUrlRequest
@@ -37,7 +37,7 @@ namespace FamilyForPets.Files.Infrastructure.Providers
             return await _s3Client.GetPreSignedURLAsync(request);
         }
 
-        public async Task<string> GetPresignedUrlToDownloadFullFileFromFileService(
+        public async Task<string> GetPresignedUrlToDownloadFullFile(
             FileName fileName)
         {
             var request = new GetPreSignedUrlRequest
@@ -54,12 +54,14 @@ namespace FamilyForPets.Files.Infrastructure.Providers
 
         public async Task<string> MultipartUploadStart(
             FileName fileName,
+            string contentType,
             CancellationToken cancellationToken)
         {
             var initiateRequest = new InitiateMultipartUploadRequest
             {
                 BucketName = fileName.BucketName,
                 Key = fileName.Key,
+                ContentType = contentType,
             };
 
             InitiateMultipartUploadResponse result = await _s3Client
@@ -102,7 +104,7 @@ namespace FamilyForPets.Files.Infrastructure.Providers
             return response.Key;
         }
 
-        public async Task<string> GetPresignedUrlToUploadChunkOfFileToFileService(
+        public async Task<string> GetPresignedUrlToUploadChunkOfFile(
             FileName fileName,
             string uploadId,
             int partNumber)

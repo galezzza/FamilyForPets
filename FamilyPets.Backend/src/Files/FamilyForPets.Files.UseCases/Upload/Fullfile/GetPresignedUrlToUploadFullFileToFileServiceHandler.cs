@@ -34,7 +34,7 @@ namespace FamilyForPets.Files.UseCases.Upload.Fullfile
                 return Result.Failure<string, ErrorList>(validationResult.ToErrorListFromValidationResult());
 
             string uploadUrl = await _filesProvider
-                .GetPresignedUrlToUploadFullFileToFileService(command.FileName);
+                .GetPresignedUrlToUploadFullFile(command.FileName);
 
             return Result.Success<string, ErrorList>(uploadUrl);
         }

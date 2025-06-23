@@ -37,7 +37,7 @@ namespace FamilyForPets.Files.UseCases.Download
                 return Result.Failure<string, ErrorList>(validationResult.ToErrorListFromValidationResult());
 
             string downloadUrl = await _filesProvider
-                .GetPresignedUrlToDownloadFullFileFromFileService(command.FileName);
+                .GetPresignedUrlToDownloadFullFile(command.FileName);
 
             return Result.Success<string, ErrorList>(downloadUrl);
 

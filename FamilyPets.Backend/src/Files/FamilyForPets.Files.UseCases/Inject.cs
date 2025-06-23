@@ -1,5 +1,6 @@
 ﻿using FamilyForPets.Core.Abstractions;
 using FamilyForPets.Files.Contracts.Requests.Download;
+using FamilyForPets.Files.Contracts.Responses.MultipartUpload;
 using FamilyForPets.Files.UseCases.Delete;
 using FamilyForPets.Files.UseCases.Download;
 using FamilyForPets.Files.UseCases.Upload.Fullfile;
@@ -29,7 +30,7 @@ namespace FamilyForPets.Files.UseCases
                     GetPresignedUrlToDownloadFullFileFromFileServiceHandler>();
 
             services.AddScoped
-                <ICommandHandler<MultipartUploadStartCommand, MultipartUploadStartCommandResponse>,
+                <ICommandHandler<MultipartUploadStartCommand, MultipartUploadStartResponse>,
                     MultipartUploadStartHandler>();
 
             services.AddScoped
@@ -42,7 +43,7 @@ namespace FamilyForPets.Files.UseCases
 
             services.AddScoped
                 <ICommandHandler<GetPresignedUrlToUploadChunkOfFileToFileServiceCommand,
-                GetPresignedUrlToUploadChunkOfFileToFileServiceCommandResponse>,
+                GetPresignedUrlToUploadChunkOfFileToFileServiceResponse>,
                     GetPresignedUrlToUploadChunkOfFileToFileServiceHandler>();
 
             services.AddValidatorsFromAssembly(typeof(Inject).Assembly);

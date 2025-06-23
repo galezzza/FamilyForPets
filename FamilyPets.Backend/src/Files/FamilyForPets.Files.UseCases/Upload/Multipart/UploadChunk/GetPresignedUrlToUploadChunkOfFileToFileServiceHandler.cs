@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.Core.Abstractions;
 using FamilyForPets.Core.Extentions.ValidationExtentions;
+using FamilyForPets.Files.Contracts.Responses.MultipartUpload;
 using FamilyForPets.SharedKernel;
 using FluentValidation;
 using FluentValidation.Results;
@@ -10,7 +11,7 @@ namespace FamilyForPets.Files.UseCases.Upload.Multipart.UploadChunk
 {
     public class GetPresignedUrlToUploadChunkOfFileToFileServiceHandler
         : ICommandHandler<GetPresignedUrlToUploadChunkOfFileToFileServiceCommand,
-            GetPresignedUrlToUploadChunkOfFileToFileServiceCommandResponse>
+            GetPresignedUrlToUploadChunkOfFileToFileServiceResponse>
     {
         private readonly IFilesProvider _filesProvider;
         private readonly IValidator<GetPresignedUrlToUploadChunkOfFileToFileServiceCommand> _validator;
@@ -26,26 +27,23 @@ namespace FamilyForPets.Files.UseCases.Upload.Multipart.UploadChunk
             _logger = logger;
         }
 
-        public async Task<Result<GetPresignedUrlToUploadChunkOfFileToFileServiceCommandResponse, ErrorList>> HandleAsync(
+        public async Task<Result<GetPresignedUrlToUploadChunkOfFileToFileServiceResponse, ErrorList>> HandleAsync(
             GetPresignedUrlToUploadChunkOfFileToFileServiceCommand command,
             CancellationToken cancellationToken)
         {
             ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
             if (validationResult.IsValid == false)
             {
-                return Result.Failure<GetPresignedUrlToUploadChunkOfFileToFileServiceCommandResponse,
+                return Result.Failure<GetPresignedUrlToUploadChunkOfFileToFileServiceResponse,
                     ErrorList>(validationResult.ToErrorListFromValidationResult());
             }
 
             string uploadUrl = await _filesProvider
-                .GetPresignedUrlToUploadChunkOfFileToFileService(
+                .GetPresignedUrlToUploadChunkOfFile(
                     command.FileName, command.UploadId, command.PartNumber);
 
-            GetPresignedUrlToUploadChunkOfFileToFileServiceCommandResponse response = new(
-                uploadUrl,
-                command.PartNumber);
-            return Result.Success<GetPresignedUrlToUploadChunkOfFileToFileServiceCommandResponse,
-                ErrorList>(response);
+            return Result.Success<GetPresignedUrlToUploadChunkOfFileToFileServiceResponse,
+                ErrorList>(new(uploadUrl, command.PartNumber));
         }
     }
 }
