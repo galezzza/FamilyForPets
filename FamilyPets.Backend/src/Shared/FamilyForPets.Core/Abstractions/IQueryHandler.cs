@@ -3,23 +3,23 @@ using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.Core.Abstractions
 {
-    public interface ICommandHandler<in TCommand, TResponse>
-        where TCommand : ICommand
+    public interface IQueryHandler<in TQuery, TResponse>
+        where TQuery : IQuery
     {
         Task<Result<TResponse, ErrorList>> HandleAsync(
-            TCommand command,
+            TQuery query,
             CancellationToken cancellationToken);
     }
 
-    public interface ICommandHandler<in TCommand>
-        where TCommand : ICommand
+    public interface IQueryHandler<in TQuery>
+        where TQuery : IQuery
     {
         Task<UnitResult<ErrorList>> HandleAsync(
-            TCommand command,
+            TQuery query,
             CancellationToken cancellationToken);
     }
 
-    public interface ICommand
+    public interface IQuery
     {
     }
 }

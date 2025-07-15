@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using FamilyForPets.Core.Configurations.Converters;
-using FamilyForPets.Core.DTOs;
 using FamilyForPets.SharedKernel;
 using FamilyForPets.SharedKernel.ValueObjects;
 using FamilyForPets.Volunteers.Domain.Entities;
