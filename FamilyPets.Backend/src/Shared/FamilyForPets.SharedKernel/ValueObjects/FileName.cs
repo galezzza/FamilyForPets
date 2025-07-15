@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.SharedKernel;
 
-namespace FamilyForPets.Core.DTOs
+namespace FamilyForPets.SharedKernel.ValueObjects
 {
     //public record FileName(string Key, string BucketName);
 

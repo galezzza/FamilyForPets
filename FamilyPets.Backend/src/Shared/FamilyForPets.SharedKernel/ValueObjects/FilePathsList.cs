@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.SharedKernel;
 
-namespace FamilyForPets.Volunteers.Domain.Entities
+namespace FamilyForPets.SharedKernel.ValueObjects
 {
     public class FilePathsList : ValueObject
     {

@@ -1,5 +1,5 @@
-﻿using FamilyForPets.Core.DTOs;
-using FamilyForPets.Files.Shared.DTOs;
+﻿using FamilyForPets.Files.Domain.DTOs;
+using FamilyForPets.SharedKernel.ValueObjects;
 
 namespace FamilyForPets.Files.UseCases
 {

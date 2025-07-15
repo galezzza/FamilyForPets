@@ -1,7 +1,7 @@
 ﻿using FamilyForPets.Core.Abstractions;
-using FamilyForPets.Core.DTOs;
+using FamilyForPets.SharedKernel.ValueObjects;
 
-namespace FamilyForPets.Files.Contracts.Requests.Download
+namespace FamilyForPets.Files.UseCases.Download
 {
     public record GetPresignedUrlToDownloadFullFileFromFileServiceCommand(
         FileName FileName) : ICommand;

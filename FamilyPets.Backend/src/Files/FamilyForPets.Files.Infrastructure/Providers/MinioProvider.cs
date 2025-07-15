@@ -1,6 +1,6 @@
-﻿using FamilyForPets.Core.DTOs;
-using FamilyForPets.Files.Shared.DTOs;
+﻿using FamilyForPets.Files.Domain.DTOs;
 using FamilyForPets.Files.UseCases;
+using FamilyForPets.SharedKernel.ValueObjects;
 using Minio;
 
 namespace FamilyForPets.Files.Infrastructure.Providers

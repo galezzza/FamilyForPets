@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Amazon.S3;
 using Amazon.S3.Model;
-using FamilyForPets.Core.DTOs;
 using FamilyForPets.Files.Infrastructure.Options;
 using FamilyForPets.Files.UseCases;
 using FamilyForPets.SharedKernel.ValueObjects;
@@ -88,7 +87,7 @@ namespace FamilyForPets.Files.Infrastructure.Providers
         public async Task<string> MultipartUploadComplete(
             FileName fileName,
             string uploadId,
-            List<Shared.DTOs.PartETag> partETags,
+            List<Domain.DTOs.PartETag> partETags,
             CancellationToken cancellationToken)
         {
             var completeRequest = new CompleteMultipartUploadRequest

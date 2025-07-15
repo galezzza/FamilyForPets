@@ -1,6 +1,6 @@
-﻿using FamilyForPets.Core.DTOs;
-using FamilyForPets.Core.Validation;
+﻿using FamilyForPets.Core.Validation;
 using FamilyForPets.SharedKernel;
+using FamilyForPets.SharedKernel.ValueObjects;
 using FluentValidation;
 
 namespace FamilyForPets.Files.UseCases.Upload.Fullfile

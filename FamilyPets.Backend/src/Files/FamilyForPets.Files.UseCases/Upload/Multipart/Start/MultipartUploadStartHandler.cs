@@ -2,6 +2,7 @@
 using FamilyForPets.Core.Abstractions;
 using FamilyForPets.Core.Extentions.ValidationExtentions;
 using FamilyForPets.Files.Contracts.Responses.MultipartUpload;
+using FamilyForPets.Files.Domain;
 using FamilyForPets.SharedKernel;
 using FluentValidation;
 using FluentValidation.Results;

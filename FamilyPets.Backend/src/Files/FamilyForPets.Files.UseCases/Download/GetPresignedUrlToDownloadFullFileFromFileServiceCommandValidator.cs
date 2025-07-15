@@ -1,7 +1,6 @@
-﻿using FamilyForPets.Core.DTOs;
-using FamilyForPets.Core.Validation;
-using FamilyForPets.Files.Contracts.Requests.Download;
+﻿using FamilyForPets.Core.Validation;
 using FamilyForPets.SharedKernel;
+using FamilyForPets.SharedKernel.ValueObjects;
 using FluentValidation;
 
 namespace FamilyForPets.Files.UseCases.Download

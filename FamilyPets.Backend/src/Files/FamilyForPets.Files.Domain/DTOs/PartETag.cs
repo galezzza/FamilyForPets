@@ -1,4 +1,4 @@
-﻿namespace FamilyForPets.Files.Shared.DTOs
+﻿namespace FamilyForPets.Files.Domain.DTOs
 {
     public record PartETag(string Value, int PartNumber);
 
