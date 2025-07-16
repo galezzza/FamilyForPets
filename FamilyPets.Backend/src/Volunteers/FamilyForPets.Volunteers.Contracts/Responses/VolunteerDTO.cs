@@ -21,7 +21,7 @@ namespace FamilyForPets.Volunteers.Contracts.Responses
 
         public int ExperienceInYears { get; init; }
 
-        public string Number { get; init; } = default!;
+        public string PhoneNumber { get; init; } = default!;
 
         public string CardNumber { get; init; } = default!;
 
@@ -42,7 +42,7 @@ namespace FamilyForPets.Volunteers.Contracts.Responses
                 Email = volunteer.Email.Email,
                 Description = volunteer.Description.Description,
                 ExperienceInYears = volunteer.ExperienceInYears,
-                Number = volunteer.PhoneNumber.Number,
+                PhoneNumber = volunteer.PhoneNumber.Number,
                 CardNumber = volunteer.DetailsForPayment.CardNumber,
                 OtherDetails = volunteer.DetailsForPayment.OtherDetails,
                 SocialNetworks = volunteer.VolunteerSocialNetworks.SocialNetworks

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FamilyForPets.Volunteers.Infrastructure.Configurations
+namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
 {
     public class PetConfiguration : IEntityTypeConfiguration<Pet>
     {

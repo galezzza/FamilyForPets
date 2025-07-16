@@ -4,7 +4,7 @@ using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FamilyForPets.Volunteers.Infrastructure.Configurations
+namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
 {
     public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
     {
