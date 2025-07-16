@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\FamilyForPets.Core\FamilyForPets.Core.csproj" />
+    <ProjectReference Include="..\FamilyForPets.Volunteers.Contracts\FamilyForPets.Volunteers.Contracts.csproj" />
     <ProjectReference Include="..\FamilyForPets.Volunteers.Domain\FamilyForPets.Volunteers.Domain.csproj" />
   </ItemGroup>
 

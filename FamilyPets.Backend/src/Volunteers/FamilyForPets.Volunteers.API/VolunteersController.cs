@@ -4,6 +4,7 @@ using FamilyForPets.Framework.Responses.EndpointResults;
 using FamilyForPets.Volunteers.Contracts;
 using FamilyForPets.Volunteers.Contracts.Requests.CreateVolunteer;
 using FamilyForPets.Volunteers.Contracts.Requests.UpdateVolunteer;
+using FamilyForPets.Volunteers.Contracts.Responses;
 using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.UseCases;
 using FamilyForPets.Volunteers.UseCases.Commands.CreateVolunteer;
@@ -160,8 +161,10 @@ namespace FamilyForPets.Volunteers.API
         }
 
         [HttpGet]
-        public async Task<EndpointResult> GetVolunteers(
-            [FromServices] IQueryHandler<GetVolunteersQuery> getVolunteersHandler,
+        public async Task<EndpointResult<IReadOnlyList<VolunteerDTO>>> GetVolunteers(
+            [FromServices] IQueryHandler<
+                GetVolunteersQuery,
+                IReadOnlyList<VolunteerDTO>> getVolunteersHandler,
             CancellationToken cancellationToken)
         {
             return await getVolunteersHandler.HandleAsync(new(), cancellationToken);
