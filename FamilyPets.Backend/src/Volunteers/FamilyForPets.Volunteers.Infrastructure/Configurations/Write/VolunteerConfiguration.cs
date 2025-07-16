@@ -1,4 +1,5 @@
-﻿using FamilyForPets.SharedKernel.ValueObjects;
+﻿using System.Text.Json;
+using FamilyForPets.SharedKernel.ValueObjects;
 using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +36,7 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
                     .HasMaxLength(FullName.MAX_NAME_TEXT_LENGHT);
             });
 
-            builder.Property(p => p.Email)
+            builder.Property(v => v.Email)
                 .HasColumnName("email")
                 .IsRequired()
                 .HasConversion(
@@ -43,15 +44,13 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
                     email => EmailAdress.Create(email).Value)
                 .HasMaxLength(EmailAdress.MAX_EMAIL_ADDRESS_LENGTH);
 
-            builder.Property(p => p.Description)
+            builder.Property(v => v.Description)
                 .HasColumnName("volunteer_description")
                 .IsRequired(false)
                 .HasConversion(
                     description => description.Description,
                     description => VolunteerDescription.Create(description).Value)
                 .HasMaxLength(VolunteerDescription.MAX_DESCRIPTION_LENGHT);
-
-
 
             builder.Property(v => v.ExperienceInYears)
                 .HasColumnName("experience_in_years")
@@ -84,23 +83,40 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
-            builder.OwnsOne(v => v.VolunteerSocialNetworks, vb =>
-            {
-                vb.ToJson("volunteer_social_newtworks");
-                vb.OwnsMany(vsnb => vsnb.SocialNetworks, snb =>
-                {
-                    snb.Property(sn => sn.Name)
-                        .IsRequired()
-                        .HasColumnName("social_network_name")
-                        .HasMaxLength(SocialNetwork.MAX_NAME_LENGHT);
+            //builder.OwnsOne(v => v.VolunteerSocialNetworks, vb =>
+            //{
+            //    vb.ToJson("volunteer_social_newtworks");
+            //    vb.OwnsMany(vsnb => vsnb.SocialNetworks, snb =>
+            //    {
+            //        snb.Property(sn => sn.Name)
+            //            .IsRequired()
+            //            .HasColumnName("social_network_name")
+            //            .HasMaxLength(SocialNetwork.MAX_NAME_LENGHT);
 
-                    snb.Property(sn => sn.Url)
-                        .IsRequired()
-                        .HasColumnName("social_network_name")
-                        .HasMaxLength(SocialNetwork.MAX_URL_LENGHT);
+            //        snb.Property(sn => sn.Url)
+            //            .IsRequired()
+            //            .HasColumnName("social_network_name")
+            //            .HasMaxLength(SocialNetwork.MAX_URL_LENGHT);
 
-                });
-            });
+            //    });
+            //});
+
+            builder.Property(v => v.VolunteerSocialNetworks)
+                .HasColumnName("volunteer_social_networks")
+                .HasConversion(
+                    networks => JsonSerializer.Serialize(
+                        networks.SocialNetworks, JsonSerializerOptions.Default),
+                    json => VolunteerSocialNetworksList.Create(
+                        JsonSerializer.Deserialize<List<SocialNetwork>>(
+                            json, JsonSerializerOptions.Default)
+                            ?? new List<SocialNetwork>())
+                    .Value)
+                .HasColumnType("jsonb");
+
+            builder.Property(p => p.IsDeleted)
+                .IsRequired()
+                .HasColumnName("is_deleted");
+
         }
     }
 }

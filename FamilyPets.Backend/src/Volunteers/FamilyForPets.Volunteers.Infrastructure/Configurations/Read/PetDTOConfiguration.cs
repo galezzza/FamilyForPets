@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
+namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Read
 {
     public class PetDTOConfiguration : IEntityTypeConfiguration<PetDTO>
     {
@@ -21,6 +21,9 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Id);
+
+            builder.Property(p => p.VolunteerId)
+                .HasColumnName("volunteer_id");
 
             builder.Property(p => p.Name)
                 .HasColumnName("name")
@@ -65,30 +68,30 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
                 .IsRequired(false)
                 .HasMaxLength(PetHealthDescription.MAX_DESCRIPTION_LENGHT);
 
-            builder.Property(a => a.Country)
+            builder.Property(p => p.Country)
                 .HasColumnName("country")
                 .IsRequired(false)
                 .HasMaxLength(Adress.MAX_ADRESS_TEXT_LENGHT);
 
-            builder.Property(a => a.City)
+            builder.Property(p => p.City)
                 .HasColumnName("city")
                 .IsRequired(false)
                 .HasMaxLength(Adress.MAX_ADRESS_TEXT_LENGHT);
 
-            builder.Property(a => a.Street)
+            builder.Property(p => p.Street)
                 .HasColumnName("street")
                 .IsRequired(false)
                 .HasMaxLength(Adress.MAX_ADRESS_TEXT_LENGHT);
 
-            builder.Property(a => a.HouseNumber)
+            builder.Property(p => p.HouseNumber)
                 .HasColumnName("house_number")
                 .IsRequired(false)
                 .HasMaxLength(Adress.MAX_ADRESS_TEXT_LENGHT);
 
-            builder.Property(a => a.Weight)
+            builder.Property(p => p.Weight)
                 .HasColumnName("weight");
 
-            builder.Property(a => a.MassType)
+            builder.Property(p => p.MassType)
                 .HasColumnName("mass_type_enum")
                 .HasMaxLength(ProjectConstants.MAX_LOW_TEXT_LENGHT);
 
@@ -102,10 +105,10 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
                     "(weight IS NULL AND mass_type_enum IS NULL) OR (weight IS NOT NULL AND mass_type_enum IS NOT NULL)");
             });
 
-            builder.Property(a => a.Height)
+            builder.Property(p => p.Height)
                 .HasColumnName("height");
 
-            builder.Property(a => a.LengthType)
+            builder.Property(p => p.LengthType)
                 .HasColumnName("length_type_enum")
                 .HasMaxLength(ProjectConstants.MAX_LOW_TEXT_LENGHT);
 
@@ -124,30 +127,31 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
                 .IsRequired()
                 .HasMaxLength(PhoneNumber.MAX_PHONE_NUMBER_LENGHT);
 
-            builder.Property(s => s.CastrationStatus)
+            builder.Property(p => p.CastrationStatus)
                 .IsRequired()
                 .HasColumnName("castration_status_enum")
                 .HasMaxLength(ProjectConstants.MAX_LOW_TEXT_LENGHT);
 
             builder.Property(p => p.PetVaccines)
-                .HasColumnName("pet_vacciene")
+                .HasColumnName("pet_vaccienes")
                 .HasColumnType("jsonb")
                 .HasConversion(
-                    v => JsonSerializer.Serialize(v, JsonSerializerOptions.Default),
-                    v => JsonSerializer.Deserialize<string[]>(
-                        v, JsonSerializerOptions.Default) ?? Array.Empty<string>());
+                    v => ThrowWriteToDatabaseException(),
+                    v => (JsonSerializer.Deserialize<List<PetVaccine>>(
+                        v, JsonSerializerOptions.Default) ?? new List<PetVaccine>())
+                    .Select(pv => pv.Name).ToArray());
 
-            builder.Property(s => s.HelpStatus)
+            builder.Property(p => p.HelpStatus)
                 .IsRequired()
                 .HasColumnName("help_status_enum")
                 .HasMaxLength(ProjectConstants.MAX_LOW_TEXT_LENGHT);
 
-            builder.Property(pd => pd.CardNumber)
+            builder.Property(p => p.CardNumber)
                 .HasColumnName("card_number_for_payment")
                 .IsRequired(false)
                 .HasMaxLength(DetailsForPayment.MAX_CARD_NUMBER_LENGHT);
 
-            builder.Property(pd => pd.OtherDetails)
+            builder.Property(p => p.OtherDetails)
                 .HasColumnName("other_payment_details")
                 .IsRequired(false)
                 .HasMaxLength(DetailsForPayment.MAX_DETAILS_LENGHT);
@@ -178,12 +182,19 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
                 .HasColumnName("pet_photos_paths")
                 .HasColumnType("jsonb")
                 .HasConversion(
-                    x => JsonSerializer.Serialize(x, JsonSerializerOptions.Default),
+                    x => ThrowWriteToDatabaseException(),
                     json => JsonSerializer.Deserialize<FileName[]>(
                         json, JsonSerializerOptions.Default) ?? Array.Empty<FileName>());
 
-            // is deleted
+            builder.Property(p => p.IsDeleted)
+                .IsRequired()
+                .HasColumnName("is_deleted");
+
         }
 
+        private static string ThrowWriteToDatabaseException()
+        {
+            throw new NotSupportedException("Read-only context — write not supported.");
+        }
     }
 }

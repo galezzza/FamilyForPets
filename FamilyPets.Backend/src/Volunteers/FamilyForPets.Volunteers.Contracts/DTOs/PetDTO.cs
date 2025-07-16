@@ -9,6 +9,8 @@ namespace FamilyForPets.Volunteers.Contracts.DTOs
     {
         public Guid Id { get; init; } = default!;
 
+        public Guid VolunteerId { get; init; } = default!;
+
         public string Name { get; init; } = default!;
 
         public string? Description { get; init; }
@@ -61,6 +63,8 @@ namespace FamilyForPets.Volunteers.Contracts.DTOs
 
         public FileName[] PetPhotos { get; init; } = [];
 
+        public bool IsDeleted { get; init; }
+
         public static PetDTO CreateFromEntity(Pet pet)
         {
             return new PetDTO
@@ -96,6 +100,7 @@ namespace FamilyForPets.Volunteers.Contracts.DTOs
                 PetPhotos = pet.PetPhotos.FilePaths
                     .Select(f => f.Path)
                     .ToArray(),
+                IsDeleted = pet.IsDeleted,
             };
         }
 

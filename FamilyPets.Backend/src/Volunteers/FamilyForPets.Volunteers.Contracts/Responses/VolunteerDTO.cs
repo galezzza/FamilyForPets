@@ -31,6 +31,8 @@ namespace FamilyForPets.Volunteers.Contracts.Responses
 
         public Guid[] Pets { get; init; } = [];
 
+        public bool IsDeleted { get; init; }
+
         public static VolunteerDTO CreateFromEntity(Volunteer volunteer)
         {
             return new VolunteerDTO
@@ -51,6 +53,27 @@ namespace FamilyForPets.Volunteers.Contracts.Responses
                 Pets = volunteer.AllPets
                     .Select(p => PetDTO.CreateFromEntity(p).Id)
                     .ToArray(),
+                IsDeleted = volunteer.IsDeleted,
+            };
+        }
+
+        public VolunteerDTO AppendPets(Guid[] ids)
+        {
+            return new VolunteerDTO
+            {
+                Id = this.Id,
+                Name = this.Name,
+                Surname = this.Surname,
+                AdditionalName = this.AdditionalName,
+                Email = this.Email,
+                Description = this.Description,
+                ExperienceInYears = this.ExperienceInYears,
+                PhoneNumber = this.PhoneNumber,
+                CardNumber = this.CardNumber,
+                OtherDetails = this.OtherDetails,
+                SocialNetworks = this.SocialNetworks,
+                IsDeleted = this.IsDeleted,
+                Pets = ids,
             };
         }
     }

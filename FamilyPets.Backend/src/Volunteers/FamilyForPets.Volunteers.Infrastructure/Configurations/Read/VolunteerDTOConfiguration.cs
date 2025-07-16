@@ -7,7 +7,7 @@ using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
+namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Read
 {
     public class VolunteerDTOConfiguration : IEntityTypeConfiguration<VolunteerDTO>
     {
@@ -19,27 +19,27 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
 
             builder.Property(v => v.Id);
 
-            builder.Property(fn => fn.Name)
+            builder.Property(v => v.Name)
                     .HasColumnName("first_name")
                     .IsRequired()
                     .HasMaxLength(FullName.MAX_NAME_TEXT_LENGHT);
 
-            builder.Property(fn => fn.Surname)
+            builder.Property(v => v.Surname)
                 .HasColumnName("last_name")
                 .IsRequired(false)
                 .HasMaxLength(FullName.MAX_NAME_TEXT_LENGHT);
 
-            builder.Property(fn => fn.AdditionalName)
+            builder.Property(v => v.AdditionalName)
                 .HasColumnName("additional_name")
                 .IsRequired(false)
                 .HasMaxLength(FullName.MAX_NAME_TEXT_LENGHT);
 
-            builder.Property(p => p.Email)
+            builder.Property(v => v.Email)
                 .HasColumnName("email")
                 .IsRequired()
                 .HasMaxLength(EmailAdress.MAX_EMAIL_ADDRESS_LENGTH);
 
-            builder.Property(p => p.Description)
+            builder.Property(v => v.Description)
                 .HasColumnName("volunteer_description")
                 .IsRequired(false)
                 .HasMaxLength(VolunteerDescription.MAX_DESCRIPTION_LENGHT);
@@ -53,34 +53,38 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
                .IsRequired()
                .HasMaxLength(PhoneNumber.MAX_PHONE_NUMBER_LENGHT);
 
-            builder.Property(pd => pd.CardNumber)
+            builder.Property(v => v.CardNumber)
                     .HasColumnName("card_number_for_payment")
                     .IsRequired()
                     .HasMaxLength(DetailsForPayment.MAX_CARD_NUMBER_LENGHT);
 
-            builder.Property(pd => pd.OtherDetails)
+            builder.Property(v => v.OtherDetails)
                 .HasColumnName("other_payment_details")
                 .IsRequired(false)
                 .HasMaxLength(DetailsForPayment.MAX_DETAILS_LENGHT);
 
-            builder.Property(v => v.Pets)
-                .HasColumnName("all_pets")
+            builder.Property(v => v.SocialNetworks)
+                .HasColumnName("volunteer_social_networks")
                 .HasConversion(
-                    v => JsonSerializer.Serialize(
-                        v, JsonSerializerOptions.Default),
-                    v => JsonSerializer.Deserialize<Guid[]>(
-                        v, JsonSerializerOptions.Default) ?? Array.Empty<Guid>())
+                    v => ThrowWriteToDatabaseException(),
+                    v => (
+                            JsonSerializer.Deserialize<List<SocialNetwork>>(
+                                v, JsonSerializerOptions.Default)
+                            ?? new List<SocialNetwork>()
+                        ).Select(sn => new SocialNetworkDTO(sn.Url, sn.Name))
+                    .ToArray())
                 .HasColumnType("jsonb");
 
-            builder.Property(p => p.SocialNetworks)
-                .HasColumnName("volunteer_social_newtworks")
-                .HasConversion(
-                    v => JsonSerializer.Serialize(
-                        v, JsonSerializerOptions.Default),
-                    v => JsonSerializer.Deserialize<SocialNetworkDTO[]>(
-                        v, JsonSerializerOptions.Default) ?? Array.Empty<SocialNetworkDTO>())
-                .HasColumnType("jsonb");
+            builder.Property(p => p.IsDeleted)
+                .IsRequired()
+                .HasColumnName("is_deleted");
 
+            builder.Ignore(v => v.Pets);
+        }
+
+        private static string ThrowWriteToDatabaseException()
+        {
+            throw new NotSupportedException("Read-only context — write not supported.");
         }
     }
 }

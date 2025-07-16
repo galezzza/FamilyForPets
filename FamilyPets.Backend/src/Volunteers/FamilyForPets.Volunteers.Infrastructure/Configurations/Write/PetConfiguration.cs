@@ -162,17 +162,28 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
                     .HasMaxLength(ProjectConstants.MAX_LOW_TEXT_LENGHT);
             });
 
-            builder.OwnsOne(p => p.PetVaccines, pb =>
-            {
-                pb.ToJson("pet_vaccienes");
-                pb.OwnsMany(pvb => pvb.PetVaccines, pv =>
-                {
-                    pv.Property(sn => sn.Name)
-                        .IsRequired(false)
-                        .HasColumnName("pet_vacciene")
-                        .HasMaxLength(PetVaccine.MAX_NAME_LENGHT);
-                });
-            });
+            builder.Property(p => p.PetVaccines)
+                .HasColumnName("pet_vaccienes")
+                .HasConversion(
+                    vaccines => JsonSerializer.Serialize(
+                        vaccines.PetVaccines, JsonSerializerOptions.Default),
+                    json => PetVaccinesList.Create(
+                        JsonSerializer.Deserialize<List<PetVaccine>>(
+                        json, JsonSerializerOptions.Default) ?? new List<PetVaccine>())
+                    .Value)
+                .HasColumnType("jsonb");
+
+            //builder.OwnsOne(p => p.PetVaccines, pb =>
+            //{
+            //    pb.ToJson("pet_vaccienes");
+            //    pb.OwnsMany(pvb => pvb.PetVaccines, pv =>
+            //    {
+            //        pv.Property(sn => sn.Name)
+            //            .IsRequired(false)
+            //            .HasColumnName("pet_vacciene")
+            //            .HasMaxLength(PetVaccine.MAX_NAME_LENGHT);
+            //    });
+            //});
 
             builder.ComplexProperty(p => p.HelpStatus, hsb =>
             {
@@ -220,19 +231,36 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
             builder.HasIndex(p => p.PetPosition)
                 .IsUnique();
 
-            builder.OwnsOne(p => p.PetPhotos, pb =>
-            {
-                pb.ToJson("pet_photos_paths");
-                pb.OwnsMany(fpb => fpb.FilePaths, fp =>
-                {
-                    fp.Property(sn => sn.Path)
-                        .IsRequired()
-                        .HasColumnName("photo_path")
-                        .HasConversion(
-                            x => JsonSerializer.Serialize(x, JsonSerializerOptions.Default),
-                            json => JsonSerializer.Deserialize<FileName>(json, JsonSerializerOptions.Default));
-                });
-            });
+            //builder.OwnsOne(p => p.PetPhotos, pb =>
+            //{
+            //    pb.ToJson("pet_photos_paths");
+            //    pb.OwnsMany(fpb => fpb.FilePaths, fp =>
+            //    {
+            //        fp.Property(sn => sn.Path)
+            //            .IsRequired()
+            //            .HasColumnName("photo_path")
+            //            .HasConversion(
+            //                x => JsonSerializer.Serialize(x, JsonSerializerOptions.Default),
+            //                json => JsonSerializer.Deserialize<FileName>(json, JsonSerializerOptions.Default));
+            //    });
+            //});
+
+            builder.Property(p => p.PetPhotos)
+                .HasColumnName("pet_photos_paths")
+                .HasConversion(
+                    files => JsonSerializer.Serialize(
+                        files.FilePaths.Select(f => f.Path), JsonSerializerOptions.Default),
+                    json => FilePathsList.Create(
+                        (JsonSerializer.Deserialize<List<FileName>>(
+                            json, JsonSerializerOptions.Default) ?? new List<FileName>())
+                            .Select(fn => FilePath.Create(fn).Value).ToList()
+                        ).Value)
+                .HasColumnType("jsonb");
+
+            builder.Property(p => p.IsDeleted)
+                .IsRequired()
+                .HasColumnName("is_deleted");
+
         }
 
     }

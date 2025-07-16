@@ -29,7 +29,7 @@ namespace FamilyForPets.Volunteers.Infrastructure.DbContexts
         {
             modelBuilder.ApplyConfigurationsFromAssembly(
                 typeof(VolunteerReadDbContext).Assembly,
-                type => type.FullName?.Contains("Configurations.Write") ?? false);
+                type => type.FullName?.Contains("Configurations.Read") ?? false);
             base.OnModelCreating(modelBuilder);
         }
 

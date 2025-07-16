@@ -20,14 +20,14 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                     volunteer_description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
                     experience_in_years = table.Column<int>(type: "integer", nullable: false),
                     phone_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    volunteer_social_networks = table.Column<string>(type: "jsonb", nullable: false),
                     card_number_for_payment = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     other_payment_details = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
                     additional_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     first_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     last_name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     is_deleted = table.Column<bool>(type: "boolean", nullable: false),
-                    deletion_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    volunteer_social_newtworks = table.Column<string>(type: "jsonb", nullable: false)
+                    deletion_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,8 +44,10 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                     date_of_birth = table.Column<long>(type: "bigint", nullable: true),
                     pet_health_description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
                     contact_phone_number = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    pet_vaccienes = table.Column<string>(type: "jsonb", nullable: false),
                     created_at = table.Column<long>(type: "bigint", nullable: false),
                     pet_position = table.Column<int>(type: "integer", nullable: false),
+                    pet_photos_paths = table.Column<string>(type: "jsonb", nullable: false),
                     volunteer_id = table.Column<Guid>(type: "uuid", nullable: false),
                     castration_status_enum = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     primary_color = table.Column<int>(type: "integer", nullable: false),
@@ -65,9 +67,7 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                     weight = table.Column<double>(type: "double precision", nullable: false),
                     mass_type_enum = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     is_deleted = table.Column<bool>(type: "boolean", nullable: false),
-                    deletion_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    pet_photos_paths = table.Column<string>(type: "jsonb", nullable: false),
-                    pet_vaccienes = table.Column<string>(type: "jsonb", nullable: false)
+                    deletion_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
