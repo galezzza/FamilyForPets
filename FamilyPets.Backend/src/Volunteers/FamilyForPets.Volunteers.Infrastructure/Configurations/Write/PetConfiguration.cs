@@ -231,8 +231,8 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
             builder.HasIndex(p => p.PetPosition)
                 .IsUnique();
 
-            //builder.OwnsOne(p => p.PetPhotos, pb =>
-            //{
+            // builder.OwnsOne(p => p.PetPhotos, pb =>
+            // {
             //    pb.ToJson("pet_photos_paths");
             //    pb.OwnsMany(fpb => fpb.FilePaths, fp =>
             //    {
@@ -243,8 +243,7 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
             //                x => JsonSerializer.Serialize(x, JsonSerializerOptions.Default),
             //                json => JsonSerializer.Deserialize<FileName>(json, JsonSerializerOptions.Default));
             //    });
-            //});
-
+            // });
             builder.Property(p => p.PetPhotos)
                 .HasColumnName("pet_photos_paths")
                 .HasConversion(
@@ -260,6 +259,9 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
             builder.Property(p => p.IsDeleted)
                 .IsRequired()
                 .HasColumnName("is_deleted");
+
+            builder.Property(p => p.Version)
+                .IsRowVersion();
 
         }
 

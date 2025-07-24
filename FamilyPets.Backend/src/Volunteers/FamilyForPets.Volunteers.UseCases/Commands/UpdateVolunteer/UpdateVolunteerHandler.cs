@@ -1,4 +1,5 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Data.Common;
+using CSharpFunctionalExtensions;
 using FamilyForPets.Core.Abstractions;
 using FamilyForPets.Core.Database;
 using FamilyForPets.Core.Extentions.ValidationExtentions;
@@ -35,6 +36,8 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer
             UpdateVolunteerCommand command,
             CancellationToken cancellationToken)
         {
+            DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
+
             ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
             if (validationResult.IsValid == false)
                 return Result.Failure<Guid, ErrorList>(validationResult.ToErrorListFromValidationResult());
@@ -87,16 +90,27 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer
             UnitResult<Error> resultSocialNetworks = volunteer.UpdateSocialNetworks(socialNetworksList);
             if (resultSocialNetworks.IsFailure)
                 Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
+            try
+            {
+                // save changed to database
+                await _unitOfWork.SaveChanges(cancellationToken);
 
-            // save changed to database
-            await _unitOfWork.SaveChanges(cancellationToken);
+                // return success operation and log it
+                Guid resultId = volunteer.Id.Value;
 
-            // return success operation and log it
-            Guid resultId = volunteer.Id.Value;
+                _logger.LogInformation("Updating operation for volunteer with id: {id} succeeded", resultId);
 
-            _logger.LogInformation("Updating operation for volunteer with id: {id} succeeded", resultId);
+                return Result.Success<Guid, ErrorList>(resultId);
+            }
+            catch
+            {
+                transaction.Rollback();
 
-            return Result.Success<Guid, ErrorList>(resultId);
+                _logger.LogInformation("Updating operation for volunteer with id: {id} failed. Transaction conflict", command.Id);
+
+                return Result.Failure<Guid, ErrorList>(Errors.Database
+                    .TransactionConflict("Update Volunteer").ToErrorList());
+            }
         }
 
     }

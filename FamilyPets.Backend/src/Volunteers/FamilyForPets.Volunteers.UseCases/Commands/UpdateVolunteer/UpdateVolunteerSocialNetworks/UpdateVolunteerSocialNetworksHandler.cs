@@ -1,4 +1,5 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Data.Common;
+using CSharpFunctionalExtensions;
 using FamilyForPets.Core.Abstractions;
 using FamilyForPets.Core.Database;
 using FamilyForPets.Core.Extentions.ValidationExtentions;
@@ -34,6 +35,8 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolun
             UpdateVolunteerSocialNetworksCommand command,
             CancellationToken cancellationToken)
         {
+            DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
+
             ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
             if (validationResult.IsValid == false)
                 return Result.Failure<Guid, ErrorList>(validationResult.ToErrorListFromValidationResult());
@@ -56,13 +59,27 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolun
             if (result.IsFailure)
                 Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
 
-            await _unitOfWork.SaveChanges(cancellationToken);
+            try
+            {
+                // save changed to database
+                await _unitOfWork.SaveChanges(cancellationToken);
 
-            Guid resultId = volunteer.Id.Value;
+                // return success operation and log it
+                Guid resultId = volunteer.Id.Value;
 
-            _logger.LogInformation("Updated social networks for volunteer with id: {id}", resultId);
+                _logger.LogInformation("Updated social networks for volunteer with id: {id} succeeded", resultId);
 
-            return Result.Success<Guid, ErrorList>(resultId);
+                return Result.Success<Guid, ErrorList>(resultId);
+            }
+            catch
+            {
+                transaction.Rollback();
+
+                _logger.LogInformation("Updated social networks volunteer with id: {id} failed. Transaction conflict", command.Id);
+
+                return Result.Failure<Guid, ErrorList>(Errors.Database
+                    .TransactionConflict("Update Volunteer social networks").ToErrorList());
+            }
         }
     }
 }

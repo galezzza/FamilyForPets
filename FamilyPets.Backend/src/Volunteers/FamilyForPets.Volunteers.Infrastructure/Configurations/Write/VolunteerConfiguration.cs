@@ -83,8 +83,8 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
-            //builder.OwnsOne(v => v.VolunteerSocialNetworks, vb =>
-            //{
+            // builder.OwnsOne(v => v.VolunteerSocialNetworks, vb =>
+            // {
             //    vb.ToJson("volunteer_social_newtworks");
             //    vb.OwnsMany(vsnb => vsnb.SocialNetworks, snb =>
             //    {
@@ -92,15 +92,12 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
             //            .IsRequired()
             //            .HasColumnName("social_network_name")
             //            .HasMaxLength(SocialNetwork.MAX_NAME_LENGHT);
-
             //        snb.Property(sn => sn.Url)
             //            .IsRequired()
             //            .HasColumnName("social_network_name")
             //            .HasMaxLength(SocialNetwork.MAX_URL_LENGHT);
-
             //    });
-            //});
-
+            // });
             builder.Property(v => v.VolunteerSocialNetworks)
                 .HasColumnName("volunteer_social_networks")
                 .HasConversion(
@@ -113,9 +110,12 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Write
                     .Value)
                 .HasColumnType("jsonb");
 
-            builder.Property(p => p.IsDeleted)
+            builder.Property(v => v.IsDeleted)
                 .IsRequired()
                 .HasColumnName("is_deleted");
+
+            builder.Property(v => v.Version)
+                .IsRowVersion();
 
         }
     }

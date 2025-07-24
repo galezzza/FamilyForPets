@@ -1,5 +1,7 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Data.Common;
+using CSharpFunctionalExtensions;
 using FamilyForPets.Core.Abstractions;
+using FamilyForPets.Core.Database;
 using FamilyForPets.Core.Extentions.ValidationExtentions;
 using FamilyForPets.SharedKernel;
 using FamilyForPets.SharedKernel.ValueObjects;
@@ -14,15 +16,18 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.CreateVolunteer
     public class CreateVolunteerHandler : ICommandHandler<CreateVolunteerCommand, Guid>
     {
         private readonly IVolunteerRepository _volunteerRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IValidator<CreateVolunteerCommand> _validator;
         private readonly ILogger<CreateVolunteerHandler> _logger;
 
         public CreateVolunteerHandler(
             IVolunteerRepository volunteerRepository,
+            IUnitOfWork unitOfWork,
             IValidator<CreateVolunteerCommand> validator,
             ILogger<CreateVolunteerHandler> logger)
         {
             _volunteerRepository = volunteerRepository;
+            _unitOfWork = unitOfWork;
             _validator = validator;
             _logger = logger;
         }
@@ -31,6 +36,8 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.CreateVolunteer
             CreateVolunteerCommand command,
             CancellationToken cancellationToken)
         {
+            DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
+
             // validate inputs
             ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
             if (validationResult.IsValid == false)
@@ -60,15 +67,27 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.CreateVolunteer
 
             Volunteer volunteer = volunteerToCreateResult.Value;
 
-            // database operations
-            Result<Guid, Error> dbResult = await _volunteerRepository.Add(volunteer, cancellationToken);
-            if (dbResult.IsFailure)
-                return Result.Failure<Guid, ErrorList>(dbResult.Error.ToErrorList());
+            try
+            { 
+                // database operations
+                Result<Guid, Error> dbResult = await _volunteerRepository.Add(volunteer, cancellationToken);
+                if (dbResult.IsFailure)
+                    return Result.Failure<Guid, ErrorList>(dbResult.Error.ToErrorList());
 
-            _logger.LogInformation("Created volunteer with id: {id}", volunteer.Id.Value);
+                _logger.LogInformation("Created volunteer with id: {id}", volunteer.Id.Value);
 
-            // return
-            return Result.Success<Guid, ErrorList>(dbResult.Value);
+                // return
+                return Result.Success<Guid, ErrorList>(dbResult.Value);
+            }
+            catch
+            {
+                transaction.Rollback();
+
+                _logger.LogInformation("Creating operation for volunteer with email: {email} failed. Transaction conflict", command.Email);
+
+                return Result.Failure<Guid, ErrorList>(Errors.Database
+                    .TransactionConflict("Creating Volunteer").ToErrorList());
+            }
         }
     }
 }

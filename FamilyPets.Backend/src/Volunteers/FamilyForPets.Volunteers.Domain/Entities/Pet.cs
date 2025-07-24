@@ -71,6 +71,8 @@ namespace FamilyForPets.Volunteers.Domain.Entities
 
         public FilePathsList PetPhotos { get; private set; } = default!;
 
+        public uint Version { get; private set; }
+
         public static Result<Pet, Error> Create(
             PetNickname name,
             //PetDescription description,
