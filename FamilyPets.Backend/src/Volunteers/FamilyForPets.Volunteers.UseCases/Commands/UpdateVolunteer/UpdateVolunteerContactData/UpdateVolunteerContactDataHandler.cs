@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.Core.Abstractions;
+using FamilyForPets.Core.Database;
 using FamilyForPets.Core.Extentions.ValidationExtentions;
 using FamilyForPets.SharedKernel;
 using FamilyForPets.SharedKernel.ValueObjects;
@@ -14,15 +15,18 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolun
     public class UpdateVolunteerContactDataHandler : ICommandHandler<UpdateVolunteerContactDataCommand, Guid>
     {
         private readonly IVolunteerRepository _volunteerRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IValidator<UpdateVolunteerContactDataCommand> _validator;
         private readonly ILogger<UpdateVolunteerContactDataHandler> _logger;
 
         public UpdateVolunteerContactDataHandler(
             IVolunteerRepository volunteerRepository,
+            IUnitOfWork unitOfWork,
             IValidator<UpdateVolunteerContactDataCommand> validator,
             ILogger<UpdateVolunteerContactDataHandler> logger)
         {
             _volunteerRepository = volunteerRepository;
+            _unitOfWork = unitOfWork;
             _validator = validator;
             _logger = logger;
         }
@@ -62,11 +66,9 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolun
             if (result.IsFailure)
                 Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
 
-            Result<Guid, Error> dbResult = await _volunteerRepository.Save(volunteer, cancellationToken);
-            if (dbResult.IsFailure)
-                return Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
+            await _unitOfWork.SaveChanges(cancellationToken);
 
-            Guid resultId = dbResult.Value;
+            Guid resultId = volunteer.Id.Value;
 
             _logger.LogInformation("Updated contact data for volunteer with id: {id}", resultId);
 

@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.Core.Abstractions;
+using FamilyForPets.Core.Database;
 using FamilyForPets.Core.Extentions.ValidationExtentions;
 using FamilyForPets.SharedKernel;
 using FamilyForPets.Volunteers.Domain.Entities;
@@ -13,15 +14,18 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.DeleteVolunteer.DeleteVolun
     public class SoftDeleteVolunteerHandler : ICommandHandler<SoftDeleteVolunteerCommand, Guid>
     {
         private readonly IVolunteerRepository _volunteerRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IValidator<SoftDeleteVolunteerCommand> _validator;
         private readonly ILogger<SoftDeleteVolunteerHandler> _logger;
 
         public SoftDeleteVolunteerHandler(
             IVolunteerRepository volunteerRepository,
+            IUnitOfWork unitOfWork,
             IValidator<SoftDeleteVolunteerCommand> validator,
             ILogger<SoftDeleteVolunteerHandler> logger)
         {
             _volunteerRepository = volunteerRepository;
+            _unitOfWork = unitOfWork;
             _validator = validator;
             _logger = logger;
         }
@@ -44,11 +48,9 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.DeleteVolunteer.DeleteVolun
 
             volunteer.SoftDelete();
 
-            Result<Guid, Error> dbResult = await _volunteerRepository.Save(volunteer, cancellationToken);
-            if (dbResult.IsFailure)
-                return Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
+            await _unitOfWork.SaveChanges(cancellationToken);
 
-            return Result.Success<Guid, ErrorList>(dbResult.Value);
+            return Result.Success<Guid, ErrorList>(volunteer.Id.Value);
         }
     }
 }

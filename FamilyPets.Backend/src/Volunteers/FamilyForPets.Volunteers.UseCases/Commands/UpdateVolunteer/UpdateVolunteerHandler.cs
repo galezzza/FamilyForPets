@@ -1,4 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
+using FamilyForPets.Core.Abstractions;
+using FamilyForPets.Core.Database;
+using FamilyForPets.Core.Extentions.ValidationExtentions;
 using FamilyForPets.SharedKernel;
 using FamilyForPets.SharedKernel.ValueObjects;
 using FamilyForPets.Volunteers.Domain.Entities;
@@ -6,23 +9,24 @@ using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.Extensions.Logging;
-using FamilyForPets.Core.Extentions.ValidationExtentions;
-using FamilyForPets.Core.Abstractions;
 
 namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer
 {
     public class UpdateVolunteerHandler : ICommandHandler<UpdateVolunteerCommand, Guid>
     {
         private readonly IVolunteerRepository _volunteerRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IValidator<UpdateVolunteerCommand> _validator;
         private readonly ILogger<UpdateVolunteerHandler> _logger;
 
         public UpdateVolunteerHandler(
             IVolunteerRepository volunteerRepository,
+            IUnitOfWork unitOfWork,
             IValidator<UpdateVolunteerCommand> validator,
             ILogger<UpdateVolunteerHandler> logger)
         {
             _volunteerRepository = volunteerRepository;
+            _unitOfWork = unitOfWork;
             _logger = logger;
             _validator = validator;
         }
@@ -85,12 +89,10 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer
                 Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
 
             // save changed to database
-            Result<Guid, Error> dbResult = await _volunteerRepository.Save(volunteer, cancellationToken);
-            if (dbResult.IsFailure)
-                return Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
+            await _unitOfWork.SaveChanges(cancellationToken);
 
             // return success operation and log it
-            Guid resultId = dbResult.Value;
+            Guid resultId = volunteer.Id.Value;
 
             _logger.LogInformation("Updating operation for volunteer with id: {id} succeeded", resultId);
 
