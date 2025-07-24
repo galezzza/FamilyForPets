@@ -70,15 +70,13 @@ namespace FamilyForPets.Volunteers.API
             return await _createVolunteerHandler.HandleAsync(command, cancellationToken);
         }
 
-        //public async Task<Result<Volunteer, ErrorList>> GetById(
+        // public async Task<Result<Volunteer, ErrorList>> GetById(
         //    Guid id,
         //    CancellationToken cancellationToken)
-        //{
+        // {
         //    GetVolunteerByIdCommand command = new(id);
-
         //    return await _getVolunteerByIdHandler.HandleAsync(command, cancellationToken);
-        //}
-
+        // }
         public async Task<Result<Guid, ErrorList>> UpdateContactData(
             Guid id, UpdateVolunteerContactDataRequest request,
             CancellationToken cancellationToken)

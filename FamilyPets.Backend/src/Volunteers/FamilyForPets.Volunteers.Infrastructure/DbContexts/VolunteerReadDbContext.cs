@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 
 namespace FamilyForPets.Volunteers.Infrastructure.DbContexts
 {
-
     public class VolunteerReadDbContext(IConfiguration configuration) : DbContext, IReadDbContext
     {
         public IQueryable<VolunteerDTO> Volunteers => Set<VolunteerDTO>().AsQueryable();

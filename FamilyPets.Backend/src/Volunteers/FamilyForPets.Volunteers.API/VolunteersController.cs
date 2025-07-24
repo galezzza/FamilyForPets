@@ -56,7 +56,8 @@ namespace FamilyForPets.Volunteers.API
                 new PaymentDetailsDto(
                     request.CardNumber,
                     request.OtherPaymentDetails));
-            //command = request.ToCommand();
+
+            // command = request.ToCommand();
 
             // implicit from Result<T, E> to ResponseEnvelope
             return await handler.HandleAsync(command, cancellationToken);
