@@ -68,11 +68,13 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolun
             if (result.IsFailure)
                 Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
 
-            DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
+            using DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
             try
             {
                 // save changed to database
                 await _unitOfWork.SaveChanges(cancellationToken);
+
+                await transaction.CommitAsync(cancellationToken);
 
                 // return success operation and log it
                 Guid resultId = volunteer.Id.Value;
@@ -83,7 +85,7 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolun
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                transaction.Rollback();
+                await transaction.RollbackAsync(cancellationToken);
 
                 _logger.LogInformation("Updated contact data for volunteer with id: {id} failed. Transaction conflict", command.Id);
                 _logger.LogInformation(ex.Message);

@@ -39,6 +39,9 @@ namespace FamilyForPets.Volunteers.Infrastructure.Configurations.Read
                 .IsRequired()
                 .HasMaxLength(EmailAdress.MAX_EMAIL_ADDRESS_LENGTH);
 
+            builder.HasIndex(v => v.Email)
+                .IsUnique();
+
             builder.Property(v => v.Description)
                 .HasColumnName("volunteer_description")
                 .IsRequired(false)

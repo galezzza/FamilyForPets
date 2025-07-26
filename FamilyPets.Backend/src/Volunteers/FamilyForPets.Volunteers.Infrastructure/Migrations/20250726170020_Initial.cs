@@ -95,6 +95,12 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                 name: "ix_pets_volunteer_id",
                 table: "pets",
                 column: "volunteer_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_volunteers_email",
+                table: "volunteers",
+                column: "email",
+                unique: true);
         }
 
         /// <inheritdoc />

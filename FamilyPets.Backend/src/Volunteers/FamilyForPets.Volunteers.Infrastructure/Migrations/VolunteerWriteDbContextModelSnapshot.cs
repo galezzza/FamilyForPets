@@ -329,6 +329,10 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("pk_volunteers");
 
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasDatabaseName("ix_volunteers_email");
+
                     b.ToTable("volunteers", (string)null);
                 });
 

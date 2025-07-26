@@ -51,18 +51,20 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.DeleteVolunteer.DeleteVolun
             if (volunteer.IsDeleted == true)
                 return Result.Success<Guid, ErrorList>(volunteer.Id.Value);
 
-            DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
+            using DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
             try
             {
                 volunteer.SoftDelete();
 
                 await _unitOfWork.SaveChanges(cancellationToken);
 
+                await transaction.CommitAsync(cancellationToken);
+
                 return Result.Success<Guid, ErrorList>(volunteer.Id.Value);
             }
-            catch (DbUpdateConcurrencyException ex) {
+            catch (DbUpdateConcurrencyException ex)
             {
-                transaction.Rollback();
+                await transaction.RollbackAsync(cancellationToken);
 
                 _logger.LogInformation("Soft Deletion operation for volunteer with id: {id} failed. Transaction conflict", command.Id);
                 _logger.LogInformation(ex.Message);

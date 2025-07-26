@@ -66,7 +66,9 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.CreateVolunteer
 
             Volunteer volunteer = volunteerToCreateResult.Value;
 
-            DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
+            using DbTransaction transaction = await _unitOfWork.BeginTransaction(
+                System.Data.IsolationLevel.Serializable,
+                cancellationToken);
             try
             {
                 // database operations
@@ -76,12 +78,14 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.CreateVolunteer
 
                 _logger.LogInformation("Created volunteer with id: {id}", volunteer.Id.Value);
 
+                await transaction.CommitAsync(cancellationToken);
+
                 // return
                 return Result.Success<Guid, ErrorList>(dbResult.Value);
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                transaction.Rollback();
+                await transaction.RollbackAsync(cancellationToken);
 
                 _logger.LogInformation("Creating operation for volunteer with email: {email} failed. Transaction conflict", command.Email);
                 _logger.LogInformation(ex.Message);

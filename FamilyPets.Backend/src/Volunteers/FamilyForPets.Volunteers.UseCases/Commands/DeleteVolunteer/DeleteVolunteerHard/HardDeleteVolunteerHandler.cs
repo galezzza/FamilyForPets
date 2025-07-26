@@ -48,18 +48,20 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.DeleteVolunteer.DeleteVolun
 
             Volunteer volunteer = volunteerResult.Value;
 
-            DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
+            using DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
             try
             {
                 Result<Guid, Error> dbResult = await _volunteerRepository.Delete(volunteer, cancellationToken);
                 if (dbResult.IsFailure)
                     return Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
 
+                await transaction.CommitAsync(cancellationToken);
+
                 return Result.Success<Guid, ErrorList>(dbResult.Value);
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                transaction.Rollback();
+                await transaction.RollbackAsync(cancellationToken);
 
                 _logger.LogInformation("Hard Deletion operation for volunteer with id: {id} failed. Transaction conflict", command.Id);
                 _logger.LogInformation(ex.Message);

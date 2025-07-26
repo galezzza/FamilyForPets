@@ -1,6 +1,7 @@
 ﻿using System.Data.Common;
 using FamilyForPets.Core.Database;
 using FamilyForPets.Volunteers.Infrastructure.DbContexts;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace FamilyForPets.Volunteers.Infrastructure
@@ -15,7 +16,16 @@ namespace FamilyForPets.Volunteers.Infrastructure
         }
 
         public async Task<DbTransaction> BeginTransaction(
+            System.Data.IsolationLevel isolationLevel = System.Data.IsolationLevel.ReadCommitted,
             CancellationToken cancellationToken = default)
+        {
+            var transaction = await _dbContext.Database
+                .BeginTransactionAsync(isolationLevel, cancellationToken);
+
+            return transaction.GetDbTransaction();
+        }
+
+        public async Task<DbTransaction> BeginTransaction(CancellationToken cancellationToken = default)
         {
             var transaction = await _dbContext.Database
                 .BeginTransactionAsync(cancellationToken);

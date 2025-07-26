@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FamilyForPets.Volunteers.Infrastructure.Migrations
 {
     [DbContext(typeof(VolunteerWriteDbContext))]
-    [Migration("20250724185929_Initial")]
+    [Migration("20250726170020_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -331,6 +331,10 @@ namespace FamilyForPets.Volunteers.Infrastructure.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_volunteers");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasDatabaseName("ix_volunteers_email");
 
                     b.ToTable("volunteers", (string)null);
                 });
