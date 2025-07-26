@@ -50,6 +50,8 @@ namespace FamilyForPets.Volunteers.Domain.Entities
 
         public DetailsForPayment DetailsForPayment { get; private set; } = default!;
 
+        public uint Version { get; private set; }
+
         public static Result<Volunteer, Error> Create(
             FullName fullName,
             EmailAdress email,
@@ -177,7 +179,7 @@ namespace FamilyForPets.Volunteers.Domain.Entities
             if (newPosition.PositionNumber > _allPets.Count)
                 return UnitResult.Failure<Error>(Errors.General.ValueIsInvalid(nameof(newPosition)));
 
-            bool isPetPositionIncreasing = newPosition.PositionNumber 
+            bool isPetPositionIncreasing = newPosition.PositionNumber
                 > petCurrentPosition.PositionNumber;
 
             int petCurrentIndex = petCurrentPosition.PositionNumber - 1;
@@ -220,6 +222,11 @@ namespace FamilyForPets.Volunteers.Domain.Entities
                 PetPosition newPetPosition = newPetPositionResult.Value;
                 petToChangePosition.ChangePetPosition(newPetPosition);
             }
+
+            //_allPets
+            //    .GetRange(fromIndex, toIndex - fromIndex)
+            //    .ForEach(p => p.ChangePetPosition(
+            //        PetPosition.Create(p.PetPosition.PositionNumber + positionChanger).Value));
 
             return UnitResult.Success<Error>();
         }

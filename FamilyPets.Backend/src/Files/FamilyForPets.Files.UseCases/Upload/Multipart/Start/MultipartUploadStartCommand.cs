@@ -1,5 +1,5 @@
 ﻿using FamilyForPets.Core.Abstractions;
-using FamilyForPets.Core.DTOs;
+using FamilyForPets.SharedKernel.ValueObjects;
 
 namespace FamilyForPets.Files.UseCases.Upload.Multipart.Start
 {

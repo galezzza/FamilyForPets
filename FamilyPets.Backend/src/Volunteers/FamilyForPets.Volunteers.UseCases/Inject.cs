@@ -1,14 +1,16 @@
 ﻿using FamilyForPets.Core.Abstractions;
+using FamilyForPets.Volunteers.Contracts.Responses;
 using FamilyForPets.Volunteers.Domain.Entities;
-using FamilyForPets.Volunteers.UseCases.CreateVolunteer;
-using FamilyForPets.Volunteers.UseCases.DeleteVolunteer.DeleteVolunteerHard;
-using FamilyForPets.Volunteers.UseCases.DeleteVolunteer.DeleteVolunteerSoft;
-using FamilyForPets.Volunteers.UseCases.GetVolunteerById;
-using FamilyForPets.Volunteers.UseCases.UpdateVolunteer;
-using FamilyForPets.Volunteers.UseCases.UpdateVolunteer.UpdateVolunteerContactData;
-using FamilyForPets.Volunteers.UseCases.UpdateVolunteer.UpdateVolunteerDetailsForPayment;
-using FamilyForPets.Volunteers.UseCases.UpdateVolunteer.UpdateVolunteerMainInfo;
-using FamilyForPets.Volunteers.UseCases.UpdateVolunteer.UpdateVolunteerSocialNetworks;
+using FamilyForPets.Volunteers.UseCases.Commands.CreateVolunteer;
+using FamilyForPets.Volunteers.UseCases.Commands.DeleteVolunteer.DeleteVolunteerHard;
+using FamilyForPets.Volunteers.UseCases.Commands.DeleteVolunteer.DeleteVolunteerSoft;
+using FamilyForPets.Volunteers.UseCases.Commands.GetVolunteerById;
+using FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer;
+using FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolunteerContactData;
+using FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolunteerDetailsForPayment;
+using FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolunteerMainInfo;
+using FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolunteerSocialNetworks;
+using FamilyForPets.Volunteers.UseCases.Queries.GetVolunteers;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -47,6 +49,9 @@ namespace FamilyForPets.Volunteers.UseCases
 
             services.AddScoped<ICommandHandler<SoftDeleteVolunteerCommand, Guid>,
                 SoftDeleteVolunteerHandler>();
+
+            services.AddScoped<IQueryHandler<GetVolunteersQuery, IReadOnlyList<VolunteerDTO>>,
+                GetVolunteersHandler>();
 
             services.AddValidatorsFromAssembly(typeof(Inject).Assembly);
 

@@ -64,5 +64,14 @@ namespace FamilyForPets.SharedKernel
                 return Error.NotFound("record.not.found", $"record not found {label}.");
             }
         }
+
+        public static class Database
+        {
+            public static Error TransactionConflict(string? operationName = null)
+            {
+                string label = operationName == null ? string.Empty : $"with operation {operationName}";
+                return Error.Conflict("database.transaction.conflict", $"A conflict occurred {label}.");
+            }
+        }
     }
 }

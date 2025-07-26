@@ -3,6 +3,7 @@ using FamilyForPets.SharedKernel;
 using FamilyForPets.SharedKernel.ValueObjects;
 using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
+using FamilyForPets.Volunteers.Infrastructure.DbContexts;
 using FamilyForPets.Volunteers.UseCases;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,9 +11,9 @@ namespace FamilyForPets.Volunteers.Infrastructure.Repositories
 {
     public class VolunteersRepository : IVolunteerRepository
     {
-        private readonly VolunteerDbContext _dbContext;
+        private readonly VolunteerWriteDbContext _dbContext;
 
-        public VolunteersRepository(VolunteerDbContext dbContext)
+        public VolunteersRepository(VolunteerWriteDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -54,18 +55,8 @@ namespace FamilyForPets.Volunteers.Infrastructure.Repositories
             return Result.Success<Volunteer, Error>(volunteer);
         }
 
-        public async Task<Result<Guid, Error>> Save(Volunteer volunteer, CancellationToken cancellationToken)
-        {
-            _dbContext.Volunteers.Attach(volunteer);
-
-            await _dbContext.SaveChangesAsync(cancellationToken);
-
-            return Result.Success<Guid, Error>(volunteer.Id.Value);
-        }
-
         public async Task<Result<Guid, Error>> Delete(Volunteer volunteer, CancellationToken cancellationToken)
         {
-
             _dbContext.Volunteers.Remove(volunteer);
 
             await _dbContext.SaveChangesAsync(cancellationToken);

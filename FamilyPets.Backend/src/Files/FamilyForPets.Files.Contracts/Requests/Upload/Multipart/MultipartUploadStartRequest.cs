@@ -1,4 +1,4 @@
-﻿using FamilyForPets.Core.DTOs;
+﻿using FamilyForPets.SharedKernel.ValueObjects;
 
 namespace FamilyForPets.Files.Contracts.Requests.Upload.Multipart
 {

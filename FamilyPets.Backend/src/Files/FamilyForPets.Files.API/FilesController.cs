@@ -7,6 +7,7 @@ using FamilyForPets.Files.Contracts.Requests.Upload.Multipart;
 using FamilyForPets.Files.Contracts.Responses.MultipartUpload;
 using FamilyForPets.Files.Infrastructure.Options;
 using FamilyForPets.Files.UseCases.Delete;
+using FamilyForPets.Files.UseCases.Download;
 using FamilyForPets.Files.UseCases.Upload.Fullfile;
 using FamilyForPets.Files.UseCases.Upload.Multipart.Cancel;
 using FamilyForPets.Files.UseCases.Upload.Multipart.Complete;

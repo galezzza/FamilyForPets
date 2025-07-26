@@ -1,4 +1,6 @@
-﻿using FamilyForPets.Volunteers.Infrastructure.Repositories;
+﻿using FamilyForPets.Core.Database;
+using FamilyForPets.Volunteers.Infrastructure.DbContexts;
+using FamilyForPets.Volunteers.Infrastructure.Repositories;
 using FamilyForPets.Volunteers.UseCases;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,8 +10,9 @@ namespace FamilyForPets.Volunteers.Infrastructure
     {
         public static IServiceCollection AddVolunteersInfrastrucutre(this IServiceCollection services)
         {
-            services.AddScoped<VolunteerDbContext>();
-
+            services.AddScoped<VolunteerWriteDbContext>();
+            services.AddScoped<IReadDbContext, VolunteerReadDbContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IVolunteerRepository, VolunteersRepository>();
 
             return services;

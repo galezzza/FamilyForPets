@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using FamilyForPets.Species.Infrastructure;
-using FamilyForPets.Volunteers.Infrastructure;
+using FamilyForPets.Volunteers.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace FamilyForPets.WEB.Extentions
@@ -11,8 +11,8 @@ namespace FamilyForPets.WEB.Extentions
         {
             await using AsyncServiceScope scope2 = app.Services.CreateAsyncScope();
 
-            VolunteerDbContext volunteerDbContext = scope2.ServiceProvider
-                .GetRequiredService<VolunteerDbContext>();
+            VolunteerWriteDbContext volunteerDbContext = scope2.ServiceProvider
+                .GetRequiredService<VolunteerWriteDbContext>();
             await volunteerDbContext.Database.MigrateAsync();
 
             await using AsyncServiceScope scope1 = app.Services.CreateAsyncScope();

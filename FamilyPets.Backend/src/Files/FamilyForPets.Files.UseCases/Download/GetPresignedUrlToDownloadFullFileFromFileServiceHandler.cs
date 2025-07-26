@@ -1,7 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using FamilyForPets.Core.Abstractions;
 using FamilyForPets.Core.Extentions.ValidationExtentions;
-using FamilyForPets.Files.Contracts.Requests.Download;
 using FamilyForPets.Files.UseCases.Delete;
 using FamilyForPets.SharedKernel;
 using FluentValidation;

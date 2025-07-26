@@ -1,4 +1,5 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Text.Json.Serialization;
+using CSharpFunctionalExtensions;
 using FamilyForPets.SharedKernel;
 
 namespace FamilyForPets.Volunteers.Domain.VolunteerValueObjects
@@ -9,6 +10,7 @@ namespace FamilyForPets.Volunteers.Domain.VolunteerValueObjects
 
         public const int MAX_URL_LENGHT = ProjectConstants.MAX_HIGH_TEXT_LENGHT;
 
+        [JsonConstructor]
         private SocialNetwork(string name, string url)
         {
             Name = name;

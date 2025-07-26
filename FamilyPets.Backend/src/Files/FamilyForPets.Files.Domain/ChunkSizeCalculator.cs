@@ -1,4 +1,4 @@
-﻿namespace FamilyForPets.Files.UseCases.Upload.Multipart.Start
+﻿namespace FamilyForPets.Files.Domain
 {
 
     public static class ChunkSizeCalculator

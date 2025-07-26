@@ -1,5 +1,4 @@
 ﻿using FamilyForPets.Core.Abstractions;
-using FamilyForPets.Files.Contracts.Requests.Download;
 using FamilyForPets.Files.Contracts.Responses.MultipartUpload;
 using FamilyForPets.Files.UseCases.Delete;
 using FamilyForPets.Files.UseCases.Download;
