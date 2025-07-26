@@ -45,6 +45,8 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolun
                 .Select(sn => SocialNetwork.Create(sn.Name, sn.Url).Value);
             VolunteerSocialNetworksList socialNetworksList = VolunteerSocialNetworksList.Create(socialNetworks).Value;
 
+            await using DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
+
             Result<Volunteer, Error> volunteerFoundedById = await _volunteerRepository.GetById(id, cancellationToken);
             if (volunteerFoundedById.IsFailure)
             {
@@ -58,7 +60,6 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolun
             if (result.IsFailure)
                 Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
 
-            using DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
             try
             {
                 // save changed to database

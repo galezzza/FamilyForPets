@@ -66,7 +66,7 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.CreateVolunteer
 
             Volunteer volunteer = volunteerToCreateResult.Value;
 
-            using DbTransaction transaction = await _unitOfWork.BeginTransaction(
+            await using DbTransaction transaction = await _unitOfWork.BeginTransaction(
                 System.Data.IsolationLevel.Serializable,
                 cancellationToken);
             try

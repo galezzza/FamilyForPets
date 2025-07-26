@@ -54,6 +54,8 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer
             DetailsForPayment detailsForPayment = DetailsForPayment.Create(
                             command.PaymentDetails.CardNumber, command.PaymentDetails.OtherPaymentDetails).Value;
 
+            await using DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
+
             // validate buisness logic
             Result<Volunteer, Error> volunteerFoundedByEmail = await _volunteerRepository
                 .GetByEmail(email, cancellationToken);
@@ -90,7 +92,6 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer
             if (resultSocialNetworks.IsFailure)
                 Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
 
-            using DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
             try
             {
                 // save changed to database

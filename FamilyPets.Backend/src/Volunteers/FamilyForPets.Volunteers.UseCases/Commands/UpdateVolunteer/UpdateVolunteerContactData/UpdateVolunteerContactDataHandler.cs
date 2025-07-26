@@ -54,6 +54,8 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolun
                     Errors.Volunteer.ConflictAlreadyExists(nameof(EmailAdress)).ToErrorList());
             }
 
+            await using DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
+
             Result<Volunteer, Error> volunteerFoundedById = await _volunteerRepository
                 .GetById(id, cancellationToken);
             if (volunteerFoundedById.IsFailure)
@@ -68,7 +70,6 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolun
             if (result.IsFailure)
                 Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
 
-            using DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
             try
             {
                 // save changed to database

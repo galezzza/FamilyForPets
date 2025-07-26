@@ -4,7 +4,6 @@ using FamilyForPets.Volunteers.Domain.Entities;
 
 namespace FamilyForPets.Volunteers.Contracts.DTOs
 {
-    // class or record ???
     public class PetDTO
     {
         public Guid Id { get; init; } = default!;

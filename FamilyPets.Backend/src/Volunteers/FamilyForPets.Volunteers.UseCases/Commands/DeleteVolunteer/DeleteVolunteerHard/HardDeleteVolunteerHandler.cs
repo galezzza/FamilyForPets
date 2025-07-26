@@ -42,13 +42,14 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.DeleteVolunteer.DeleteVolun
 
             VolunteerId volunteerId = VolunteerId.Create(command.Id);
 
+            await using DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
+
             Result<Volunteer, Error> volunteerResult = await _volunteerRepository.GetById(volunteerId, cancellationToken);
             if (volunteerResult.IsFailure)
                 return Result.Failure<Guid, ErrorList>(volunteerResult.Error.ToErrorList());
 
             Volunteer volunteer = volunteerResult.Value;
 
-            using DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
             try
             {
                 Result<Guid, Error> dbResult = await _volunteerRepository.Delete(volunteer, cancellationToken);

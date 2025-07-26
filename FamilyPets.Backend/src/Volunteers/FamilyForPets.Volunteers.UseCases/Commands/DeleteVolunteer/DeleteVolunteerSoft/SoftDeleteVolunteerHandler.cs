@@ -42,6 +42,9 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.DeleteVolunteer.DeleteVolun
 
             VolunteerId volunteerId = VolunteerId.Create(command.Id);
 
+            await using DbTransaction transaction = await 
+                cancellationToken);
+
             Result<Volunteer, Error> volunteerResult = await _volunteerRepository.GetById(volunteerId, cancellationToken);
             if (volunteerResult.IsFailure)
                 return Result.Failure<Guid, ErrorList>(volunteerResult.Error.ToErrorList());
@@ -51,7 +54,6 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.DeleteVolunteer.DeleteVolun
             if (volunteer.IsDeleted == true)
                 return Result.Success<Guid, ErrorList>(volunteer.Id.Value);
 
-            using DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
             try
             {
                 volunteer.SoftDelete();
