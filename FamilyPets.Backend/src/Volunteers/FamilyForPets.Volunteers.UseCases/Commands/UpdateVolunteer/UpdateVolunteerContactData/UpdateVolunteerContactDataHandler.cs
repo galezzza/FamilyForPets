@@ -9,6 +9,7 @@ using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolunteerContactData
@@ -36,8 +37,6 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolun
             UpdateVolunteerContactDataCommand command,
             CancellationToken cancellationToken)
         {
-            DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
-
             ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
             if (validationResult.IsValid == false)
                 return Result.Failure<Guid, ErrorList>(validationResult.ToErrorListFromValidationResult());
@@ -69,6 +68,7 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolun
             if (result.IsFailure)
                 Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
 
+            DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
             try
             {
                 // save changed to database
@@ -81,11 +81,12 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.UpdateVolunteer.UpdateVolun
 
                 return Result.Success<Guid, ErrorList>(resultId);
             }
-            catch
+            catch (DbUpdateConcurrencyException ex)
             {
                 transaction.Rollback();
 
                 _logger.LogInformation("Updated contact data for volunteer with id: {id} failed. Transaction conflict", command.Id);
+                _logger.LogInformation(ex.Message);
 
                 return Result.Failure<Guid, ErrorList>(Errors.Database
                     .TransactionConflict("Update Volunteer contact data").ToErrorList());

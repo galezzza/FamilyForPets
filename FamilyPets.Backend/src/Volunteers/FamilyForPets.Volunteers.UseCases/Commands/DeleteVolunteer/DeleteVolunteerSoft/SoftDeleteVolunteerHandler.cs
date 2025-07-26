@@ -1,4 +1,5 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Data.Common;
+using CSharpFunctionalExtensions;
 using FamilyForPets.Core.Abstractions;
 using FamilyForPets.Core.Database;
 using FamilyForPets.Core.Extentions.ValidationExtentions;
@@ -7,6 +8,7 @@ using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace FamilyForPets.Volunteers.UseCases.Commands.DeleteVolunteer.DeleteVolunteerSoft
@@ -46,11 +48,28 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.DeleteVolunteer.DeleteVolun
 
             Volunteer volunteer = volunteerResult.Value;
 
-            volunteer.SoftDelete();
+            if (volunteer.IsDeleted == true)
+                return Result.Success<Guid, ErrorList>(volunteer.Id.Value);
 
-            await _unitOfWork.SaveChanges(cancellationToken);
+            DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
+            try
+            {
+                volunteer.SoftDelete();
 
-            return Result.Success<Guid, ErrorList>(volunteer.Id.Value);
+                await _unitOfWork.SaveChanges(cancellationToken);
+
+                return Result.Success<Guid, ErrorList>(volunteer.Id.Value);
+            }
+            catch (DbUpdateConcurrencyException ex) {
+            {
+                transaction.Rollback();
+
+                _logger.LogInformation("Soft Deletion operation for volunteer with id: {id} failed. Transaction conflict", command.Id);
+                _logger.LogInformation(ex.Message);
+
+                return Result.Failure<Guid, ErrorList>(Errors.Database
+                    .TransactionConflict("Soft Delete Volunteer").ToErrorList());
+            }
         }
     }
 }

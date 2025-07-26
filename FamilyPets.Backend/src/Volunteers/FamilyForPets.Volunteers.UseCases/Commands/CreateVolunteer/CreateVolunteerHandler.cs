@@ -9,6 +9,7 @@ using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace FamilyForPets.Volunteers.UseCases.Commands.CreateVolunteer
@@ -36,8 +37,6 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.CreateVolunteer
             CreateVolunteerCommand command,
             CancellationToken cancellationToken)
         {
-            DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
-
             // validate inputs
             ValidationResult validationResult = await _validator.ValidateAsync(command, cancellationToken);
             if (validationResult.IsValid == false)
@@ -67,8 +66,9 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.CreateVolunteer
 
             Volunteer volunteer = volunteerToCreateResult.Value;
 
+            DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
             try
-            { 
+            {
                 // database operations
                 Result<Guid, Error> dbResult = await _volunteerRepository.Add(volunteer, cancellationToken);
                 if (dbResult.IsFailure)
@@ -79,11 +79,12 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.CreateVolunteer
                 // return
                 return Result.Success<Guid, ErrorList>(dbResult.Value);
             }
-            catch
+            catch (DbUpdateConcurrencyException ex)
             {
                 transaction.Rollback();
 
                 _logger.LogInformation("Creating operation for volunteer with email: {email} failed. Transaction conflict", command.Email);
+                _logger.LogInformation(ex.Message);
 
                 return Result.Failure<Guid, ErrorList>(Errors.Database
                     .TransactionConflict("Creating Volunteer").ToErrorList());

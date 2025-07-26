@@ -1,11 +1,14 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Data.Common;
+using CSharpFunctionalExtensions;
 using FamilyForPets.Core.Abstractions;
+using FamilyForPets.Core.Database;
 using FamilyForPets.Core.Extentions.ValidationExtentions;
 using FamilyForPets.SharedKernel;
 using FamilyForPets.Volunteers.Domain.Entities;
 using FamilyForPets.Volunteers.Domain.VolunteerValueObjects;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace FamilyForPets.Volunteers.UseCases.Commands.DeleteVolunteer.DeleteVolunteerHard
@@ -13,15 +16,18 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.DeleteVolunteer.DeleteVolun
     public class HardDeleteVolunteerHandler : ICommandHandler<HardDeleteVolunteerCommand, Guid>
     {
         private readonly IVolunteerRepository _volunteerRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IValidator<HardDeleteVolunteerCommand> _validator;
         private readonly ILogger<HardDeleteVolunteerHandler> _logger;
 
         public HardDeleteVolunteerHandler(
             IVolunteerRepository volunteerRepository,
+            IUnitOfWork unitOfWork,
             IValidator<HardDeleteVolunteerCommand> validator,
             ILogger<HardDeleteVolunteerHandler> logger)
         {
             _volunteerRepository = volunteerRepository;
+            _unitOfWork = unitOfWork;
             _validator = validator;
             _logger = logger;
         }
@@ -42,11 +48,26 @@ namespace FamilyForPets.Volunteers.UseCases.Commands.DeleteVolunteer.DeleteVolun
 
             Volunteer volunteer = volunteerResult.Value;
 
-            Result<Guid, Error> dbResult = await _volunteerRepository.Delete(volunteer, cancellationToken);
-            if (dbResult.IsFailure)
-                return Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
+            DbTransaction transaction = await _unitOfWork.BeginTransaction(cancellationToken);
+            try
+            {
+                Result<Guid, Error> dbResult = await _volunteerRepository.Delete(volunteer, cancellationToken);
+                if (dbResult.IsFailure)
+                    return Result.Failure<Guid, ErrorList>(Errors.General.Failure().ToErrorList());
 
-            return Result.Success<Guid, ErrorList>(dbResult.Value);
+                return Result.Success<Guid, ErrorList>(dbResult.Value);
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                transaction.Rollback();
+
+                _logger.LogInformation("Hard Deletion operation for volunteer with id: {id} failed. Transaction conflict", command.Id);
+                _logger.LogInformation(ex.Message);
+
+                return Result.Failure<Guid, ErrorList>(Errors.Database
+                    .TransactionConflict("Hard Delete Volunteer").ToErrorList());
+            }
+
         }
     }
 }
